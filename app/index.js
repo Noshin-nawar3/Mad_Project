@@ -1,10 +1,17 @@
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
+// import "../global.css"
 
 export default function Home() {
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Welcome to Growth Assist!</Text>
+    <View style={styles.container}>
+      <Text>Home!</Text>
     </View>
   );
 }
+const styles = StyleSheet.create({
+  container: {
+    padding: 40,
+    backgroundColor: 'red',
+  }
+});
