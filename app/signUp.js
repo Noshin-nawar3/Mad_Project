@@ -30,7 +30,7 @@ export default function SignUp() {
             {/*signIn image*/}
             <View className="item-center">
                 <Image style={{ height: hp(20) }} resizeMode="contain"
-                    source={require('../assets/images/register.png')}/>
+                    source={require('../assets/images/register.jpg')}/>
             </View>
             <View className="gap-10">
                 <Text style={{fontSize: hp(4)}} className="font-bold tracking-wider text-center text-neutral-800">Sign Up</Text>
