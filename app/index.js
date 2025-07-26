@@ -1,11 +1,11 @@
-import {View, Text, StyleSheet} from 'react-native';
-import React from 'react';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 // import "../global.css"
 
-export default function Home() {
+export default function StartPage() {
   return (
-    <View style={styles.container}>
-      <Text>Home!</Text>
+    <View className="flex-1 justify-center items-center" >  
+      <ActivityIndicator size="large" color="gray"/>
+      <Text>Loading...</Text>
     </View>
   );
 }
