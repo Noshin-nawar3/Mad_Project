@@ -3,10 +3,9 @@ import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Image, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
-import Loading from "../components/Loading";
 export default function SignIn() {
     const router = useRouter();
-    const [loading, setLoading] = useState(false);
+    //const [loading, setLoading] = useState(false);
 
     const emailRef = useRef("");
     const passwordRef = useRef("");
@@ -58,21 +57,11 @@ export default function SignIn() {
                 <Text style={{fontSize: hp(1.8)}} className="font-semibold text-right text-neutral-500">Forgot Password?</Text>
                 </View>
                 {/*submit button*/}
-                <View>
-                    {loading ? (
-                        <View className="flex-row justify-center">
-                            <Loading size={hp(6.5)} />
-                        </View>
-
-                        ):(
+                
                             <TouchableOpacity  onPress={handleLogin} style={{ height: hp(6.5) }} className="bg-indigo-500 rounded-xl justify-center items-center">
                                 <Text style={{fontSize: hp(2.7)}} className="text-white font-bold tracking-wider">
                                     Sign In</Text>
-                                    </TouchableOpacity>
-                        )
-                    }
-                </View>
-
+                            </TouchableOpacity>
                 
                 {/*signUp text*/}
                 <View className="flex-row justify-center">
