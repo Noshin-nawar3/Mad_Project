@@ -1,3 +1,4 @@
+import React, { useState, useEffect, useRef } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { StatusBar, useRouter } from 'expo-router';
 import { Text, View } from "react-native";
