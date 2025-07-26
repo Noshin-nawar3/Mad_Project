@@ -4,6 +4,9 @@ import { Text, View } from "react-native";
 import CustomKeyboardView from '../components/CustomKeyboardView';
 import Loading from "../components/Loading";
 
+// use as usual in your components
+
+
 
 export default function SignUp() {
     const router = useRouter();

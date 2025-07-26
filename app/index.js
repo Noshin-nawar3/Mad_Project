@@ -1,17 +1,19 @@
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
-// import "../global.css"
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 
 export default function StartPage() {
   return (
-    <View className="flex-1 justify-center items-center" >  
-      <ActivityIndicator size="large" color="gray"/>
-      <Text>Loading...</Text>
+    <View style={styles.container}>
+      <Text style={{ color: 'white', fontSize: 24 }}>Hello World!</Text>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
-    padding: 40,
+    flex: 1, // ✅ VERY IMPORTANT: makes the view fill the screen
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'red',
-  }
+  },
 });
