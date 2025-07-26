@@ -1,12 +1,11 @@
 import { Octicons } from "@expo/vector-icons";
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { Image, Pressable, Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { useRef, useState } from 'react';
+import { Alert, Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 import Loading from "../components/Loading";
-import { useState, useRef } from 'react';
-import { Alert } from 'react-native';
-
+import { useAuth } from '../context/authContext';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -79,7 +78,7 @@ const styles = StyleSheet.create({
 export default function SignIn() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-
+  const { login } = useAuth();
   const emailRef = useRef("");
   const passwordRef = useRef("");
 

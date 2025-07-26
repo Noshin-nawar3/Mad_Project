@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 
@@ -23,28 +23,29 @@ export const AuthContextProvider = ({children}) => {
         }catch(e){
 
         }
-    }
+    };
     const logout = async () => {
         try{
 
         }catch(e){
 
         }
-    }
+    };
     const register = async (email, password,username,profileUrl) => {
         try{
 
         }catch(e){
 
         }
+    };
 
         return(
             <AuthContext.Provider value={{user, isAuthenticated, login, register, logout}}>
                 {children}
             </AuthContext.Provider>
-        )
-    }
-}
+        );
+    };
+
 
 export const useAuth = () => {
     const value = useContext(AuthContext);
