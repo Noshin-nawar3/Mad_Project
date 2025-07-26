@@ -2,7 +2,6 @@ import { Feather } from '@expo/vector-icons';
 import { StatusBar, useRouter } from 'expo-router';
 import { Text, View } from "react-native";
 import CustomKeyboardView from '../components/CustomKeyboardView';
-import Loading from "../components/Loading";
 
 // use as usual in your components
 
@@ -10,7 +9,7 @@ import Loading from "../components/Loading";
 
 export default function SignUp() {
     const router = useRouter();
-    const [loading, setLoading] = useState(false);
+    //const [loading, setLoading] = useState(false);
 
     const emailRef = useRef("");
     const passwordRef = useRef("");
@@ -83,18 +82,12 @@ export default function SignUp() {
                         </View>
                     </View>
                     {/*submit button*/}
-                    <View>
-                        {loading ? (
-                            <View className="flex-row justify-center">
-                                <Loading size={hp(6.5)} />
-                            </View>
-                        ) : (
+                    
                             <TouchableOpacity  onPress={handleRegister} style={{ height: hp(6.5) }} className="bg-indigo-500 rounded-xl justify-center items-center">
                                 <Text style={{fontSize: hp(2.7)}} className="text-white font-bold tracking-wider">
                                     Sign Up</Text>
                             </TouchableOpacity>
-                        )}
-                    </View>
+                  
                     {/*signUp text*/}
                     <View className="flex-row justify-center">
                         <Text style={{fontSize: hp(1.8)}} className="font-semibold text-neutral-500">Already have an account? </Text>
