@@ -8,3 +8,13 @@
 //     </View>
 //   );
 // }
+
+import { View, ActivityIndicator } from 'react-native';
+
+const Loading = ({ size }) => (
+  <View>
+    <ActivityIndicator size={size} color="#0000ff" />
+  </View>
+);
+
+export default Loading;
