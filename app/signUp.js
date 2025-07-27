@@ -96,7 +96,7 @@ export default function SignUp() {
   const {register} = useAuth();
 
   const handleRegister = async () => {
-    if (!usernameRef.current || !emailRef.current || !passwordRef.current || !profileRef.current || !roleRef.current) {
+    if (!usernameRef.current || !emailRef.current || !passwordRef.current || !profileRef.current) {
       Alert.alert('Sign Up', "Please fill in all fields");
       return;
     }
