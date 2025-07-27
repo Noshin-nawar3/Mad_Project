@@ -17,4 +17,4 @@ const Loading = ({ size }) => (
   </View>
 );
 
-export default Loading;
+export default Loading; 
