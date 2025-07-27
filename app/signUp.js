@@ -1,13 +1,12 @@
 import { Octicons } from "@expo/vector-icons";
+import { Picker } from '@react-native-picker/picker'; // Corrected import
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useRef, useState } from 'react';
-import { Alert, Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 import Loading from "../components/Loading";
 import { useAuth } from '../context/authContext';
-import { Picker } from '@react-native-picker/picker'; // Corrected import
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -91,17 +90,30 @@ export default function SignUp() {
   const usernameRef = useRef("");
   const emailRef = useRef("");
   const passwordRef = useRef("");
+  const profileRef = useRef("");
+  const roleRef = useRef("");
   const [selectedRole, setSelectedRole] = useState("Special Child"); // Default role
+  const {register} = useAuth();
 
   const handleRegister = async () => {
-    if (!usernameRef.current || !emailRef.current || !passwordRef.current) {
+    if (!usernameRef.current || !emailRef.current || !passwordRef.current || !profileRef.current || !roleRef.current) {
       Alert.alert('Sign Up', "Please fill in all fields");
       return;
     }
+    setLoading(true);
     // registration process
+    let response = await register(emailRef.current, passwordRef.current, usernameRef.current, profileRef.current);
+    setLoading(false);
+
+    console.log('Registration response:', response);
+    if (!response.success) {
+      Alert.alert('Sign Up', response.msg);
+    }
   };
 
   return (
+    <ScrollView>
+    <KeyboardAvoidingView>
     <View style={styles.container}>
       <StatusBar style="dark" />
       <View style={styles.imageContainer}>
@@ -144,6 +156,15 @@ export default function SignUp() {
               secureTextEntry
             />
           </View>
+          <View style={styles.inputContainer}>
+            <Octicons name="link" size={hp(2.7)} color="gray" />
+            <TextInput
+              onChangeText={(value) => (profileRef.current = value)}
+              style={styles.input}
+              placeholder="Profile URL"
+              placeholderTextColor="gray"
+            />
+          </View>
           <View style={styles.pickerContainer}>
             <Picker
               selectedValue={selectedRole}
@@ -182,5 +203,7 @@ export default function SignUp() {
         </View>
       </View>
     </View>
+    </KeyboardAvoidingView>
+    </ScrollView>
   );
 }

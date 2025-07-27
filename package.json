@@ -34,6 +34,7 @@
     "expo-symbols": "~0.4.5",
     "expo-system-ui": "~5.0.10",
     "expo-web-browser": "~14.2.0",
+    "firebase": "^12.0.0",
     "jwt-decode": "^4.0.0",
     "lottie-react": "^2.4.1",
     "nativewind": "^4.1.23",
@@ -54,6 +55,9 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@react-native-community/cli": "latest",
+    "@types/estree": "^1.0.8",
+    "@types/hammerjs": "^2.0.46",
+    "@types/json-schema": "^7.0.15",
     "@types/react": "~19.0.10",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~9.2.0",

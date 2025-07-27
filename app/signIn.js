@@ -1,11 +1,11 @@
 import { Octicons } from "@expo/vector-icons";
-    import { useRouter } from 'expo-router';
-    import { StatusBar } from 'expo-status-bar';
-    import { useRef, useState } from 'react';
-    import { Alert, Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-    import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
-    import Loading from "../components/Loading";
-    import { useAuth } from '../context/authContext';
+import { useRouter } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { useRef, useState } from 'react';
+import { Alert, Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
+import Loading from "../components/Loading";
+import { useAuth } from '../context/authContext';
 
     const styles = StyleSheet.create({
       container: {
@@ -90,6 +90,13 @@ import { Octicons } from "@expo/vector-icons";
           return;
         }
         // login process
+        setLoading(true);
+        const response = await login(emailRef.current, passwordRef.current);
+        setLoading(false);
+        console.log('sign in ', response.msg);
+        if (!response.success) {
+          Alert.alert('Sign In', response.msg);
+        }
       };
 
       return (
