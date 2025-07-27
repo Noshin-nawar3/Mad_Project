@@ -6,6 +6,7 @@ import { Alert, Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity,
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 import Loading from "../components/Loading";
 import { useAuth } from '../context/authContext';
+import { Picker } from '@react-native-picker/picker'; // Corrected import
 
 const styles = StyleSheet.create({
   container: {
@@ -68,6 +69,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
   },
+  pickerContainer: {
+    height: hp(7),
+    backgroundColor: '#F1F5F9',
+    borderRadius: 10,
+    justifyContent: 'center',
+    paddingHorizontal: wp(4),
+  },
+  linkContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default function SignUp() {
@@ -78,6 +91,7 @@ export default function SignUp() {
   const usernameRef = useRef("");
   const emailRef = useRef("");
   const passwordRef = useRef("");
+  const [selectedRole, setSelectedRole] = useState("Special Child"); // Default role
 
   const handleRegister = async () => {
     if (!usernameRef.current || !emailRef.current || !passwordRef.current) {
@@ -91,7 +105,12 @@ export default function SignUp() {
     <View style={styles.container}>
       <StatusBar style="dark" />
       <View style={styles.imageContainer}>
-        <Image style={styles.image} resizeMode="contain" source={require('../assets/images/register.jpg')} />
+        <Image
+          style={styles.image}
+          resizeMode="contain"
+          source={require('../assets/images/register.jpg')}
+          onError={(e) => console.log('Image load error:', e.nativeEvent.error)}
+        />
       </View>
       <View style={{ gap: 40 }}>
         <Text style={styles.title}>Sign Up</Text>
@@ -99,7 +118,7 @@ export default function SignUp() {
           <View style={styles.inputContainer}>
             <Octicons name="person" size={hp(2.7)} color="gray" />
             <TextInput
-              onChangeText={value => usernameRef.current = value}
+              onChangeText={(value) => (usernameRef.current = value)}
               style={styles.input}
               placeholder="Username"
               placeholderTextColor="gray"
@@ -108,7 +127,7 @@ export default function SignUp() {
           <View style={styles.inputContainer}>
             <Octicons name="mail" size={hp(2.7)} color="gray" />
             <TextInput
-              onChangeText={value => emailRef.current = value}
+              onChangeText={(value) => (emailRef.current = value)}
               style={styles.input}
               placeholder="Email address"
               placeholderTextColor="gray"
@@ -118,12 +137,24 @@ export default function SignUp() {
           <View style={styles.inputContainer}>
             <Octicons name="lock" size={hp(2.7)} color="gray" />
             <TextInput
-              onChangeText={value => passwordRef.current = value}
+              onChangeText={(value) => (passwordRef.current = value)}
               style={styles.input}
               placeholder="Password"
               placeholderTextColor="gray"
               secureTextEntry
             />
+          </View>
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={selectedRole}
+              onValueChange={(itemValue) => setSelectedRole(itemValue)}
+              style={{ height: hp(7), width: '100%' }}
+            >
+              <Picker.Item label="Special Child" value="Special Child" />
+              <Picker.Item label="Educator" value="Educator" />
+              <Picker.Item label="Parent" value="Parent" />
+              <Picker.Item label="Admin" value="Admin" />
+            </Picker>
           </View>
           <View>
             {loading ? (
@@ -137,12 +168,15 @@ export default function SignUp() {
             )}
           </View>
         </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+        <View style={styles.linkContainer}>
           <Text style={styles.signInText}>Already have an account? </Text>
-          <Pressable onPress={() => {
-            console.log('Navigating to signIn');
-            router.push('signIn');
-          }}>
+          <Pressable
+            onPress={() => {
+              console.log('Navigating to signIn');
+              router.push('signIn');
+            }}
+            onPressIn={() => console.log('Pressable pressed')}
+          >
             <Text style={styles.signInLink}>Sign In</Text>
           </Pressable>
         </View>
