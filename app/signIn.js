@@ -97,6 +97,10 @@ import { useAuth } from '../context/authContext';
         if (!response.success) {
           Alert.alert('Sign In', response.msg);
         }
+        // if (response.success) {
+        //   router.push('/home');
+        // }
+
       };
 
       return (
