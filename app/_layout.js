@@ -5,40 +5,35 @@ import { MenuProvider } from 'react-native-popup-menu';
 import { AuthContextProvider, useAuth } from '../context/authContext';
 import "../global.css";
 
-
 // use as usual in your components
 
-
 const MainLayout = () => {
-    const {isAuthenticated } = useAuth;
-    const segments = useSegments(); 
-    const router = useRouter();
+  const { isAuthenticated } = useAuth();
+  const segments = useSegments();
+  const router = useRouter();
 
-
-   useEffect(() => {
-    // Check if the user is authenticated
-    if(typeof isAuthenticated === 'undefined') return;
+  useEffect(() => {
+    console.log('isAuthenticated:', isAuthenticated);
+    if (typeof isAuthenticated === 'undefined') return;
     const inApp = segments[0] === '(app)';
-    if (isAuthenticated&&!inApp) {
-      // Redirect to home
+    if (isAuthenticated && !inApp) {
       router.replace('/home');
-    }else if (isAuthenticated==false) {
-      // redirect to signin
+    } else if (isAuthenticated === false) {
       router.replace('/signIn');
     }
-}, [isAuthenticated]);
+  }, [isAuthenticated]);
 
-return <Slot/>;
+  return <Slot />;
 };
 
 export default function RootLayout() {
   return (
-      <MenuProvider>
-          <AuthContextProvider>
-              <MainLayout />
-          </AuthContextProvider>
-      </MenuProvider>
-  )
+    <MenuProvider>
+      <AuthContextProvider>
+        <MainLayout />
+      </AuthContextProvider>
+    </MenuProvider>
+  );
 }
 
 

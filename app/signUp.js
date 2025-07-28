@@ -101,7 +101,7 @@ export default function SignUp() {
       return;
     }
     setLoading(true);
-    // registration process
+   
     let response = await register(emailRef.current, passwordRef.current, usernameRef.current, profileRef.current, selectedRole);
     setLoading(false);
 
