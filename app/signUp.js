@@ -102,7 +102,7 @@ export default function SignUp() {
     }
     setLoading(true);
     // registration process
-    let response = await register(emailRef.current, passwordRef.current, usernameRef.current, profileRef.current);
+    let response = await register(emailRef.current, passwordRef.current, usernameRef.current, profileRef.current, selectedRole);
     setLoading(false);
 
     console.log('Registration response:', response);
