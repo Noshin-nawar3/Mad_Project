@@ -83,11 +83,12 @@
 
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { Image } from 'expo-image';
-import { Platform, Text, View } from "react-native";
+import { Platform, Text, View, StyleSheet } from "react-native";
 import { Menu, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '../context/authContext';
+import { useRouter } from 'expo-router';
 import { blurhash } from '../utils/common';
 import { MenuItem } from './CustomMenuItems';
 
@@ -95,8 +96,20 @@ const ios = Platform.OS === 'ios';
 export default function HomeHeader() {
   const { user, logout } = useAuth();
   const { top } = useSafeAreaInsets();
+  const router = useRouter();
 
-  const handleProfile = () => {};
+  const handleProfile = () => {
+    if (user?.role === 'Admin') {
+      router.push('/admin_dashboard');
+    } else if (user?.role === 'Special Child') {
+      router.push('/specialChild_dashboard');
+    } else if (user?.role === 'Parent') {
+      router.push('/parent_dashboard');
+    } else if (user?.role === 'Educator') {
+      router.push('/educator_dashboard');
+    }
+  };
+
   const handleLogout = async () => {
     await logout();
   };
@@ -104,18 +117,16 @@ export default function HomeHeader() {
   console.log('User in HomeHeader:', user);
 
   return (
-    <View style={{ paddingTop: ios ? top : top + 10, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, backgroundColor: '#6366F1', paddingBottom: 24, borderBottomLeftRadius: 24, borderBottomRightRadius: 24, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, shadowRadius: 4 }}>
-      <View>
-        <Text style={{ fontSize: heightPercentageToDP(3), color: '#FFFFFF', fontWeight: '500' }}>
-          Home
-        </Text>
+    <View style={styles.container}>
+      <View style={styles.titleContainer}>
+        <Text style={styles.titleText}>Home</Text>
       </View>
       <View>
         {user ? (
           <Menu>
             <MenuTrigger>
               <Image
-                style={{ height: heightPercentageToDP(4.3), aspectRatio: 1, borderRadius: 100 }}
+                style={styles.profileImage}
                 source={user.profileUrl ? { uri: user.profileUrl } : require('../assets/images/login.png')}
                 placeholder={{ blurhash }}
                 transition={500}
@@ -157,5 +168,40 @@ export default function HomeHeader() {
 }
 
 const Divider = () => {
-  return <View style={{ padding: 1, width: '100%', backgroundColor: '#E5E7EB' }} />;
+  return <View style={styles.divider} />;
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    backgroundColor: '#6366F1',
+    paddingBottom: 24,
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    paddingTop: Platform.OS === 'ios' ? 10 : 20, // Adjusted for safe area
+  },
+  titleContainer: {
+    paddingTop: Platform.OS === 'ios' ? 10 : 20, // Safe area adjustment
+  },
+  titleText: {
+    fontSize: heightPercentageToDP(3),
+    color: '#FFFFFF',
+    fontWeight: '500',
+  },
+  profileImage: {
+    height: heightPercentageToDP(4.3),
+    aspectRatio: 1,
+    borderRadius: 100,
+  },
+  divider: {
+    padding: 1,
+    width: '100%',
+    backgroundColor: '#E5E7EB',
+  },
+});
