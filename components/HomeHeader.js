@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     backgroundColor: '#6366F1',
+    height:150,
     paddingBottom: 24,
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
@@ -190,6 +191,7 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'ios' ? 10 : 20, // Safe area adjustment
   },
   titleText: {
+    paddingTop:60,
     fontSize: heightPercentageToDP(3),
     color: '#FFFFFF',
     fontWeight: '500',
