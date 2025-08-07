@@ -9,7 +9,10 @@ export default function SpecialChildDashboard({ navigation }) {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Take RAADS-R Test")}
+        onPress={() => {
+              router.push('Take RAADS-R Test');
+            }}
+        //onPress={() => navigation.navigate("Take RAADS-R Test")}
       >
         <Ionicons name="document-text-outline" size={20} color="#fff" style={styles.icon} />
         <Text style={styles.buttonText}>Take RAADS-R Test</Text>
@@ -17,7 +20,10 @@ export default function SpecialChildDashboard({ navigation }) {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Test History")}
+        onPress={() => {
+              router.push('Test History');
+            }}
+        //onPress={() => navigation.navigate("Test History")}
       >
         <Ionicons name="time-outline" size={20} color="#fff" style={styles.icon} />
         <Text style={styles.buttonText}>View Test History</Text>
