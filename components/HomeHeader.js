@@ -83,7 +83,7 @@
 
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { Image } from 'expo-image';
-import { Platform, Text, View, StyleSheet } from "react-native";
+import { Platform, Pressable, Text, View, StyleSheet } from "react-native";
 import { Menu, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -114,14 +114,20 @@ export default function HomeHeader() {
     await logout();
   };
 
+  const handleHome = () => {
+    router.push('/home');
+  };
+
   console.log('User in HomeHeader:', user);
 
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={styles.titleText}>Home</Text>
+        <Pressable onPress={handleHome}>
+          <Text style={styles.titleText}>Home</Text>
+        </Pressable>
       </View>
-      <View>
+      <View style={styles.profileContainer}>
         {user ? (
           <Menu>
             <MenuTrigger>
@@ -177,7 +183,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     backgroundColor: '#6366F1',
-    height:150,
+    height: 150,
     paddingBottom: 24,
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
@@ -191,13 +197,16 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'ios' ? 10 : 20, // Safe area adjustment
   },
   titleText: {
-    paddingTop:60,
+    paddingTop: 60,
     fontSize: heightPercentageToDP(3),
     color: '#FFFFFF',
     fontWeight: '500',
   },
+  profileContainer: {
+    paddingTop: 20, 
+  },
   profileImage: {
-    height: heightPercentageToDP(4.3),
+    height: heightPercentageToDP(5),
     aspectRatio: 1,
     borderRadius: 100,
   },

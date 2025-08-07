@@ -1,11 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
-
+import {SafeAreaView, StyleSheet, Text, View } from "react-native";
+import HomeHeader from "../../components/HomeHeader";
 export default function ParentDashboard() {
   return (
-    <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
+          <View style={styles.container_home}> 
+                <HomeHeader />
       <Text style={styles.title}>Parent Dashboard</Text>
       <Text style={styles.welcome}>Welcome to the Parent Dashboard!</Text>
     </View>
+    </SafeAreaView>
   );
 }
 

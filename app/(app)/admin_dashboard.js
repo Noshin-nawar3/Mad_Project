@@ -1,6 +1,6 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView,Pressable, StyleSheet, Text, View } from "react-native";
 import { useRouter } from "expo-router";
-
+import HomeHeader from "../../components/HomeHeader";
 export default function AdminDashboard({ navigation }) {
   const router = useRouter();
 
@@ -9,7 +9,9 @@ export default function AdminDashboard({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.container_home}> 
+            <HomeHeader />
       <Text style={styles.title}>Admin Dashboard</Text>
       <Text style={styles.welcome}>Welcome to the Admin Dashboard!</Text>
       <View style={styles.tileContainer}>
@@ -29,7 +31,8 @@ export default function AdminDashboard({ navigation }) {
           <Text style={styles.tileText}>Registered Events</Text>
         </Pressable>
       </View>
-    </View>
+      </View>
+    </SafeAreaView>
   );
 }
 
