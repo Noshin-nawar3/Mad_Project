@@ -16,7 +16,7 @@ export default function AdminDashboard({ navigation }) {
         <Pressable style={styles.tile} onPress={() => handleTilePress("post_event")}>
           <Text style={styles.tileText}>Post Event</Text>
         </Pressable>
-        <Pressable style={styles.tile} onPress={() => handleTilePress("NoticeScreen")}>
+        <Pressable style={styles.tile} onPress={() => handleTilePress("post_notice")}>
           <Text style={styles.tileText}>Post Notice</Text>
         </Pressable>
         <Pressable style={styles.tile} onPress={() => handleTilePress("AllUserScreen")}>

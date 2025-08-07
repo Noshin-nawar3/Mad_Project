@@ -87,9 +87,9 @@ export default function Home() {
               onPress={() => router.push("/event")} // Updated to "event"
             />
             <FullWidthButton
-              title="Click the Post"
-              description="Click to register for the upcoming session"
-              onPress={() => router.push("/event")}
+              title="Notices"
+              description="Click to see the upcoming session"
+              onPress={() => router.push("/notice")}
             />
             <FullWidthButton
               title="Check the Blog"
