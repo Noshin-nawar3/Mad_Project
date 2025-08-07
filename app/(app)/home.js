@@ -17,8 +17,10 @@ import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import SquareButton from "../../components/SquareButton";
 import FullWidthButton from "../../components/FullwidthButton";
+import { useRouter } from "expo-router";
 
-export default function Home({ navigation }) {
+export default function Home() {
+  const router = useRouter();
   const { logout, user } = useAuth();
 
   const handleLogout = async () => {
@@ -28,90 +30,89 @@ export default function Home({ navigation }) {
   console.log("user data ", user);
 
   return (
-    <View className="flex-1 bg-white">
+    <View style={styles.container}>
       <HomeHeader />
       <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
+        contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        
-          <View className="flex items-center">
-            <Text style={{ fontSize: hp(5) }}>
-              Welcome, {user?.username || "Guest"}!
-            </Text>
+        <View style={styles.content}>
+          <Text style={styles.welcomeText}>
+            Welcome, {user?.username || "Guest"}!
+          </Text>
 
-            <View style={styles.wrapper}>
-              <SquareButton
-                title="All User"
-                iconName="account"
-                navigateTo="AllUserScreen"
-                navigation={navigation}
-              />
-              <SquareButton
-                title="Notice"
-                iconName="bell-outline"
-                navigateTo="NoticeScreen"
-                navigation={navigation}
-              />
-              <SquareButton
-                title="Event"
-                iconName="calendar"
-                navigateTo="EventScreen"
-                navigation={navigation}
-              />
-              <SquareButton
-                title="Students"
-                iconName="school"
-                navigateTo="StudentScreen"
-                navigation={navigation}
-              />
-              <SquareButton
-                title="Course"
-                iconName="book"
-                navigateTo="CourseScreen"
-                navigation={navigation}
-              />
-              <SquareButton
-                title="Feedback"
-                iconName="message-text-outline"
-                navigateTo="FeedbackScreen"
-                navigation={navigation}
-              />
-            </View>
-
-            <View className="mt-5 space-y-4 px-4 w-full">
-              <FullWidthButton
-                title="Join the Event"
-                description="Click to register for the upcoming session"
-                onPress={() => navigation.navigate("EventScreen")}
-              />
-              <FullWidthButton
-                title="Click the Post"
-                description="Click to register for the upcoming session"
-                onPress={() => navigation.navigate("EventScreen")}
-              />
-              <FullWidthButton
-                title="Check the Blog"
-                description="Click to register for the upcoming session"
-                onPress={() => navigation.navigate("EventScreen")}
-              />
-              <FullWidthButton
-                title="Enroll the course"
-                description="Click to register for the upcoming session"
-                onPress={() => navigation.navigate("EventScreen")}
-              />
-              <FullWidthButton
-                title="Give Feedback"
-                description="Click to register for the upcoming session"
-                onPress={() => navigation.navigate("EventScreen")}
-              />
-              <FullWidthButton
-                title="Quiz"
-                description="Click to register for the upcoming session"
-                onPress={() => navigation.navigate("EventScreen")}
-              />
-            </View>
+          <View style={styles.wrapper}>
+            <SquareButton
+              title="All User"
+              iconName="account"
+              // navigateTo="AllUserScreen"
+              // navigation={navigation}
+            />
+            <SquareButton
+              title="Notice"
+              iconName="bell-outline"
+              // navigateTo="NoticeScreen"
+              // navigation={navigation}
+            />
+            <SquareButton
+              title="Event"
+              iconName="calendar"
+              // navigateTo="EventScreen"
+              // navigation={navigation}
+            />
+            <SquareButton
+              title="Students"
+              iconName="school"
+              // navigateTo="StudentScreen"
+              // navigation={navigation}
+            />
+            <SquareButton
+              title="Course"
+              iconName="book"
+              // navigateTo="CourseScreen"
+              // navigation={navigation}
+            />
+            <SquareButton
+              title="Feedback"
+              iconName="message-text-outline"
+              // navigateTo="FeedbackScreen"
+              // navigation={navigation}
+            />
           </View>
+
+          <View style={styles.buttonSection}>
+            <FullWidthButton
+              title="Join the Event"
+              description="Click to register for the upcoming session"
+              onPress={() => router.push("/event")} // Updated to "event"
+            />
+            <FullWidthButton
+              title="Click the Post"
+              description="Click to register for the upcoming session"
+              onPress={() => router.push("/event")}
+            />
+            <FullWidthButton
+              title="Check the Blog"
+              description="Click to register for the upcoming session"
+              onPress={() => nrouter.push("/event")}
+            />
+            <FullWidthButton
+              title="Enroll the course"
+              description="Click to register for the upcoming session"
+              onPress={() => router.push("/event")}
+            />
+            <FullWidthButton
+              title="Give Feedback"
+              description="Click to register for the upcoming session"
+              onPress={() => router.push("/event")}
+            />
+            <FullWidthButton
+              title="Quiz"
+              description="Click to register for the upcoming session"
+              onPress={() => router.push("/event")}
+            />
+          </View>
+        </View>
       </ScrollView>
       <StatusBar style={Platform.OS === "ios" ? "dark" : "light"} />
     </View>
@@ -119,10 +120,31 @@ export default function Home({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
+  content: {
+    flex: 1,
+    alignItems: "center",
+  },
+  welcomeText: {
+    fontSize: hp(5),
+    marginTop: 20,
+  },
   wrapper: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
     marginTop: 20,
+  },
+  buttonSection: {
+    marginTop: 20,
+    paddingHorizontal: 16,
+    width: "100%",
+    gap: 16,
   },
 });

@@ -39,7 +39,7 @@ export default function PostEvent() {
       return;
     }
 
-    console.log("db:", db); // Debug: Check what db contains
+    console.log("db:", db); 
     if (!db) {
       Alert.alert("Error", "Firestore is not initialized. Check configuration.");
       return;
@@ -52,7 +52,7 @@ export default function PostEvent() {
         date: eventDate,
         description: eventDescription,
         createdAt: serverTimestamp(),
-        createdBy: "Admin", // Adjust based on user authentication
+        createdBy: "Admin", 
       });
       Alert.alert("Success", "Event posted successfully!");
       router.push("/admin_dashboard"); // Return to Admin Dashboard
