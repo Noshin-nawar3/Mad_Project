@@ -25,7 +25,7 @@ export default function AdminDashboard({ navigation }) {
         <Pressable style={styles.tile} onPress={() => handleTilePress("FeedbackScreen")}>
           <Text style={styles.tileText}>Feedbacks</Text>
         </Pressable>
-        <Pressable style={styles.tile} onPress={() => handleTilePress("RegisteredEventsScreen")}>
+        <Pressable style={styles.tile} onPress={() => handleTilePress("eventReg")}>
           <Text style={styles.tileText}>Registered Events</Text>
         </Pressable>
       </View>
