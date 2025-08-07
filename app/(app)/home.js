@@ -83,7 +83,7 @@ export default function Home() {
           <View style={styles.buttonSection}>
             <FullWidthButton
               title="Join the Event"
-              description="Click to register for the upcoming session"
+              description="Click to register for the upcoming events"
               onPress={() => router.push("/event")} // Updated to "event"
             />
             <FullWidthButton
@@ -103,8 +103,8 @@ export default function Home() {
             />
             <FullWidthButton
               title="Give Feedback"
-              description="Click to register for the upcoming session"
-              onPress={() => router.push("/event")}
+              description="Your Opinion Matters – Click to Share Your Experience!"
+              onPress={() => router.push("/feedback")}
             />
             <FullWidthButton
               title="Quiz"
