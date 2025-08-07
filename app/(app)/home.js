@@ -94,7 +94,7 @@ export default function Home() {
             <FullWidthButton
               title="Check the Blog"
               description="Click to register for the upcoming session"
-              onPress={() => nrouter.push("/event")}
+              onPress={() => router.push("/event")}
             />
             <FullWidthButton
               title="Enroll the course"
