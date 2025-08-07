@@ -1,16 +1,29 @@
 import { Ionicons } from '@expo/vector-icons'; // If using Expo
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { useRouter } from 'expo-router';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import HomeHeader from "../../components/HomeHeader";
+import { useAuth } from "../../context/authContext"; // Adjust path as needed
 
 export default function SpecialChildDashboard({ navigation }) {
+  const router = useRouter();
+  const { logout, user } = useAuth();
+  
+    const handleLogout = async () => {
+      await logout();
+    };
+    console.log("user data ", user);
+
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.container_home}> 
+      <HomeHeader />
       <Text style={styles.title}>Special Child Dashboard</Text>
       <Text style={styles.welcome}>Welcome to the Special Child Dashboard!</Text>
 
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-              router.push('Take RAADS-R Test');
+              router.push('RAADSRTestScreen');
             }}
         //onPress={() => navigation.navigate("Take RAADS-R Test")}
       >
@@ -21,18 +34,24 @@ export default function SpecialChildDashboard({ navigation }) {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-              router.push('Test History');
+              router.push('TestHistoryScreen');
             }}
         //onPress={() => navigation.navigate("Test History")}
       >
         <Ionicons name="time-outline" size={20} color="#fff" style={styles.icon} />
         <Text style={styles.buttonText}>View Test History</Text>
       </TouchableOpacity>
+      </View>
     </SafeAreaView>
+    
   );
 }
 
 const styles = StyleSheet.create({
+  container_home: {
+    flex: 1,
+    backgroundColor: '#DBEAFE',
+  },
   container: {
     flex: 1,
     backgroundColor: '#DBEAFE',

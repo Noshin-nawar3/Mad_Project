@@ -8,8 +8,8 @@ export default function TabLayout() {
         <Tabs.Screen name="Event"/>
         <Tabs.Screen name="School"/>
         <Tabs.Screen name="Notice"/>
-        <Tabs.Screen name="Test History"/>
-        <Tabs.Screen name="Take RAADS-R Test"/>
+        <Tabs.Screen name="TestHistory"/>
+        <Tabs.Screen name="RAADSRTest"/>
     </Tabs>
   )
 }
