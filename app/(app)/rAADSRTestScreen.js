@@ -181,7 +181,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import {
-  ActivityIndicator, Alert,
+  ActivityIndicator,
+  Alert,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -335,97 +337,132 @@ export default function rAADSRTestScreen({ navigation }) {
       const history = stored ? JSON.parse(stored) : [];
       history.push(result);
       await AsyncStorage.setItem('@raadsr_history', JSON.stringify(history));
-      navigation.navigate('Test History');
+      router.push('specialChild_dashboard');// Navigate to dashboard (root route)
     } catch (e) {
-      Alert.alert('Error saving result');
+      //Alert.alert('Error saving result');
+      router.push('specialChild_dashboard');
     }
   };
 
   if (loading) {
     return (
-      <View style={styles.centered}>
+      <SafeAreaView style={styles.centered}>
         <ActivityIndicator size="large" />
-        <Text>Loading Test...</Text>
-      </View>
+        <Text style={styles.loadingText}>Loading Test...</Text>
+      </SafeAreaView>
     );
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>RAADS-R Test</Text>
-      {questions.map((q, index) => (
-        <View key={q.id} style={styles.questionContainer}>
-          <Text style={styles.questionText}>
-            {index + 1}. {q.text}
-          </Text>
-          {OPTIONS.map(opt => (
-            <TouchableOpacity
-              key={opt.label}
-              style={[
-                styles.option,
-                answers[q.id] === opt.value && styles.selectedOption,
-              ]}
-              onPress={() => handleSelect(q.id, opt.value)}
-            >
-              <Text>{opt.label}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      ))}
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Text style={styles.title}>RAADS-R Test</Text>
+        {questions.map((q, index) => (
+          <View key={q.id} style={styles.questionContainer}>
+            <Text style={styles.questionText}>
+              {index + 1}. {q.text}
+            </Text>
+            {OPTIONS.map(opt => (
+              <TouchableOpacity
+                key={opt.label}
+                style={[
+                  styles.option,
+                  answers[q.id] === opt.value && styles.selectedOption,
+                ]}
+                onPress={() => handleSelect(q.id, opt.value)}
+              >
+                <Text style={styles.optionText}>{opt.label}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        ))}
+      </ScrollView>
       <TouchableOpacity
-        style={styles.button}
+        style={styles.floatingButton}
         onPress={handleSubmit}
         disabled={Object.keys(answers).length < 5}
       >
         <Text style={styles.buttonText}>Submit Test</Text>
       </TouchableOpacity>
-    </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
+  scrollContainer: {
     padding: 20,
-    backgroundColor: '#fff',
-    flexGrow: 1,
+    paddingBottom: 80, // Extra padding to prevent overlap with floating button
   },
   centered: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#f5f5f5',
   },
   title: {
-    fontSize: 22,
+    fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 25,
+    color: '#333',
   },
   questionContainer: {
-    marginBottom: 20,
+    marginBottom: 25,
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 10,
+    elevation: 2, // Shadow for Android
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   questionText: {
-    fontSize: 16,
-    marginBottom: 10,
+    fontSize: 18,
+    marginBottom: 15,
+    color: '#444',
   },
   option: {
-    padding: 10,
-    backgroundColor: '#eee',
-    borderRadius: 5,
-    marginBottom: 5,
+    padding: 12,
+    backgroundColor: '#e0e0e0',
+    borderRadius: 8,
+    marginBottom: 10,
   },
   selectedOption: {
-    backgroundColor: '#cde',
+    backgroundColor: '#a3bffa',
   },
-  button: {
+  optionText: {
+    fontSize: 16,
+    color: '#333',
+  },
+  loadingText: {
+    fontSize: 18,
+    color: '#666',
+    marginTop: 10,
+  },
+  floatingButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    left: 20,
     backgroundColor: '#2563eb',
     padding: 15,
-    borderRadius: 5,
-    marginTop: 30,
+    borderRadius: 8,
+    elevation: 8, // Shadow for Android
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
     opacity: 0.5,
   },
   buttonText: {
     color: '#fff',
     textAlign: 'center',
     fontWeight: 'bold',
+    fontSize: 18,
   },
 });

@@ -48,6 +48,7 @@ export default function testHistoryScreen() {
       return;
     }
 
+    
     let message = 'RAADS-R Test History:\n\n';
     history.forEach((item, i) => {
       message += `#${history.length - i} • ${new Date(item.date).toLocaleString()}\n`;
