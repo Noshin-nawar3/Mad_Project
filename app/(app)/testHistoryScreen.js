@@ -51,13 +51,8 @@
     
 //     let message = 'RAADS-R Test History:\n\n';
 //     history.forEach((item, i) => {
-<<<<<<< Updated upstream
-//       message += `#${history.length - i} • ${new Date(item.date).toLocaleString()}\n`;
-//       message += `Total Score: ${item.score}\n`;
-=======
 //       message += #${history.length - i} • ${new Date(item.date).toLocaleString()}\n;
 //       message += Total Score: ${item.score}\n;
->>>>>>> Stashed changes
 //       message += 'Section Scores:\n';
 //       for (const [sec, val] of Object.entries(item.sectionScores)) {
 //         message += ` - ${sec}: ${val}\n`;
@@ -107,11 +102,7 @@
 //         style={[styles.button, { backgroundColor: '#dc2626' }]}
 //         onPress={clearHistory}
 //       >
-<<<<<<< Updated upstream
-//         <Text style={styles.buttonText}>🗑️ Clear History</Text>
-=======
 //         <Text style={styles.buttonText}>🗑 Clear History</Text>
->>>>>>> Stashed changes
 //       </TouchableOpacity>
 //     </View>
 //   );
@@ -165,11 +156,8 @@
 //     fontWeight: '600',
 //   },
 // });
-<<<<<<< Updated upstream
-=======
 import { useRouter } from 'expo-router';
 import { collection, deleteDoc, getDocs, query, where } from 'firebase/firestore';
->>>>>>> Stashed changes
 import { useEffect, useState } from 'react';
 import {
   Alert,
@@ -180,15 +168,8 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-<<<<<<< Updated upstream
-import { db } from '../../firebaseConfig';
-import { collection, getDocs, query, where, deleteDoc, doc } from 'firebase/firestore';
-import { useAuth } from '../../context/authContext';
-import { useRouter } from 'expo-router';
-=======
 import { useAuth } from '../../context/authContext';
 import { db } from '../../firebaseConfig';
->>>>>>> Stashed changes
 
 export default function TestHistoryScreen() {
   const [history, setHistory] = useState([]);
