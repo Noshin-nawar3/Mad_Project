@@ -73,14 +73,14 @@ export default function Home() {
 
           <View style={styles.buttonSection}>
             <FullWidthButton
-              title="Join the Event"
-              description="Click to register for the upcoming events"
-              onPress={() => router.push("/event")}
+              title="Contact Us"
+              description="Feel free to reach out!"
+              // onPress={() => router.push("/event")}
             />
             <FullWidthButton
-              title="Notices"
-              description="Click to see the upcoming session"
-              onPress={() => router.push("/notice")}
+              title="About Us"
+              description="Click to see more infos"
+              // onPress={() => router.push("/notice")}
             />
           </View>
         </View>
@@ -117,9 +117,9 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   largeButton: {
-    width: wp(40), // Increased width to make tiles bigger
-    height: hp(15), // Increased height to make tiles bigger
-    marginHorizontal: 10, // Added more space between tiles
+    width: wp(40), 
+    height: hp(15), 
+    marginHorizontal: 10, 
   },
   buttonSection: {
     marginTop: 20,

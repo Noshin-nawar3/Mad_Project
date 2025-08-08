@@ -22,13 +22,12 @@ const firebaseConfig = {
   messagingSenderId: "600270221715",
   appId: "1:600270221715:web:3b3527ed4844e6a6ecf866"
 };
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 export const auth = initializeAuth(app, {
-  //persistence: getReactNativePersistence(AsyncStorage), // Use the appropriate persistence for your app
+  
 });
 
 export const db = getFirestore(app);
-export const usersRef = collection(db, 'users'); // Collection reference for users
+export const usersRef = collection(db, 'users'); 
 export const roomRef = collection(db, 'rooms');

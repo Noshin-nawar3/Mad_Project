@@ -3,8 +3,9 @@ import { Picker } from '@react-native-picker/picker'; // Corrected import
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useRef, useState } from 'react';
-import { Alert, Image, KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
+import CustomKeyboardView from "../components/CustomKeyboardView";
 import Loading from "../components/Loading";
 import { useAuth } from '../context/authContext';
 const styles = StyleSheet.create({
@@ -112,8 +113,8 @@ export default function SignUp() {
   };
 
   return (
+    <CustomKeyboardView>
     <ScrollView>
-    <KeyboardAvoidingView>
     <View style={styles.container}>
       <StatusBar style="dark" />
       <View style={styles.imageContainer}>
@@ -174,7 +175,7 @@ export default function SignUp() {
               <Picker.Item label="Special Child" value="Special Child" />
               <Picker.Item label="Educator" value="Educator" />
               <Picker.Item label="Parent" value="Parent" />
-              <Picker.Item label="Admin" value="Admin" />
+              
             </Picker>
           </View>
           <View>
@@ -203,7 +204,7 @@ export default function SignUp() {
         </View>
       </View>
     </View>
-    </KeyboardAvoidingView>
     </ScrollView>
+    </CustomKeyboardView>
   );
 }

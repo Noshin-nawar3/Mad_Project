@@ -5,7 +5,6 @@ import { MenuProvider } from 'react-native-popup-menu';
 import { AuthContextProvider, useAuth } from '../context/authContext';
 import "../global.css";
 
-// use as usual in your components
 
 const MainLayout = () => {
   const { isAuthenticated } = useAuth();

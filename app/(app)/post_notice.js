@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput, Pressable, Alert } from "react-native";
-import { db } from "../../firebaseConfig";
-import { collection, addDoc } from "firebase/firestore";
-import { useAuth } from "../../context/authContext";
 import { useRouter } from "expo-router";
+import { addDoc, collection } from "firebase/firestore";
+import { useState } from "react";
+import { Alert, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { useAuth } from "../../context/authContext";
+import { db } from "../../firebaseConfig";
 
 export default function PostNotice() {
   const router = useRouter();
@@ -25,7 +25,7 @@ export default function PostNotice() {
         createdBy: user?.userId || "Unknown Admin",
       });
       Alert.alert("Success", "Notice posted successfully!");
-      router.replace("/admin_dashboard"); // Redirect to admin dashboard
+      router.replace("/admin_dashboard"); 
     } catch (error) {
       console.error("Error posting notice:", error);
       Alert.alert("Error", "Failed to post notice.");

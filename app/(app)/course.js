@@ -1,7 +1,6 @@
-import React from 'react';
-import { StyleSheet, Text, View, ScrollView, SafeAreaView } from 'react-native';
 import { useRouter } from 'expo-router';
-import FullWidthButton from "../../components/FullwidthButton"; // Adjust path as needed
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import FullWidthButton from "../../components/FullwidthButton";
 
 const Course = () => {
   const router = useRouter();

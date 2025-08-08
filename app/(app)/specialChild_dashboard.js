@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logoutButton: {
-    backgroundColor: '#dc2626', // Red color for logout to distinguish it
+    backgroundColor: '#dc2626', 
   },
   buttonText: {
     color: '#fff',
