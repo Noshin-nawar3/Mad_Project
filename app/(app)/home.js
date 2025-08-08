@@ -42,41 +42,28 @@ export default function Home() {
           </Text>
 
           <View style={styles.wrapper}>
-            <SquareButton
-              title="All User"
-              iconName="account"
-              // navigateTo="AllUserScreen"
-              // navigation={navigation}
-            />
+            
             <SquareButton
               title="Notice"
               iconName="bell-outline"
-              // navigateTo="NoticeScreen"
-              // navigation={navigation}
+              onPress={() => router.push("/notice")}
             />
             <SquareButton
               title="Event"
               iconName="calendar"
-              // navigateTo="EventScreen"
-              // navigation={navigation}
+               onPress={() => router.push("/event")}
+             
             />
-            <SquareButton
-              title="Students"
-              iconName="school"
-              // navigateTo="StudentScreen"
-              // navigation={navigation}
-            />
+          
             <SquareButton
               title="Course"
               iconName="book"
-              // navigateTo="CourseScreen"
-              // navigation={navigation}
+             onPress={() => router.push("/course")}
             />
             <SquareButton
               title="Feedback"
               iconName="message-text-outline"
-              // navigateTo="FeedbackScreen"
-              // navigation={navigation}
+             onPress={() => router.push("/feedback")}
             />
           </View>
 
@@ -91,26 +78,10 @@ export default function Home() {
               description="Click to see the upcoming session"
               onPress={() => router.push("/notice")}
             />
-            <FullWidthButton
-              title="Check the Blog"
-              description="Click to register for the upcoming session"
-              onPress={() => router.push("/event")}
-            />
-            <FullWidthButton
-              title="Enroll the course"
-              description="Click to register for the upcoming session"
-              onPress={() => router.push("/event")}
-            />
-            <FullWidthButton
-              title="Give Feedback"
-              description="Your Opinion Matters – Click to Share Your Experience!"
-              onPress={() => router.push("/feedback")}
-            />
-            <FullWidthButton
-              title="Quiz"
-              description="Click to register for the upcoming session"
-              onPress={() => router.push("/event")}
-            />
+           
+         
+    
+         
           </View>
         </View>
       </ScrollView>
