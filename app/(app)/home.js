@@ -1,23 +1,20 @@
-import {
-  Pressable,
-  Text,
-  View,
-  StyleSheet,
-  ScrollView,
-  Platform,
-} from "react-native";
-import HomeHeader from "../../components/HomeHeader";
-import { useAuth } from "../../context/authContext";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-import { StatusBar } from "expo-status-bar";
-import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
-import SquareButton from "../../components/SquareButton";
-import FullWidthButton from "../../components/FullwidthButton";
 import { useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import {
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View
+} from "react-native";
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from "react-native-responsive-screen";
+import FullWidthButton from "../../components/FullwidthButton";
+import HomeHeader from "../../components/HomeHeader";
+import SquareButton from "../../components/SquareButton";
+import { useAuth } from "../../context/authContext";
 
 export default function Home() {
   const router = useRouter();
@@ -42,46 +39,49 @@ export default function Home() {
           </Text>
 
           <View style={styles.wrapper}>
-            
-            <SquareButton
-              title="Notice"
-              iconName="bell-outline"
-              onPress={() => router.push("/notice")}
-            />
-            <SquareButton
-              title="Event"
-              iconName="calendar"
-               onPress={() => router.push("/event")}
-             
-            />
-          
-            <SquareButton
-              title="Course"
-              iconName="book"
-             onPress={() => router.push("/course")}
-            />
-            <SquareButton
-              title="Feedback"
-              iconName="message-text-outline"
-             onPress={() => router.push("/feedback")}
-            />
+            {/* First row with two buttons */}
+            <View style={styles.row}>
+              <SquareButton
+                title="Notice"
+                iconName="bell-outline"
+                onPress={() => router.push("/notice")}
+                style={styles.largeButton}
+              />
+              <SquareButton
+                title="Event"
+                iconName="calendar"
+                onPress={() => router.push("/event")}
+                style={styles.largeButton}
+              />
+            </View>
+            {/* Second row with two buttons */}
+            <View style={styles.row}>
+              <SquareButton
+                title="Course"
+                iconName="book"
+                onPress={() => router.push("/course")}
+                style={styles.largeButton}
+              />
+              <SquareButton
+                title="Feedback"
+                iconName="message-text-outline"
+                onPress={() => router.push("/feedback")}
+                style={styles.largeButton}
+              />
+            </View>
           </View>
 
           <View style={styles.buttonSection}>
             <FullWidthButton
               title="Join the Event"
               description="Click to register for the upcoming events"
-              onPress={() => router.push("/event")} 
+              onPress={() => router.push("/event")}
             />
             <FullWidthButton
               title="Notices"
               description="Click to see the upcoming session"
               onPress={() => router.push("/notice")}
             />
-           
-         
-    
-         
           </View>
         </View>
       </ScrollView>
@@ -107,10 +107,19 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   wrapper: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+    flexDirection: "column",
     justifyContent: "center",
     marginTop: 20,
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginVertical: 10,
+  },
+  largeButton: {
+    width: wp(40), // Increased width to make tiles bigger
+    height: hp(15), // Increased height to make tiles bigger
+    marginHorizontal: 10, // Added more space between tiles
   },
   buttonSection: {
     marginTop: 20,
