@@ -5,48 +5,15 @@ import HomeHeader from "../../components/HomeHeader";
 import { useAuth } from "../../context/authContext";
 
 export default function Resources() {
-  const router = useRouter();
-  const { logout, user } = useAuth();
   
-  const handleLogout = async () => {
-    await logout();
-  };
-  console.log("user data ", user);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container_home}> 
         <HomeHeader />
-        <Text style={styles.title}>Special Child Dashboard</Text>
-        <Text style={styles.welcome}>Welcome to the Special Child Dashboard!</Text>
+        <Text style={styles.title}>Resources</Text>
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            router.push('rAADSRTestScreen');
-          }}
-        >
-          <Ionicons name="document-text-outline" size={20} color="#fff" style={styles.icon} />
-          <Text style={styles.buttonText}>Take RAADS-R Test</Text>
-        </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            router.push('testHistoryScreen');
-          }}
-        >
-          <Ionicons name="time-outline" size={20} color="#fff" style={styles.icon} />
-          <Text style={styles.buttonText}>View Test History</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.button, styles.logoutButton]}
-          onPress={handleLogout}
-        >
-          <Ionicons name="log-out-outline" size={20} color="#fff" style={styles.icon} />
-          <Text style={styles.buttonText}>Logout</Text>
-        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -55,7 +22,6 @@ export default function Resources() {
 const styles = StyleSheet.create({
   container_home: {
     flex: 1,
-    backgroundColor: '#DBEAFE',
   },
   container: {
     flex: 1,
@@ -64,15 +30,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
+    marginTop: 0,
     fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    marginLeft: 30,
   },
-  welcome: {
-    marginTop: 16,
-    textAlign: 'center',
-    marginBottom: 40,
-  },
+
   button: {
     backgroundColor: '#2563eb',
     padding: 15,
@@ -82,8 +45,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  logoutButton: {
-    backgroundColor: '#dc2626', 
+  buttonSection: {
+    marginTop: 20,
+    paddingHorizontal: 16,
+    width: "100%",
+    gap: 16,
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginVertical: 10,
+    flexWrap: "wrap",
   },
   buttonText: {
     color: '#fff',

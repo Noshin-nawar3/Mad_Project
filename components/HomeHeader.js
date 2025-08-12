@@ -124,7 +124,7 @@ export default function HomeHeader() {
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <Pressable onPress={handleHome}>
-          <Text style={styles.titleText}>Home</Text>
+          <Text style={styles.titleText}>Growth Assist</Text>
         </Pressable>
       </View>
       <View style={styles.profileContainer}>
