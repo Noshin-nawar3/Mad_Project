@@ -54,7 +54,7 @@ export default function School() {
             <SquareButton
               title="Course"
               iconName="book"
-              onPress={() => router.push("/")}
+              onPress={() => router.push("/CourseScreen")}
               style={styles.largeButton}
             />
             <SquareButton
@@ -82,7 +82,7 @@ export default function School() {
         length="5h 30m"
         rating="4.8"
         onFavoriteToggle={(fav) => console.log("Favorite status:", fav)}
-        onPress={() => router.push("/chat")}
+        onPress={() => router.push("/courseDetails")}
       />
       <CourseCard
         image="https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg"
@@ -90,7 +90,7 @@ export default function School() {
         description="Master closures, async programming, and advanced concepts."
         length="3h 45m"
         rating="4.6"
-        onPress={() => router.push("/chat")} 
+        onPress={() => router.push("/courseDetails")}
       />
    
           
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   title: {
-    marginTop: 10,
+    marginTop: 0,
     fontSize: 24,
     fontWeight: "bold",
     marginLeft: 30,
@@ -123,6 +123,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginVertical: 10,
-    flexWrap: "wrap", // ✅ so buttons wrap to next row if needed
+    flexWrap: "wrap",
   },
 });
