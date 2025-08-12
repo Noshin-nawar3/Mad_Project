@@ -53,9 +53,6 @@ export default function Home() {
                 onPress={() => router.push("/event")}
                 style={styles.largeButton}
               />
-            </View>
-            {/* Second row with two buttons */}
-            <View style={styles.row}>
               <SquareButton
                 title="Course"
                 iconName="book"
@@ -113,8 +110,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    justifyContent: "center",
-    marginVertical: 10,
+    
   },
   largeButton: {
     width: wp(40), 
