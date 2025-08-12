@@ -7,9 +7,10 @@ import SquareButton from "../../components/SquareButton";
 import FullWidthButton from "../../components/FullwidthButton";
 import { useState } from "react";
 import SearchBar from "../../components/SearchBar";
+import CourseCard from "../../components/CourseCard";
 
 export default function School() {
-  const router = useRouter(); // ✅ FIXED
+  const router = useRouter(); 
   const [search, setSearch] = useState("");
   const data = ["Bangla", "English", "History", "Arts and Crafts"];
 
@@ -63,22 +64,37 @@ export default function School() {
               onPress={() => router.push("/QuizScreen")}
               style={styles.largeButton}
             />
+            <SquareButton
+              title="Bookmark"
+              iconName="bookmark-outline"
+              onPress={() => router.push("/bookmark")}
+              style={styles.largeButton}
+            />
           </View>
         </View>
 
         {/* Courses List */}
         <Text style={styles.title}>Courses</Text>
         <View style={styles.buttonSection}>
-          <FullWidthButton
-            title="Course"
-            description="Click to see the Course"
-            onPress={() => router.push("/chat")}
-          />
-          <FullWidthButton
-            title="Course"
-            description="Click to see the Course"
-            onPress={() => router.push("/NoticeScreen")}
-          />
+      <CourseCard
+        image="https://images.pexels.com/photos/4145195/pexels-photo-4145195.jpeg"
+        title="React Native for Beginners"
+        description="Learn how to build cross-platform mobile apps using React Native and Expo."
+        length="5h 30m"
+        rating="4.8"
+        onFavoriteToggle={(fav) => console.log("Favorite status:", fav)}
+        onPress={() => router.push("/chat")}
+      />
+      <CourseCard
+        image="https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg"
+        title="Advanced JavaScript"
+        description="Master closures, async programming, and advanced concepts."
+        length="3h 45m"
+        rating="4.6"
+        onPress={() => router.push("/chat")}
+      />
+   
+          
         </View>
       </ScrollView>
     </View>
