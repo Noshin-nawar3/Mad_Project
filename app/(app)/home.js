@@ -15,6 +15,7 @@ import FullWidthButton from "../../components/FullwidthButton";
 import HomeHeader from "../../components/HomeHeader";
 import SquareButton from "../../components/SquareButton";
 import { useAuth } from "../../context/authContext";
+//import BottomNavigator from "../../components/BottomNavigator";
 
 export default function Home() {
   const router = useRouter();
@@ -39,7 +40,6 @@ export default function Home() {
           </Text>
 
           <View style={styles.wrapper}>
-            {/* First row with two buttons */}
             <View style={styles.row}>
               <SquareButton
                 title="Notice"
@@ -71,6 +71,11 @@ export default function Home() {
 
           <View style={styles.buttonSection}>
             <FullWidthButton
+              title="School"
+              description="Click to see the School"
+              onPress={() => router.push("/school")}
+            />
+            <FullWidthButton
               title="Contact Us"
               description="Feel free to reach out!"
               // onPress={() => router.push("/event")}
@@ -83,6 +88,9 @@ export default function Home() {
           </View>
         </View>
       </ScrollView>
+      {/* <View style={styles.bottomNavWrapper}>
+        <BottomNavigator />
+      </View> */}
       <StatusBar style={Platform.OS === "ios" ? "dark" : "light"} />
     </View>
   );
