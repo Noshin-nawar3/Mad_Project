@@ -1,12 +1,12 @@
-// Example: screens/SchoolScreen.js
+// Example: screens/Bookmark.js
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const SchoolScreen = () => (
+const Bookmark = () => (
   <View style={styles.container}>
     <Text
-      // onPress={()=>navigation.navigate('school')}
-    >School Screen</Text>
+    // onPress={()=>navigation.navigate('event')}
+    >Bookmark Screen</Text>
   </View>
 );
 
@@ -16,4 +16,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SchoolScreen;
+export default Bookmark;

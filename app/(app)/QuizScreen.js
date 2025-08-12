@@ -1,12 +1,12 @@
-// Example: screens/EventScreen.js
+// Example: screens/QuizScreen.js
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const EventScreen = () => (
+const QuizScreen = () => (
   <View style={styles.container}>
     <Text
-    // onPress={()=>navigation.navigate('event')}
-    >Event Screen</Text>
+      // onPress={()=>navigation.navigate('Quiz')}
+    >Quiz Screen</Text>
   </View>
 );
 
@@ -16,4 +16,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EventScreen;
+export default QuizScreen;

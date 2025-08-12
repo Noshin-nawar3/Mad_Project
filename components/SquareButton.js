@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 13.5,
+    fontSize: 12.5,
     fontWeight: "600",
     textAlign: "center",
   }, 

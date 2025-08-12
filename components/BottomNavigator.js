@@ -6,9 +6,9 @@ import { Ionicons } from "@expo/vector-icons";
 
 import Home from "../app/(app)/home"; // Your current screen
 import ChatScreen from "../app/(app)/chat";
-import SchoolScreen from "../app/(app)/screens/SchoolScreen";
-import EventScreen from "../app/(app)/screens/EventScreen";
-import NoticeScreen from "../app/(app)/screens/NoticeScreen";
+import SchoolScreen from "../app/(app)/QuizScreen";
+import EventScreen from "../app/(app)/screens/bookmark";
+import NoticeScreen from "../app/(app)/NoticeScreen";
 
 const homeName = "home";
 const chatName = "chat";
