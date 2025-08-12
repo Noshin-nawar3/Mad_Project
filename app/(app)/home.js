@@ -15,7 +15,9 @@ import FullWidthButton from "../../components/FullwidthButton";
 import HomeHeader from "../../components/HomeHeader";
 import SquareButton from "../../components/SquareButton";
 import { useAuth } from "../../context/authContext";
-//import BottomNavigator from "../../components/BottomNavigator";
+import BottomNavigator from "../../components/BottomNavigator";
+import { NavigationContainer } from "@react-navigation/native";
+import BottomTabs from "../../components/BottomTabs";
 
 export default function Home() {
   const router = useRouter();
@@ -90,7 +92,8 @@ export default function Home() {
       </ScrollView>
       {/* <View style={styles.bottomNavWrapper}>
         <BottomNavigator />
-      </View> */}
+      </View>  */}
+      {/* <BottomTabs/> */}
       <StatusBar style={Platform.OS === "ios" ? "dark" : "light"} />
     </View>
   );

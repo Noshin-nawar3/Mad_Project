@@ -4,7 +4,6 @@ import { StyleSheet, Text, ScrollView, FlatList, View } from "react-native";
 import HomeHeader from "../../components/HomeHeader";
 import { useAuth } from "../../context/authContext";
 import SquareButton from "../../components/SquareButton";
-import FullWidthButton from "../../components/FullwidthButton";
 import { useState } from "react";
 import SearchBar from "../../components/SearchBar";
 import CourseCard from "../../components/CourseCard";
@@ -91,7 +90,7 @@ export default function School() {
         description="Master closures, async programming, and advanced concepts."
         length="3h 45m"
         rating="4.6"
-        onPress={() => router.push("/chat")}
+        onPress={() => router.push("/chat")} 
       />
    
           
@@ -109,7 +108,7 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   title: {
-    marginTop: 30,
+    marginTop: 10,
     fontSize: 24,
     fontWeight: "bold",
     marginLeft: 30,
