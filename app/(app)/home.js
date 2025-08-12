@@ -53,9 +53,7 @@ export default function Home() {
                 onPress={() => router.push("/event")}
                 style={styles.largeButton}
               />
-            </View>
-            {/* Second row with two buttons */}
-            <View style={styles.row}>
+            
               <SquareButton
                 title="Course"
                 iconName="book"
