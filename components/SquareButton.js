@@ -41,6 +41,7 @@
 import React from 'react';
 import { Pressable, Text, View, StyleSheet, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 
 const screenWidth = Dimensions.get('window').width;
 const buttonSize = screenWidth / 3;
@@ -49,7 +50,7 @@ export default function SquareButton({ title, iconName, onPress }) {
   return (
     <Pressable style={styles.buttonContainer} onPress={onPress}>
       <View style={styles.content}>
-        <Icon name={iconName} size={buttonSize * 0.4} color="#6366F1" />
+        <Icon name={iconName} size={buttonSize * 0.3} color="#6366F1" />
         <Text style={styles.title}>{title}</Text>
       </View>
     </Pressable>
@@ -58,8 +59,9 @@ export default function SquareButton({ title, iconName, onPress }) {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    width: buttonSize,
-    height: buttonSize,
+    width: wp(22),
+    height: wp(22),
+    margin: wp(1),
     backgroundColor: '#FFFFFF',
     padding: 12,
     borderRadius: 12,
@@ -77,9 +79,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    marginTop: 8,
-    fontSize: 14,
-    textAlign: 'center',
-    color: '#333',
-  },
-});
+    fontSize: 13.5,
+    fontWeight: "600",
+    textAlign: "center",
+  }, 
+}); 
