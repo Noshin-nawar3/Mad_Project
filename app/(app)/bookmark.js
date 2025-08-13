@@ -8,14 +8,10 @@ export default function Bookmark() {
   
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.container_home}> 
-        <HomeHeader />
-        <Text style={styles.title}>Bookmark</Text>
-
-
-      </View>
-    </SafeAreaView>
+    <View style={styles.container_home}> 
+            <HomeHeader />
+            <Text style={styles.title}>Bookmark</Text>
+          </View>
   );
 }
 

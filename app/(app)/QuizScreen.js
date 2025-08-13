@@ -8,14 +8,10 @@ export default function QuizScreen() {
   
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.container_home}> 
-        <HomeHeader />
-        <Text style={styles.title}>Quiz</Text>
-
-
-      </View>
-    </SafeAreaView>
+    <View style={styles.container_home}> 
+            <HomeHeader />
+            <Text style={styles.title}>Quiz Screen</Text>
+          </View>
   );
 }
 

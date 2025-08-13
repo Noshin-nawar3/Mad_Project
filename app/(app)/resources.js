@@ -8,14 +8,10 @@ export default function Resources() {
   
 
   return (
-    <SafeAreaView style={styles.container}>
       <View style={styles.container_home}> 
         <HomeHeader />
         <Text style={styles.title}>Resources</Text>
-
-
       </View>
-    </SafeAreaView>
   );
 }
 

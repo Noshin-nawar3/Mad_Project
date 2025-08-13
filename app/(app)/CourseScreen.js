@@ -8,14 +8,10 @@ export default function CourseScreen() {
   
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.container_home}> 
-        <HomeHeader />
-        <Text style={styles.title}>Course</Text>
-
-
-      </View>
-    </SafeAreaView>
+    <View style={styles.container_home}> 
+            <HomeHeader />
+            <Text style={styles.title}>Course Screen</Text>
+          </View>
   );
 }
 
