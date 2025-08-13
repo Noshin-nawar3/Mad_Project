@@ -8,14 +8,10 @@ export default function Chat() {
   
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.container_home}> 
-        <HomeHeader />
-        <Text style={styles.title}>Chat</Text>
-
-
-      </View>
-    </SafeAreaView>
+    <View style={styles.container_home}> 
+            <HomeHeader />
+            <Text style={styles.title}>Chat</Text>
+          </View>
   );
 }
 
