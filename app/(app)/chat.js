@@ -1,19 +1,49 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+  Image,
+} from "react-native";
 import { db } from "../../firebaseConfig";
 import { useAuth } from "../../context/authContext";
-import { doc, collection, setDoc, updateDoc, arrayUnion, Timestamp, onSnapshot, getDocs, query } from "firebase/firestore";
+import {
+  doc,
+  collection,
+  setDoc,
+  updateDoc,
+  arrayUnion,
+  Timestamp,
+  onSnapshot,
+  getDocs,
+  getDoc,
+  query,
+} from "firebase/firestore";
 import { useLocalSearchParams } from "expo-router";
 
 export default function Chat() {
   const { user } = useAuth();
-  const { friendId, friendName } = useLocalSearchParams(); // ✅ useSearchParams instead of route.params
+  const { friendId, friendName } = useLocalSearchParams();
+  const [friendProfilePic, setFriendProfilePic] = useState(null);
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
   const [chatDocId, setChatDocId] = useState(null);
 
   useEffect(() => {
     if (!user || !friendId) return;
+
+    const fetchFriendDetails = async () => {
+      const docSnap = await getDoc(doc(db, "users", friendId));
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setFriendProfilePic(data.profileUrl || null);
+      }
+    };
 
     const setupChat = async () => {
       const chatsRef = collection(db, "chats");
@@ -41,6 +71,7 @@ export default function Chat() {
       }
     };
 
+    fetchFriendDetails();
     setupChat();
   }, [friendId, user]);
 
@@ -48,26 +79,45 @@ export default function Chat() {
     if (!text.trim() || !chatDocId) return;
 
     const message = { from: user.userId, text: text.trim(), timestamp: Timestamp.now() };
-
     await updateDoc(doc(db, "chats", chatDocId), {
       messages: arrayUnion(message),
     });
-
     setText("");
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>{friendName}</Text>
+    <KeyboardAvoidingView
+      style={{ flex: 1, backgroundColor: "#ECE5DD" }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 100}
+    >
+      {/* Header with profile photo */}
+      <View style={styles.headerContainer}>
+        <Image
+          source={{ uri: friendProfilePic || "https://via.placeholder.com/40" }}
+          style={styles.headerAvatar}
+        />
+        <Text style={styles.headerText}>{friendName}</Text>
+      </View>
+
+      {/* Messages */}
       <FlatList
-        data={messages.sort((a,b) => a.timestamp.seconds - b.timestamp.seconds)}
+        data={messages.sort((a, b) => a.timestamp.seconds - b.timestamp.seconds)}
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item }) => (
-          <View style={[styles.messageBubble, item.from === user.userId ? styles.myMessage : styles.friendMessage]}>
-            <Text style={{ color: "#fff" }}>{item.text}</Text>
+          <View
+            style={[
+              styles.messageBubble,
+              item.from === user.userId ? styles.myMessage : styles.friendMessage,
+            ]}
+          >
+            <Text style={styles.messageText}>{item.text}</Text>
           </View>
         )}
+        contentContainerStyle={{ paddingTop: 100, paddingBottom: 90 }}
       />
+
+      {/* Input */}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -79,17 +129,86 @@ export default function Chat() {
           <Text style={{ color: "#fff" }}>Send</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 10, backgroundColor: "#f5f5f5" },
-  header: { fontSize: 20, fontWeight: "bold", marginBottom: 10, textAlign: "center" },
-  messageBubble: { padding: 10, borderRadius: 8, marginVertical: 3, maxWidth: "70%" },
-  myMessage: { backgroundColor: "#007bff", alignSelf: "flex-end" },
-  friendMessage: { backgroundColor: "#555", alignSelf: "flex-start" },
-  inputContainer: { flexDirection: "row", alignItems: "center", marginTop: 10 },
-  input: { flex: 1, borderWidth: 1, borderColor: "#ccc", borderRadius: 20, paddingHorizontal: 15 },
-  sendButton: { marginLeft: 10, backgroundColor: "#007bff", padding: 10, borderRadius: 20 },
+  headerContainer: {
+     flexDirection: "row",
+  alignItems: "center",
+  paddingTop: 20,
+  paddingBottom: 10,
+  paddingHorizontal: 10,
+  backgroundColor: "rgba(255, 255, 255, 0.8)", // semi-transparent
+  shadowColor: "#000",
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.3,
+  shadowRadius: 3,
+  elevation: 5, // for Android shadow
+  position: "absolute", // make it float
+  top: 0,
+  left: 0,
+  right: 0,
+  zIndex: 10,
+  paddingTop: Platform.OS === "ios" ? 40 : 40, // Adjust for safe area
+  },
+  headerAvatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#075E54",
+  },
+  messageBubble: {
+    padding: 10,
+    borderRadius: 20,
+    marginVertical: 4,
+    maxWidth: "70%",
+  },
+  myMessage: {
+    backgroundColor: "#DCF8C6",
+    alignSelf: "flex-end",
+    borderTopRightRadius: 0,
+  },
+  friendMessage: {
+    backgroundColor: "#FFFFFF",
+    alignSelf: "flex-start",
+    borderTopLeftRadius: 0,
+  },
+  messageText: {
+    fontSize: 16,
+    color: "#000",
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    backgroundColor: "#FFF",
+    borderTopWidth: 1,
+    borderColor: "#DDD",
+    marginBottom: Platform.OS === "ios" ? 20 : 40,
+  },
+  input: {
+    flex: 1,
+    backgroundColor: "#F0F0F0",
+    borderRadius: 20,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    fontSize: 16,
+    marginRight: 10,
+  },
+  sendButton: {
+    backgroundColor: "#128C7E",
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
