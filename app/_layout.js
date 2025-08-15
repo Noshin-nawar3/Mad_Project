@@ -1,26 +1,38 @@
-
 import { Slot, useRouter, useSegments } from 'expo-router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { MenuProvider } from 'react-native-popup-menu';
 import { AuthContextProvider, useAuth } from '../context/authContext';
+import { View, Text } from 'react-native'; // Explicitly import for native
 import "../global.css";
-
 
 const MainLayout = () => {
   const { isAuthenticated } = useAuth();
   const segments = useSegments();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(false); // Set loaded after mount
+  }, []);
 
   useEffect(() => {
     console.log('isAuthenticated:', isAuthenticated);
-    if (typeof isAuthenticated === 'undefined') return;
+    if (isLoading || typeof isAuthenticated === 'undefined') return;
     const inApp = segments[0] === '(app)';
     if (isAuthenticated && !inApp) {
       router.replace('/home');
     } else if (isAuthenticated === false) {
       router.replace('/signIn');
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, isLoading, segments]);
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Loading...</Text> {/* React Native Text component */}
+      </View>
+    );
+  }
 
   return <Slot />;
 };
@@ -34,7 +46,6 @@ export default function RootLayout() {
     </MenuProvider>
   );
 }
-
 
 // import { Slot, useRouter, useSegments } from 'expo-router';
 // import { useEffect } from 'react';
