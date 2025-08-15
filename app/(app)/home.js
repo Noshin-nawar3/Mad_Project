@@ -77,6 +77,13 @@ export default function Home() {
               description="Click to see the School"
               onPress={() => router.push("/school")}
             />
+
+            <FullWidthButton
+              title="Connection"
+              description="connect with all!"
+               onPress={() => router.push("/connection")}
+            />
+
             <FullWidthButton
               title="Contact Us"
               description="Feel free to reach out!"
