@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, FlatList, Pressable, Alert } from "react-native";
 import { db } from "../../firebaseConfig";
-import { collection, getDocs, addDoc, doc, updateDoc, query, where } from "firebase/firestore";
+import { collection, getDocs, addDoc, doc, updateDoc, query, where, getDoc } from "firebase/firestore";
 import { useAuth } from "../../context/authContext";
+import { useRouter } from "expo-router";
 
 export default function Connection() {
   const { user } = useAuth();
+  const router = useRouter();
   const [suggestions, setSuggestions] = useState([]);
   const [requests, setRequests] = useState([]);
+  const [friends, setFriends] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [usernames, setUsernames] = useState({});
 
   useEffect(() => {
     const fetchSuggestions = async () => {
@@ -17,8 +21,21 @@ export default function Connection() {
         const usersList = usersSnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
-        })).filter((u) => u.userId !== user.userId); // Exclude current user
-        setSuggestions(usersList);
+        })).filter((u) => u.userId !== user.userId);
+
+        const sentRequestsQuery = query(collection(db, "friendRequests"), where("fromUserId", "==", user.userId));
+        const receivedRequestsQuery = query(collection(db, "friendRequests"), where("toUserId", "==", user.userId));
+        const [sentSnapshot, receivedSnapshot] = await Promise.all([
+          getDocs(sentRequestsQuery),
+          getDocs(receivedRequestsQuery),
+        ]);
+
+        const sentRequestUserIds = sentSnapshot.docs.map((doc) => doc.data().toUserId);
+        const receivedRequestUserIds = receivedSnapshot.docs.map((doc) => doc.data().fromUserId);
+        const excludedUserIds = [...sentRequestUserIds, ...receivedRequestUserIds];
+
+        const filteredSuggestions = usersList.filter((u) => !excludedUserIds.includes(u.userId));
+        setSuggestions(filteredSuggestions);
       } catch (error) {
         console.error("Error fetching suggestions:", error);
         Alert.alert("Error", "Failed to fetch suggestions.");
@@ -34,15 +51,60 @@ export default function Connection() {
           ...doc.data(),
         }));
         setRequests(requestsList);
+
+        const usernamePromises = requestsList.map(async (request) => {
+          const userDoc = await getDoc(doc(db, "users", request.fromUserId));
+          if (userDoc.exists()) {
+            return { userId: request.fromUserId, username: userDoc.data().username };
+          }
+          return null;
+        });
+        const usernameResults = (await Promise.all(usernamePromises)).filter(Boolean);
+        const newUsernames = usernameResults.reduce((acc, { userId, username }) => ({
+          ...acc,
+          [userId]: username,
+        }), {});
+        setUsernames((prev) => ({ ...prev, ...newUsernames }));
       } catch (error) {
         console.error("Error fetching requests:", error);
         Alert.alert("Error", "Failed to fetch requests.");
       }
     };
 
+    const fetchFriends = async () => {
+      try {
+        const q = query(collection(db, "friends"), where("user1Id", "==", user.userId));
+        const friendsSnapshot = await getDocs(q);
+        const friendsList = friendsSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        const friendUserIds = friendsList.map((f) => f.user2Id);
+        const friendPromises = friendUserIds.map(async (friendId) => {
+          const userDoc = await getDoc(doc(db, "users", friendId));
+          if (userDoc.exists()) {
+            return { userId: friendId, username: userDoc.data().username };
+          }
+          return null;
+        });
+        const friendResults = (await Promise.all(friendPromises)).filter(Boolean);
+        const newFriendUsernames = friendResults.reduce((acc, { userId, username }) => ({
+          ...acc,
+          [userId]: username,
+        }), {});
+        setUsernames((prev) => ({ ...prev, ...newFriendUsernames }));
+        setFriends(friendResults.map((f) => ({ userId: f.userId, username: f.username })));
+      } catch (error) {
+        console.error("Error fetching friends:", error);
+        Alert.alert("Error", "Failed to fetch friends.");
+      }
+    };
+
     if (user?.userId) {
       fetchSuggestions();
       fetchRequests();
+      fetchFriends();
       setLoading(false);
     } else {
       setLoading(false);
@@ -59,7 +121,6 @@ export default function Connection() {
         timestamp: new Date(),
       });
       Alert.alert("Success", "Friend request sent!");
-      // Optionally remove the user from suggestions
       setSuggestions((prev) => prev.filter((s) => s.userId !== suggestedUserId));
     } catch (error) {
       console.error("Error sending friend request:", error);
@@ -71,7 +132,6 @@ export default function Connection() {
     try {
       const requestRef = doc(db, "friendRequests", requestId);
       await updateDoc(requestRef, { status: "accepted" });
-      // Optionally add friends relationship
       await addDoc(collection(db, "friends"), {
         user1Id: user.userId,
         user2Id: fromUserId,
@@ -85,6 +145,10 @@ export default function Connection() {
     }
   };
 
+  const handleChat = (friendUserId) => {
+    router.push(`/chat?userId=${friendUserId}`);
+  };
+
   const renderSuggestionTile = ({ item }) => (
     <View style={styles.tile}>
       <Text style={styles.tileText}>{item.username}</Text>
@@ -96,9 +160,18 @@ export default function Connection() {
 
   const renderRequestTile = ({ item }) => (
     <View style={styles.tile}>
-      <Text style={styles.tileText}>Request from {item.fromUserId}</Text>
+      <Text style={styles.tileText}>Request from {usernames[item.fromUserId] || "Unknown User"}</Text>
       <Pressable style={styles.button} onPress={() => handleAcceptRequest(item.id, item.fromUserId)}>
         <Text style={styles.buttonText}>Accept</Text>
+      </Pressable>
+    </View>
+  );
+
+  const renderFriendTile = ({ item }) => (
+    <View style={styles.tile}>
+      <Text style={styles.tileText}>{item.username}</Text>
+      <Pressable style={styles.button} onPress={() => handleChat(item.userId)}>
+        <Text style={styles.buttonText}>Chat</Text>
       </Pressable>
     </View>
   );
@@ -129,6 +202,19 @@ export default function Connection() {
         />
       ) : (
         <Text style={styles.noRequest}>No requests</Text>
+      )}
+
+      <Text style={styles.sectionTitle}>Friends</Text>
+      {friends.length > 0 ? (
+        <FlatList
+          data={friends}
+          renderItem={renderFriendTile}
+          keyExtractor={(item) => item.userId}
+          numColumns={2}
+          contentContainerStyle={styles.list}
+        />
+      ) : (
+        <Text style={styles.noRequest}>No friends</Text>
       )}
     </View>
   );
