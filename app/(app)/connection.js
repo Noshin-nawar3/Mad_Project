@@ -13,9 +13,12 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import { useAuth } from "../../context/authContext";
+import { useRouter } from "expo-router";
 
-export default function Connection({ navigation }) {
+export default function Connection() {
   const { user } = useAuth();
+  const router = useRouter();
+
   const [allUsers, setAllUsers] = useState([]);
   const [friendRequests, setFriendRequests] = useState([]);
   const [sentRequests, setSentRequests] = useState([]);
@@ -41,13 +44,13 @@ export default function Connection({ navigation }) {
       if (user?.userId) {
         const currentUserData = usersData.find((u) => u.userId === user.userId) || {};
 
-        // Suggestions: exclude friends and incoming friend requests
-       const suggested = usersData.filter(
-  (u) =>
-    u.userId !== user.userId && // exclude self
-    !(u.friends || []).includes(user.userId) && // exclude friends
-    !((currentUserData["Friend Request"] || []).includes(u.userId)) // exclude users who sent request to you
-);
+        // Suggestions: exclude friends and incoming friend requests only
+        const suggested = usersData.filter(
+          (u) =>
+            u.userId !== user.userId &&
+            !(u.friends || []).includes(user.userId) &&
+            !((currentUserData["Friend Request"] || []).includes(u.userId))
+        );
         setSuggestions(suggested);
 
         // Friends list
@@ -176,7 +179,9 @@ export default function Connection({ navigation }) {
       <Text style={styles.name}>{item.username || "Unknown"}</Text>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Chat", { friendId: item.userId, friendName: item.username })}
+        onPress={() =>
+          router.push(`/chat?friendId=${item.userId}&friendName=${item.username}`)
+        }
       >
         <Text style={styles.buttonText}>Chat</Text>
       </TouchableOpacity>

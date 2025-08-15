@@ -1,211 +1,95 @@
-// import React, { useState, useEffect } from "react";
-// import { StyleSheet, View, FlatList, TextInput, Pressable, Alert, Image } from "react-native"; // Explicitly import Text
-// import { db } from "../../firebaseConfig";
-// import { collection, addDoc, query, orderBy, limit, getDocs, doc, getDoc } from "firebase/firestore";
-// import { useAuth } from "../../context/authContext";
-// import { useRouter, useLocalSearchParams } from "expo-router";
-// import HomeHeader from "../../components/HomeHeader";
+import React, { useEffect, useState } from "react";
+import { View, Text, FlatList, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import { db } from "../../firebaseConfig";
+import { useAuth } from "../../context/authContext";
+import { doc, collection, setDoc, updateDoc, arrayUnion, Timestamp, onSnapshot, getDocs, query } from "firebase/firestore";
+import { useLocalSearchParams } from "expo-router";
 
-// export default function Chat() {
-//   const { user } = useAuth();
-//   const { userId: friendUserId } = useLocalSearchParams();
-//   const router = useRouter();
-//   const [messages, setMessages] = useState([]);
-//   const [newMessage, setNewMessage] = useState("");
-//   const [friendDetails, setFriendDetails] = useState({ username: "Loading...", profilePic: null });
-//   const [loading, setLoading] = useState(true);
+export default function Chat() {
+  const { user } = useAuth();
+  const { friendId, friendName } = useLocalSearchParams(); // ✅ useSearchParams instead of route.params
+  const [messages, setMessages] = useState([]);
+  const [text, setText] = useState("");
+  const [chatDocId, setChatDocId] = useState(null);
 
-//   useEffect(() => {
-//     console.log("Friend User ID:", friendUserId);
-//     if (!friendUserId) {
-//       Alert.alert("Error", "No chat partner selected.");
-//       router.back();
-//       return;
-//     }
-//     if (!user) {
-//       Alert.alert("Error", "User not authenticated.");
-//       router.back();
-//       return;
-//     }
+  useEffect(() => {
+    if (!user || !friendId) return;
 
-//     const chatRoomId = user.userId < friendUserId ? `${user.userId}_${friendUserId}` : `${friendUserId}_${user.userId}`;
+    const setupChat = async () => {
+      const chatsRef = collection(db, "chats");
+      const q = query(chatsRef);
+      const snapshot = await getDocs(q);
+      let existingChat = null;
 
-//     const fetchMessages = async () => {
-//       try {
-//         const q = query(
-//           collection(db, `chats/${chatRoomId}/messages`),
-//           orderBy("timestamp", "asc"),
-//           limit(50)
-//         );
-//         const querySnapshot = await getDocs(q);
-//         const messagesList = querySnapshot.docs.map((doc) => ({
-//           id: doc.id,
-//           ...doc.data(),
-//         }));
-//         setMessages(messagesList);
-//       } catch (error) {
-//         console.error("Error fetching messages:", error);
-//         Alert.alert("Error", "Failed to load messages.");
-//       }
-//     };
+      snapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        if (data.users.includes(user.userId) && data.users.includes(friendId)) {
+          existingChat = { id: docSnap.id, ...data };
+        }
+      });
 
-//     const fetchFriendDetails = async () => {
-//       try {
-//         const friendDoc = await getDoc(doc(db, "users", friendUserId));
-//         if (friendDoc.exists()) {
-//           setFriendDetails({
-//             username: friendDoc.data().username,
-//             profilePic: friendDoc.data().profilePic || null,
-//           });
-//         } else {
-//           setFriendDetails({ username: "Unknown User", profilePic: null });
-//         }
-//       } catch (error) {
-//         console.error("Error fetching friend details:", error);
-//         Alert.alert("Error", "Failed to load friend details.");
-//       }
-//     };
+      if (existingChat) {
+        setChatDocId(existingChat.id);
+        onSnapshot(doc(db, "chats", existingChat.id), (docSnap) => {
+          if (docSnap.exists()) setMessages(docSnap.data().messages || []);
+        });
+      } else {
+        const newDocRef = doc(chatsRef);
+        await setDoc(newDocRef, { users: [user.userId, friendId], messages: [] });
+        setChatDocId(newDocRef.id);
+        setMessages([]);
+      }
+    };
 
-//     fetchFriendDetails();
-//     fetchMessages();
-//     setLoading(false);
-//   }, [user, friendUserId, router]);
+    setupChat();
+  }, [friendId, user]);
 
-//   const handleSendMessage = async () => {
-//     if (!user || !newMessage.trim()) return;
+  const sendMessage = async () => {
+    if (!text.trim() || !chatDocId) return;
 
-//     const chatRoomId = user.userId < friendUserId ? `${user.userId}_${friendUserId}` : `${friendUserId}_${user.userId}`;
-//     try {
-//       await addDoc(collection(db, `chats/${chatRoomId}/messages`), {
-//         senderId: user.userId,
-//         content: newMessage,
-//         timestamp: new Date(),
-//       });
-//       setNewMessage("");
-//       const q = query(
-//         collection(db, `chats/${chatRoomId}/messages`),
-//         orderBy("timestamp", "asc"),
-//         limit(50)
-//       );
-//       const querySnapshot = await getDocs(q);
-//       const messagesList = querySnapshot.docs.map((doc) => ({
-//         id: doc.id,
-//         ...doc.data(),
-//       }));
-//       setMessages(messagesList);
-//     } catch (error) {
-//       console.error("Error sending message:", error);
-//       Alert.alert("Error", "Failed to send message.");
-//     }
-//   };
+    const message = { from: user.userId, text: text.trim(), timestamp: Timestamp.now() };
 
-//   const renderMessage = ({ item }) => (
-//     <View style={[styles.message, item.senderId === user?.userId ? styles.sent : styles.received]}>
-//       <Text style={styles.messageText}>{item.content}</Text>
-//       <Text style={styles.timestamp}>{new Date(item.timestamp?.toDate()).toLocaleTimeString()}</Text>
-//     </View>
-//   );
+    await updateDoc(doc(db, "chats", chatDocId), {
+      messages: arrayUnion(message),
+    });
 
-//   if (loading) {
-//     return (
-//       <View style={styles.loadingContainer}>
-//         <Text>Loading...</Text> {/* Ensure Text is a component */}
-//       </View>
-//     );
-//   }
+    setText("");
+  };
 
-//   return (
-//     <View style={styles.container}>
-//       <HomeHeader username={friendDetails.username} profilePic={friendDetails.profilePic} />
-//       <FlatList
-//         data={messages}
-//         renderItem={renderMessage}
-//         keyExtractor={(item) => item.id}
-//         inverted
-//         contentContainerStyle={styles.messageList}
-//       />
-//       <View style={styles.inputContainer}>
-//         <TextInput
-//           style={styles.input}
-//           value={newMessage}
-//           onChangeText={setNewMessage}
-//           placeholder="Type a message..."
-//           multiline
-//         />
-//         <Pressable style={styles.sendButton} onPress={handleSendMessage}>
-//           <Text style={styles.sendButtonText}>Send</Text>
-//         </Pressable>
-//       </View>
-//     </View>
-//   );
-// }
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>{friendName}</Text>
+      <FlatList
+        data={messages.sort((a,b) => a.timestamp.seconds - b.timestamp.seconds)}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({ item }) => (
+          <View style={[styles.messageBubble, item.from === user.userId ? styles.myMessage : styles.friendMessage]}>
+            <Text style={{ color: "#fff" }}>{item.text}</Text>
+          </View>
+        )}
+      />
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          value={text}
+          onChangeText={setText}
+          placeholder="Type a message"
+        />
+        <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
+          <Text style={{ color: "#fff" }}>Send</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#E5E7EB",
-//     padding: 10,
-//   },
-//   loadingContainer: {
-//     flex: 1,
-//     justifyContent: "center",
-//     alignItems: "center",
-//     backgroundColor: "#E5E7EB",
-//   },
-//   messageList: {
-//     paddingBottom: 10,
-//   },
-//   message: {
-//     maxWidth: "70%",
-//     padding: 10,
-//     marginVertical: 5,
-//     borderRadius: 8,
-//   },
-//   sent: {
-//     backgroundColor: "#60A5FA",
-//     alignSelf: "flex-end",
-//   },
-//   received: {
-//     backgroundColor: "#9CA3AF",
-//     alignSelf: "flex-start",
-//   },
-//   messageText: {
-//     fontSize: 16,
-//     color: "#FFFFFF",
-//   },
-//   timestamp: {
-//     fontSize: 12,
-//     color: "#D1D5DB",
-//     textAlign: "right",
-//   },
-//   inputContainer: {
-//     flexDirection: "row",
-//     alignItems: "center",
-//     padding: 10,
-//     backgroundColor: "#F9FAFB",
-//     borderTopWidth: 1,
-//     borderTopColor: "#D1D5DB",
-//   },
-//   input: {
-//     flex: 1,
-//     backgroundColor: "#FFFFFF",
-//     borderRadius: 20,
-//     padding: 10,
-//     fontSize: 16,
-//     marginRight: 10,
-//     borderWidth: 1,
-//     borderColor: "#D1D5DB",
-//   },
-//   sendButton: {
-//     backgroundColor: "#3B82F6",
-//     paddingVertical: 10,
-//     paddingHorizontal: 15,
-//     borderRadius: 20,
-//     justifyContent: "center",
-//   },
-//   sendButtonText: {
-//     color: "#FFFFFF",
-//     fontSize: 16,
-//     fontWeight: "500",
-//   },
-// });
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 10, backgroundColor: "#f5f5f5" },
+  header: { fontSize: 20, fontWeight: "bold", marginBottom: 10, textAlign: "center" },
+  messageBubble: { padding: 10, borderRadius: 8, marginVertical: 3, maxWidth: "70%" },
+  myMessage: { backgroundColor: "#007bff", alignSelf: "flex-end" },
+  friendMessage: { backgroundColor: "#555", alignSelf: "flex-start" },
+  inputContainer: { flexDirection: "row", alignItems: "center", marginTop: 10 },
+  input: { flex: 1, borderWidth: 1, borderColor: "#ccc", borderRadius: 20, paddingHorizontal: 15 },
+  sendButton: { marginLeft: 10, backgroundColor: "#007bff", padding: 10, borderRadius: 20 },
+});
