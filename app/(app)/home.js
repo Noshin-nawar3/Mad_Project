@@ -15,9 +15,6 @@ import FullWidthButton from "../../components/FullwidthButton";
 import HomeHeader from "../../components/HomeHeader";
 import SquareButton from "../../components/SquareButton";
 import { useAuth } from "../../context/authContext";
-import BottomNavigator from "../../components/BottomNavigator";
-import { NavigationContainer } from "@react-navigation/native";
-import BottomTabs from "../../components/BottomTabs";
 
 export default function Home() {
   const router = useRouter();
@@ -55,13 +52,6 @@ export default function Home() {
                 onPress={() => router.push("/event")}
                 style={styles.largeButton}
               />
-            
-              <SquareButton
-                title="Course"
-                iconName="book"
-                onPress={() => router.push("/course")}
-                style={styles.largeButton}
-              />
               <SquareButton
                 title="Feedback"
                 iconName="message-text-outline"
@@ -88,11 +78,6 @@ export default function Home() {
               title="Contact Us"
               description="Feel free to reach out!"
               // onPress={() => router.push("/event")}
-            />
-            <FullWidthButton
-              title="About Us"
-              description="Click to see more infos"
-              // onPress={() => router.push("/notice")}
             />
           </View>
         </View>

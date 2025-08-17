@@ -1,12 +1,10 @@
-import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { StyleSheet, Text, ScrollView, FlatList, View } from "react-native";
-import HomeHeader from "../../components/HomeHeader";
-import { useAuth } from "../../context/authContext";
-import SquareButton from "../../components/SquareButton";
 import { useState } from "react";
-import SearchBar from "../../components/SearchBar";
+import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import CourseCard from "../../components/CourseCard";
+import HomeHeader from "../../components/HomeHeader";
+import SearchBar from "../../components/SearchBar";
+import SquareButton from "../../components/SquareButton";
 
 export default function School() {
   const router = useRouter(); 
@@ -52,19 +50,13 @@ export default function School() {
               style={styles.largeButton}
             />
             <SquareButton
-              title="Course"
+              title="Your Course"
               iconName="book"
               onPress={() => router.push("/CourseScreen")}
               style={styles.largeButton}
             />
             <SquareButton
-              title="Quiz"
-              iconName="clipboard-text-outline"
-              onPress={() => router.push("/QuizScreen")}
-              style={styles.largeButton}
-            />
-            <SquareButton
-              title="Bookmark"
+              title="Library"
               iconName="bookmark-outline"
               onPress={() => router.push("/bookmark")}
               style={styles.largeButton}
