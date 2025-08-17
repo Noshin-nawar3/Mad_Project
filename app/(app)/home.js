@@ -25,7 +25,7 @@ export default function Home() {
 
   const handleLogout = async () => {
     await logout();
-  };
+  }; 
 
   console.log("user data ", user);
 
@@ -97,6 +97,21 @@ export default function Home() {
           </View>
         </View>
       </ScrollView>
+      {/* <View style={styles.container}>
+            <Text>Notice Screen</Text>
+            <Button onPress={() => router.push('home')}>
+              Go to Home
+            </Button>
+            <Button onPress={() => router.push('chat')}>
+              Go to Chat
+            </Button>
+            <Button onPress={() => router.push('event')}>
+              Go to Event
+            </Button>
+            <Button onPress={() => router.push('/school')}>
+              Go to School
+            </Button>
+          </View> */}
       {/* <View style={styles.bottomNavWrapper}>
         <BottomNavigator />
       </View>  */}
