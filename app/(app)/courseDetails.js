@@ -4,14 +4,16 @@ import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-na
 import HomeHeader from "../../components/HomeHeader";
 import { useAuth } from "../../context/authContext";
 
-export default function CourseDetails() {
-  
+export default function CourseDetails({ route }){
+
+  const { course } = route.params;
 
   return (
-    <View style={styles.container_home}> 
-            <HomeHeader />
-            <Text style={styles.title}>Course Details</Text>
-          </View>
+    <View style={styles.container_home}>
+      <HomeHeader />
+      <Text style={{ fontSize: 24, fontWeight: "bold" }}>{course.title}</Text>
+      <Text style={{ marginTop: 10 }}>This is where course details will go.</Text>
+    </View>
   );
 }
 
@@ -63,3 +65,4 @@ const styles = StyleSheet.create({
     marginRight: 4,
   },
 });
+
