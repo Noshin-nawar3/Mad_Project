@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-#import { Platform, useState } from "react";
+import { Platform, useState } from "react";
 import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import HomeHeader from "../../components/HomeHeader";
 import SearchBar from "../../components/SearchBar";
@@ -210,4 +210,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowRadius: 12,
       },
-       
+      default: { elevation: 10 },
+    }) : { elevation: 10 }),
+    borderWidth: 1,
+    borderColor: "rgba(0, 0, 0, 0.15)",
+  },
+}); 
