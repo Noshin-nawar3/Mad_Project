@@ -39,4 +39,8 @@ export default function Quiz() {
     }
   };
 
+  const handleSubmit = () => {
+    setShowResults(true);
+  };
+
   
