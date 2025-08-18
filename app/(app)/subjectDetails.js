@@ -101,3 +101,89 @@ const router = useRouter();
   const currentIndex = currentVideoIndex[level] || 0;
   const videoUrl = videos[currentIndex] || "";
 
+return (
+    <View style={styles.levelContainer}>
+      <Pressable
+        style={({ pressed }) => [
+          styles.levelButton,
+          { backgroundColor: subjectColors[subject] || "#2563eb" },
+          pressed && styles.buttonPressed,
+        ]}
+        onPress={() => handleLevelPress(level)}
+      >
+        <Text style={styles.buttonText}>{level}</Text>
+      </Pressable>
+      {isExpanded && (
+        <View style={styles.dropdownContainer}>
+          <Pressable
+            style={({ pressed }) => [
+              styles.dropdownButton,
+              pressed && styles.buttonPressed,
+            ]}
+            onPress={handleResourcePress}
+          >
+            <Text style={styles.dropdownText}>Resource (PDF)</Text>
+          </Pressable>
+          <View style={styles.tutorialContainer}>
+            <View style={styles.videoPlaceholder}>
+              <View style={styles.videoFrame}>
+                <Video
+                  source={videoUrl}
+                  style={styles.video}
+                  useNativeControls
+                  resizeMode="contain"
+                  isLooping
+                  onError={(error) => console.log("Video Error:", error)}
+                />
+              </View>
+              <View style={styles.navigationButtons}>
+                <Pressable
+                  style={({ pressed }) => [
+                    styles.navButton,
+                    pressed && styles.buttonPressed,
+                  ]}
+                  onPress={() => handleTutorialPrev(level)}
+                >
+                  <Text style={styles.navButtonText}>Previous</Text>
+                </Pressable>
+                <Pressable
+                  style={({ pressed }) => [
+                    styles.navButton,
+                    pressed && styles.buttonPressed,
+                  ]}
+                  onPress={() => handleTutorialNext(level)}
+                >
+                  <Text style={styles.navButtonText}>Next</Text>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+          <Pressable
+            style={({ pressed }) => [
+              styles.dropdownButton,
+              pressed && styles.buttonPressed,
+            ]}
+            onPress={() => handleQuizPress(level)}
+          >
+            <Text style={styles.dropdownText}>Take Quiz</Text>
+          </Pressable>
+        </View>
+      )}
+    </View>
+  );
+};
+
+  return (
+    <View style={styles.container_home}>
+      <HomeHeader />
+      <Text style={styles.title}>{subject || "Subject Details"}</Text>
+      <FlatList
+        data={levels}
+        renderItem={renderLevelItem}
+        keyExtractor={(item) => item}
+        contentContainerStyle={styles.buttonSection}
+      />
+    </View>
+  );
+}
+
