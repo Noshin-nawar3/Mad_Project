@@ -1,9 +1,9 @@
 import { useRouter } from "expo-router";
-import { Platform, useState } from "react";
-#import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
-#import HomeHeader from "../../components/HomeHeader";
-#import SearchBar from "../../components/SearchBar";
-#import SquareButton from "../../components/SquareButton";
+#import { Platform, useState } from "react";
+import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
+import HomeHeader from "../../components/HomeHeader";
+import SearchBar from "../../components/SearchBar";
+import SquareButton from "../../components/SquareButton";
 import { useBookmarks } from "./BookmarkContext";
 
 export default function School() {
@@ -33,4 +33,81 @@ export default function School() {
     });
   };
 
-  
+ return (
+    <View style={styles.container_home}>
+      <HomeHeader />
+
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        {/* Search */}
+        <View style={styles.searchContainer}>
+          <SearchBar
+            value={search}
+            onChangeText={setSearch}
+            placeholder="Search Courses..."
+          />
+          {search.trim() !== "" && (
+            <FlatList
+              data={filteredData}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item }) => (
+                <Text style={styles.searchItem}>{item}</Text>
+              )}
+            />
+          )}
+        </View>
+
+        {/* School Buttons */}
+        <Text style={styles.title}>School</Text>
+        <View style={styles.wrapper}>
+          <View style={styles.row}>
+            <SquareButton
+              title="Resource"
+              iconName="book-open-page-variant"
+              onPress={() => router.push("/resources")}
+              style={styles.largeButton}
+            />
+            <SquareButton
+              title="Your Course"
+              iconName="book"
+              onPress={() => router.push("/CourseScreen")}
+              style={styles.largeButton}
+            />
+            <SquareButton
+              title="Library"
+              iconName="bookmark-outline"
+              onPress={() => router.push("/bookmark")}
+              style={styles.largeButton}
+            />
+          </View>
+        </View>
+
+        {/* Subjects Section */}
+        <Text style={styles.title}>Subjects</Text>
+        <View style={styles.wrapper}>
+          {Array(Math.ceil(subjects.length / 2))
+            .fill()
+            .map((_, rowIndex) => {
+              const isLastRow = subjects.slice(rowIndex * 2, rowIndex * 2 + 2).length === 1;
+              return (
+                <View
+                  key={rowIndex}
+                  style={isLastRow ? styles.leftAlignedRow : styles.subjectRow}
+                >
+                  {subjects.slice(rowIndex * 2, rowIndex * 2 + 2).map((subject, subIndex) => (
+                    <SquareButton
+                      key={subIndex}
+                      title={subject}
+                      onPress={() => handleSubjectPress(subject)}
+                      style={[styles.subjectButton, { backgroundColor: subjectColors[subject] }]}
+                    />
+                  ))}
+                  {isLastRow && <View style={styles.subjectSpacer} />}
+                </View>
+              );
+            })}
+        </View>
+      </ScrollView>
+    </View>
+  );
+}
+
