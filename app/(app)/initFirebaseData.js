@@ -1,5 +1,5 @@
-// import { collection } from "firebase/firestore";
-// import { db } from "../../firebaseConfig";
+import { collection } from "firebase/firestore";
+import { db } from "../../firebaseConfig";
 const initializeQuestions = async () => {
   const questions = [
     // Science
