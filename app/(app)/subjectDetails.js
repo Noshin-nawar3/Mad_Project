@@ -187,3 +187,17 @@ return (
   );
 }
 
+const styles = StyleSheet.create({
+  container_home: {
+    flex: 1,
+    backgroundColor: "#f8f9fa",
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: "700",
+    marginLeft: 20,
+    marginTop: 20,
+    marginBottom: 10,
+    color: "#1a1a1a",
+  },
+  
