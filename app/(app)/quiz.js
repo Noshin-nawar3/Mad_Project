@@ -126,4 +126,37 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     backgroundColor: '#fff',
   },
+  selected: {
+    backgroundColor: '#e0f7fa',
+    borderColor: '#2563eb',
+  },
+  correct: {
+    backgroundColor: '#c8e6c9',
+    borderColor: '#4caf50',
+  },
+  wrong: {
+    backgroundColor: '#ffcdd2',
+    borderColor: '#f44336',
+  },
+  optionText: {
+    fontSize: 16,
+    color: '#1a1a1a',
+  },
+  feedback: {
+    fontSize: 14,
+    color: '#4caf50',
+    marginTop: 5,
+  },
+  submitButton: {
+    padding: 15,
+    backgroundColor: '#2563eb',
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  submitText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#fff',
+  },
   
