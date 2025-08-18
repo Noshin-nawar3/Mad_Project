@@ -118,4 +118,21 @@ const styles = StyleSheet.create({
   scrollContent: {
     paddingBottom: 50,
   },
+  searchContainer: {
+    padding: 20,
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    marginHorizontal: 12,
+    marginTop: 12,
+    ...(Platform && Platform.select ? Platform.select({
+      android: { elevation: 4 },
+      ios: {
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.15,
+        shadowRadius: 6,
+      },
+      default: { elevation: 4 },
+    }) : { elevation: 4 }),
+  },
   
