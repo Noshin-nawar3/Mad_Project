@@ -159,4 +159,16 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     width: "100%",
   },
+  spacer: {
+    flex: 1,
+    minWidth: "48%",
+    maxWidth: "48%",
+    margin: 4,
+  },
+  largeButton: {
+    flex: 1,
+    minWidth: "48%",
+    maxWidth: "48%",
+    margin: 4,
+  },
   
