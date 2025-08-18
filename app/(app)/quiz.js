@@ -30,4 +30,13 @@ export default function Quiz() {
         console.error('Error fetching questions:', error);
       }
     };
-    
+    fetchQuestions();
+  }, [subject, level]);
+
+  const handleSelect = (questionId, selectedOption) => {
+    if (!showResults) {
+      setAnswers(prev => ({ ...prev, [questionId]: selectedOption }));
+    }
+  };
+
+  
