@@ -76,4 +76,25 @@ export default function Quiz() {
     );
   };
 
-  
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{subject} - {level} Quiz</Text>
+      <FlatList
+        data={questions}
+        renderItem={renderQuestion}
+        keyExtractor={item => item.id}
+      />
+      {!showResults && (
+        <Pressable style={styles.submitButton} onPress={handleSubmit}>
+          <Text style={styles.submitText}>Submit</Text>
+        </Pressable>
+      )}
+      {showResults && (
+        <Text style={styles.score}>
+          Score: {Object.values(answers).filter(a => questions.find(q => q.id === Object.keys(answers).find(k => answers[k] === a))?.correctAnswer === a).length} / {questions.length}
+        </Text>
+      )}
+    </View>
+  );
+}
+
