@@ -7,7 +7,7 @@ export default function QuizScreen() {
   return (
     <View style={styles.container_home}> 
             <HomeHeader />
-            <Text style={styles.title}>Quiz Screen</Text>
+            <Text style={styles.title}>Subjects</Text>
           </View>
   );
 }
