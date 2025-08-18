@@ -140,4 +140,17 @@ const styles = StyleSheet.create({
     padding: 8,
     color: "#333",
   },
+  title: {
+    fontSize: 26,
+    fontWeight: "700",
+    marginLeft: 20,
+    marginTop: 20,
+    marginBottom: 10,
+    color: "#1a1a1a",
+  },
+  wrapper: {
+    flex: 1,
+    alignItems: "flex-start",
+    paddingHorizontal: 10,
+  },
   
