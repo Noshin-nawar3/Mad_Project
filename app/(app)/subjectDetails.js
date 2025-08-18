@@ -66,4 +66,38 @@ const router = useRouter();
     }
   };
 
-  
+  const handleResourcePress = () => {
+    Linking.openURL(resources[subject] || "https://www.example.com/default.pdf");
+  };
+
+  const handleTutorialPrev = (level) => {
+    setCurrentVideoIndex((prev) => {
+      const videos = tutorials[subject] || [];
+      const currentIndex = prev[level] || 0;
+      const prevIndex = (currentIndex - 1 + videos.length) % videos.length;
+      return { ...prev, [level]: prevIndex };
+    });
+  };
+
+  const handleTutorialNext = (level) => {
+    setCurrentVideoIndex((prev) => {
+      const videos = tutorials[subject] || [];
+      const currentIndex = prev[level] || 0;
+      const nextIndex = (currentIndex + 1) % videos.length;
+      return { ...prev, [level]: nextIndex }; // Fixed: Use nextIndex instead of prevIndex
+    });
+  };
+
+  const handleQuizPress = (level) => {
+    router.push({
+      pathname: "/quiz",
+      params: { subject, level },
+    });
+  };
+
+  const renderLevelItem = ({ item: level }) => {
+  const isExpanded = expandedLevel === level;
+  const videos = tutorials[subject] || [];
+  const currentIndex = currentVideoIndex[level] || 0;
+  const videoUrl = videos[currentIndex] || "";
+
