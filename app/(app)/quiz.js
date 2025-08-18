@@ -113,4 +113,17 @@ const styles = StyleSheet.create({
   questionContainer: {
     marginBottom: 20,
   },
+  questionText: {
+    fontSize: 18,
+    marginBottom: 10,
+    color: '#1a1a1a',
+  },
+  optionButton: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    marginBottom: 5,
+    backgroundColor: '#fff',
+  },
   
