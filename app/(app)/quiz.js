@@ -43,4 +43,37 @@ export default function Quiz() {
     setShowResults(true);
   };
 
+  const renderQuestion = ({ item: q }) => {
+    const selected = answers[q.id];
+    return (
+      <View style={styles.questionContainer}>
+        <Text style={styles.questionText}>{q.question}</Text>
+        {q.options.map((option, index) => {
+          let optionStyle = styles.optionButton;
+          if (showResults) {
+            if (option === q.correctAnswer) {
+              optionStyle = [styles.optionButton, styles.correct];
+            } else if (option === selected && selected !== q.correctAnswer) {
+              optionStyle = [styles.optionButton, styles.wrong];
+            }
+          } else if (option === selected) {
+            optionStyle = [styles.optionButton, styles.selected];
+          }
+          return (
+            <Pressable
+              key={index}
+              style={optionStyle}
+              onPress={() => handleSelect(q.id, option)}
+            >
+              <Text style={styles.optionText}>{option}</Text>
+            </Pressable>
+          );
+        })}
+        {showResults && selected !== q.correctAnswer && (
+          <Text style={styles.feedback}>Correct: {q.correctAnswer}</Text>
+        )}
+      </View>
+    );
+  };
+
   
