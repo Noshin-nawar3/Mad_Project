@@ -135,4 +135,9 @@ const styles = StyleSheet.create({
       default: { elevation: 4 },
     }) : { elevation: 4 }),
   },
+  searchItem: {
+    fontSize: 18,
+    padding: 8,
+    color: "#333",
+  },
   
