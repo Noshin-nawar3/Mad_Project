@@ -171,4 +171,43 @@ const styles = StyleSheet.create({
     maxWidth: "48%",
     margin: 4,
   },
-  
+  subjectRow: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginVertical: 10,
+    width: "100%",
+    paddingHorizontal: 20,
+  },
+  leftAlignedRow: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    marginVertical: 10,
+    width: "100%",
+    paddingHorizontal: 20,
+  },
+  subjectSpacer: {
+    flex: 1,
+    minWidth: "42%",
+    maxWidth: "42%",
+    margin: 6,
+    marginLeft: 26, // Matches subjectButton’s effective right margin + gap
+  },
+  subjectButton: {
+    flex: 1,
+    minWidth: "42%",
+    maxWidth: "42%",
+    height: 130,
+    margin: 6,
+    marginLeft: 26, // Matches paddingHorizontal (20) + margin (6)
+    borderRadius: 18,
+    justifyContent: "center",
+    alignItems: "center",
+    ...(Platform && Platform.select ? Platform.select({
+      android: { elevation: 10 },
+      ios: {
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 5 },
+        shadowOpacity: 0.3,
+        shadowRadius: 12,
+      },
+       
