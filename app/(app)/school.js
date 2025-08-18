@@ -18,4 +18,19 @@ export default function School() {
     item.toLowerCase().includes(search.toLowerCase())
   );
 
+  const subjectColors = {
+    Science: "#27AE60", // Vibrant green
+    Mathematics: "#2980B9", // Deep blue
+    "Social Studies": "#D35400", // Rich orange
+    Language: "#8E44AD", // Vivid purple
+    "Art & Music": "#C0392B", // Bold red
+  };
+
+  const handleSubjectPress = (subject) => {
+    router.push({
+      pathname: "/subjectDetails",
+      params: { subject },
+    });
+  };
+
   
