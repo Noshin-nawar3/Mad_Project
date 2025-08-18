@@ -153,4 +153,10 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     paddingHorizontal: 10,
   },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginVertical: 8,
+    width: "100%",
+  },
   
