@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -10,21 +10,39 @@ import {
   Picker,
 } from "react-native";
 import { db } from "../../firebaseConfig";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs } from "firebase/firestore";
 import { useAuth } from "../../context/authContext";
 import { useRouter } from "expo-router";
 
 export default function PostQuiz() {
   const { user } = useAuth();
   const router = useRouter();
-  const [setName, setSetName] = useState("Set A"); 
+  const [setName, setSetName] = useState("Set A");
+  const [availableSets, setAvailableSets] = useState(["Set A", "Set B", "Set C", "Set D", "Set E"]);
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState({
     text: "",
     options: ["", "", "", ""],
-    correctAnswer: "A", 
+    correctAnswer: "A",
   });
-   const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const fetchExistingSets = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "quizzes"));
+        const usedSets = new Set(querySnapshot.docs.map(doc => doc.data().setName));
+        const updatedSets = ["Set A", "Set B", "Set C", "Set D", "Set E"].filter(set => !usedSets.has(set));
+        setAvailableSets(updatedSets);
+        if (!updatedSets.includes(setName)) {
+          setSetName(updatedSets[0] || "Set A");
+        }
+      } catch (error) {
+        console.error("Error fetching existing sets:", error);
+      }
+    };
+    fetchExistingSets();
+  }, []);
 
   const handleOptionChange = (optIndex, value) => {
     const newOptions = [...currentQuestion.options];
@@ -46,7 +64,7 @@ export default function PostQuiz() {
   };
 
   const handleSubmit = async () => {
-    if (!setName.trim()) {
+    if (!setName) {
       Alert.alert("Error", "Please select a set name.");
       return;
     }
@@ -54,7 +72,7 @@ export default function PostQuiz() {
       Alert.alert("Error", "Please fill all fields for the current question.");
       return;
     }
-     const finalQuestions = [...questions, currentQuestion];
+    const finalQuestions = [...questions, currentQuestion];
 
     try {
       await addDoc(collection(db, "quizzes"), {
@@ -96,14 +114,16 @@ export default function PostQuiz() {
           selectedValue={setName}
           style={styles.picker}
           onValueChange={(value) => setSetName(value)}
+          enabled={availableSets.length > 0}
         >
-          <Picker.Item label="Set A" value="Set A" />
-          <Picker.Item label="Set B" value="Set B" />
-          <Picker.Item label="Set C" value="Set C" />
-          <Picker.Item label="Set D" value="Set D" />
-          <Picker.Item label="Set E" value="Set E" />
+          {availableSets.map((set) => (
+            <Picker.Item key={set} label={set} value={set} />
+          ))}
         </Picker>
       </View>
+      {availableSets.length === 0 && (
+        <Text style={styles.errorText}>All sets have been used. No new quizzes can be posted.</Text>
+      )}
       <View style={styles.questionContainer}>
         <Text style={styles.questionLabel}>Question {currentIndex + 1}</Text>
         <TextInput
@@ -201,5 +221,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     color: "#333",
+  },
+  errorText: {
+    color: "red",
+    textAlign: "center",
+    marginBottom: 10,
   },
 });
