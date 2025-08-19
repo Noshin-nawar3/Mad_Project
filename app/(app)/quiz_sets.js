@@ -49,42 +49,42 @@ export default function QuizSets() {
   );
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#DBEAFE',
-//     padding: 20,
-//   },
-//   title: {
-//     fontSize: 24,
-//     fontWeight: 'bold',
-//     textAlign: 'center',
-//     marginBottom: 20,
-//   },
-//   list: {
-//     paddingBottom: 20,
-//   },
-//   tile: {
-//     flex: 1,
-//     backgroundColor: '#2563eb',
-//     padding: 15,
-//     borderRadius: 8,
-//     margin: 5,
-//     alignItems: 'center',
-//     shadowColor: '#000',
-//     shadowOffset: { width: 0, height: 2 },
-//     shadowOpacity: 0.2,
-//     shadowRadius: 4,
-//     elevation: 3,
-//   },
-//   tileText: {
-//     color: '#fff',
-//     fontWeight: 'bold',
-//     fontSize: 16,
-//   },
-//   noQuizzes: {
-//     textAlign: 'center',
-//     color: '#666',
-//     fontSize: 16,
-//   },
-// });
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#DBEAFE',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  list: {
+    paddingBottom: 20,
+  },
+  tile: {
+    flex: 1,
+    backgroundColor: '#2563eb',
+    padding: 15,
+    borderRadius: 8,
+    margin: 5,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  tileText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  noQuizzes: {
+    textAlign: 'center',
+    color: '#666',
+    fontSize: 16,
+  },
+});
