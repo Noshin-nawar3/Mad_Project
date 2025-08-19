@@ -65,13 +65,13 @@ export default function GiveQuiz() {
     }
   };
 
-//   if (loading) {
-//     return (
-//       <SafeAreaView style={styles.container}>
-//         <Text>Loading...</Text>
-//       </SafeAreaView>
-//     );
-//   }
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text>Loading...</Text>
+      </SafeAreaView>
+    );
+  }
 
 //   return (
 //     <SafeAreaView style={styles.container}>
