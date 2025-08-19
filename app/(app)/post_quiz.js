@@ -26,11 +26,11 @@ export default function PostQuiz() {
   });
    const [currentIndex, setCurrentIndex] = useState(0);
 
-//   const handleOptionChange = (optIndex, value) => {
-//     const newOptions = [...currentQuestion.options];
-//     newOptions[optIndex] = value;
-//     setCurrentQuestion({ ...currentQuestion, options: newOptions });
-//   };
+  const handleOptionChange = (optIndex, value) => {
+    const newOptions = [...currentQuestion.options];
+    newOptions[optIndex] = value;
+    setCurrentQuestion({ ...currentQuestion, options: newOptions });
+  };
 
 //   const handleNext = () => {
 //     if (!currentQuestion.text.trim() || currentQuestion.options.some(o => !o.trim())) {
