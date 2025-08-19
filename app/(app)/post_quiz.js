@@ -45,15 +45,15 @@ export default function PostQuiz() {
     }
   };
 
-//   const handleSubmit = async () => {
-//     if (!setName.trim()) {
-//       Alert.alert("Error", "Please select a set name.");
-//       return;
-//     }
-//     if (!currentQuestion.text.trim() || currentQuestion.options.some(o => !o.trim())) {
-//       Alert.alert("Error", "Please fill all fields for the current question.");
-//       return;
-//     }
+  const handleSubmit = async () => {
+    if (!setName.trim()) {
+      Alert.alert("Error", "Please select a set name.");
+      return;
+    }
+    if (!currentQuestion.text.trim() || currentQuestion.options.some(o => !o.trim())) {
+      Alert.alert("Error", "Please fill all fields for the current question.");
+      return;
+    }
 //     const finalQuestions = [...questions, currentQuestion];
 
 //     try {
