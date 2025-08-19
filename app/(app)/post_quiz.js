@@ -24,7 +24,7 @@ export default function PostQuiz() {
     options: ["", "", "", ""],
     correctAnswer: "A", 
   });
-//   const [currentIndex, setCurrentIndex] = useState(0);
+   const [currentIndex, setCurrentIndex] = useState(0);
 
 //   const handleOptionChange = (optIndex, value) => {
 //     const newOptions = [...currentQuestion.options];
