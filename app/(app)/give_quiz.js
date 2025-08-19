@@ -1,9 +1,9 @@
-// import React, { useEffect, useState } from "react";
-// import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from "react-native";
-// import { db } from "../../firebaseConfig";
-// import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
-// import { useLocalSearchParams } from "expo-router";
-// import { useAuth } from "../../context/authContext"; // Corrected import
+import React, { useEffect, useState } from "react";
+import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { db } from "../../firebaseConfig";
+import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
+import { useLocalSearchParams } from "expo-router";
+//import { useAuth } from "../../context/authContext"; // Corrected import
 
 // export default function GiveQuiz() {
 //   const { setName } = useLocalSearchParams();
