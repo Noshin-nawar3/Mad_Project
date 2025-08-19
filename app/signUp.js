@@ -117,6 +117,7 @@ export default function SignUp() {
     <ScrollView>
     <View style={styles.container}>
       <StatusBar style="dark" />
+
       <View style={styles.imageContainer}>
         <Image
           style={styles.image}
@@ -194,8 +195,8 @@ export default function SignUp() {
           <Text style={styles.signInText}>Already have an account? </Text>
           <Pressable
             onPress={() => {
-              console.log('Navigating to signIn');
-              router.push('signIn');
+              console.log("Navigating to signIn");
+              router.push('/signIn');
             }}
             onPressIn={() => console.log('Pressable pressed')}
           >

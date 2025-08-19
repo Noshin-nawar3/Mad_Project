@@ -15,16 +15,22 @@ const MainLayout = () => {
     setIsLoading(false); // Set loaded after mount
   }, []);
 
-  useEffect(() => {
-    console.log('isAuthenticated:', isAuthenticated);
-    if (isLoading || typeof isAuthenticated === 'undefined') return;
-    const inApp = segments[0] === '(app)';
-    if (isAuthenticated && !inApp) {
-      router.replace('/home');
-    } else if (isAuthenticated === false) {
+useEffect(() => {
+  console.log('isAuthenticated:', isAuthenticated);
+  if (isLoading || typeof isAuthenticated === 'undefined') return;
+
+  const inApp = segments[0] === '(app)';
+
+  if (isAuthenticated && !inApp) {
+    router.replace('/home');
+  } else if (isAuthenticated === false) {
+    
+    if (segments[0] !== 'signUp') {
       router.replace('/signIn');
     }
-  }, [isAuthenticated, isLoading, segments]);
+  }
+}, [isAuthenticated, isLoading, segments]);
+
 
   if (isLoading) {
     return (

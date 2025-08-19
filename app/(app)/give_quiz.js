@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { db } from "../../firebaseConfig";
 import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import { useLocalSearchParams } from "expo-router";
-import { useAuth } from "../../context/authContext"; // Corrected import
+import { useAuth } from "../../context/authContext";
 
 export default function GiveQuiz() {
   const { setName } = useLocalSearchParams();
@@ -49,7 +49,6 @@ export default function GiveQuiz() {
     setScore(correctCount);
     setSubmitted(true);
 
-   
     try {
       await addDoc(collection(db, "quizScores"), {
         userId: user?.userId,
@@ -75,47 +74,49 @@ export default function GiveQuiz() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Quiz: {decodeURIComponent(setName)}</Text>
-      {questions.length > 0 ? (
-        <>
-          {questions.map((q, index) => (
-            <View key={index} style={styles.questionContainer}>
-              <Text style={styles.questionText}>{index + 1}. {q.text}</Text>
-              {q.options.map((option, optIndex) => (
-                <TouchableOpacity
-                  key={optIndex}
-                  style={[
-                    styles.optionButton,
-                    selectedAnswers[index] === String.fromCharCode(65 + optIndex) && styles.selectedOption,
-                  ]}
-                  onPress={() => handleOptionSelect(index, optIndex)}
-                  disabled={submitted}
-                >
-                  <Text style={styles.optionText}>
-                    {String.fromCharCode(65 + optIndex)}. {option}
+      <ScrollView>
+        <Text style={styles.title}>Quiz: {decodeURIComponent(setName)}</Text>
+        {questions.length > 0 ? (
+          <>
+            {questions.map((q, index) => (
+              <View key={index} style={styles.questionContainer}>
+                <Text style={styles.questionText}>{index + 1}. {q.text}</Text>
+                {q.options.map((option, optIndex) => (
+                  <TouchableOpacity
+                    key={optIndex}
+                    style={[
+                      styles.optionButton,
+                      selectedAnswers[index] === String.fromCharCode(65 + optIndex) && styles.selectedOption,
+                    ]}
+                    onPress={() => handleOptionSelect(index, optIndex)}
+                    disabled={submitted}
+                  >
+                    <Text style={styles.optionText}>
+                      {String.fromCharCode(65 + optIndex)}. {option}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+                {submitted && (
+                  <Text style={styles.resultText}>
+                    Your Answer: {selectedAnswers[index] || "Not selected"}
+                    {"\n"}Correct Answer: {q.correctAnswer}
+                    {selectedAnswers[index] === q.correctAnswer ? " (Correct)" : " (Incorrect)"}
                   </Text>
-                </TouchableOpacity>
-              ))}
-              {submitted && (
-                <Text style={styles.resultText}>
-                  Your Answer: {selectedAnswers[index] || "Not selected"}
-                  {"\n"}Correct Answer: {q.correctAnswer}
-                  {selectedAnswers[index] === q.correctAnswer ? " (Correct)" : " (Incorrect)"}
-                </Text>
-              )}
-            </View>
-          ))}
-          {!submitted ? (
-            <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-              <Text style={styles.submitButtonText}>Submit</Text>
-            </TouchableOpacity>
-          ) : (
-            <Text style={styles.scoreText}>Your Score: {score} out of {questions.length}</Text>
-          )}
-        </>
-      ) : (
-        <Text style={styles.noQuestions}>No questions available for this quiz</Text>
-      )}
+                )}
+              </View>
+            ))}
+            {!submitted ? (
+              <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+                <Text style={styles.submitButtonText}>Submit</Text>
+              </TouchableOpacity>
+            ) : (
+              <Text style={styles.scoreText}>Your Score: {score} out of {questions.length}</Text>
+            )}
+          </>
+        ) : (
+          <Text style={styles.noQuestions}>No questions available for this quiz</Text>
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
 }

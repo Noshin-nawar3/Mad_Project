@@ -149,8 +149,8 @@ import { useAuth } from '../context/authContext';
             <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
               <Text style={styles.signupText}>Don't have an account? </Text>
               <Pressable onPress={() => {
-                console.log('Navigating to signUp');
-                router.push('signUp');
+                console.log("Navigating to signUp");
+                router.push('/signUp');
               }}>
                 <Text style={styles.signupLink}>Sign Up</Text>
               </Pressable>
