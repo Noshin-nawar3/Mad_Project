@@ -1,12 +1,12 @@
-// import React, { useEffect, useState } from "react";
-// import { SafeAreaView, StyleSheet, Text, FlatList, TouchableOpacity } from "react-native";
-// import { db } from "../../firebaseConfig";
-// import { collection, getDocs } from "firebase/firestore";
-// import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { SafeAreaView, StyleSheet, Text, FlatList, TouchableOpacity } from "react-native";
+import { db } from "../../firebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
+import { useRouter } from "expo-router";
 
-// export default function QuizSets() {
-//   const router = useRouter();
-//   const [quizSets, setQuizSets] = useState([]);
+export default function QuizSets() {
+  const router = useRouter();
+  const [quizSets, setQuizSets] = useState([]);
 
 //   useEffect(() => {
 //     const fetchQuizSets = async () => {
