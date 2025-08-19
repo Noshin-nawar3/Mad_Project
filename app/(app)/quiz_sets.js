@@ -21,15 +21,15 @@ export default function QuizSets() {
     fetchQuizSets();
   }, []);
 
-//   const handleQuizSelect = (setName) => {
-//     router.push(`/give_quiz?setName=${encodeURIComponent(setName)}`);
-//   };
+  const handleQuizSelect = (setName) => {
+    router.push(`/give_quiz?setName=${encodeURIComponent(setName)}`);
+  };
 
-//   const renderQuizTile = ({ item }) => (
-//     <TouchableOpacity style={styles.tile} onPress={() => handleQuizSelect(item)}>
-//       <Text style={styles.tileText}>{item}</Text>
-//     </TouchableOpacity>
-//   );
+  const renderQuizTile = ({ item }) => (
+    <TouchableOpacity style={styles.tile} onPress={() => handleQuizSelect(item)}>
+      <Text style={styles.tileText}>{item}</Text>
+    </TouchableOpacity>
+  );
 
 //   return (
 //     <SafeAreaView style={styles.container}>
