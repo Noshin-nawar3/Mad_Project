@@ -50,20 +50,20 @@ export default function GiveQuiz() {
     setSubmitted(true);
 
     // Store score in Firebase
-//     try {
-//       await addDoc(collection(db, "quizScores"), {
-//         userId: user?.userId,
-//         setName: decodeURIComponent(setName),
-//         score: correctCount,
-//         totalQuestions: questions.length,
-//         timestamp: new Date(),
-//       });
-//       console.log("Score saved successfully");
-//     } catch (error) {
-//       console.error("Error saving score:", error);
-//       Alert.alert("Error", "Failed to save score.");
-//     }
-//   };
+    try {
+      await addDoc(collection(db, "quizScores"), {
+        userId: user?.userId,
+        setName: decodeURIComponent(setName),
+        score: correctCount,
+        totalQuestions: questions.length,
+        timestamp: new Date(),
+      });
+      console.log("Score saved successfully");
+    } catch (error) {
+      console.error("Error saving score:", error);
+      Alert.alert("Error", "Failed to save score.");
+    }
+  };
 
 //   if (loading) {
 //     return (
