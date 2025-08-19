@@ -14,16 +14,16 @@ import { collection, addDoc } from "firebase/firestore";
 import { useAuth } from "../../context/authContext";
 import { useRouter } from "expo-router";
 
-// export default function PostQuiz() {
-//   const { user } = useAuth();
-//   const router = useRouter();
-//   const [setName, setSetName] = useState("Set A"); // Default to Set A
-//   const [questions, setQuestions] = useState([]);
-//   const [currentQuestion, setCurrentQuestion] = useState({
-//     text: "",
-//     options: ["", "", "", ""],
-//     correctAnswer: "A", 
-//   });
+export default function PostQuiz() {
+  const { user } = useAuth();
+  const router = useRouter();
+  const [setName, setSetName] = useState("Set A"); // Default to Set A
+  const [questions, setQuestions] = useState([]);
+  const [currentQuestion, setCurrentQuestion] = useState({
+    text: "",
+    options: ["", "", "", ""],
+    correctAnswer: "A", 
+  });
 //   const [currentIndex, setCurrentIndex] = useState(0);
 
 //   const handleOptionChange = (optIndex, value) => {
