@@ -17,7 +17,7 @@ import { useRouter } from "expo-router";
 export default function PostQuiz() {
   const { user } = useAuth();
   const router = useRouter();
-  const [setName, setSetName] = useState("Set A"); // Default to Set A
+  const [setName, setSetName] = useState("Set A"); 
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState({
     text: "",
