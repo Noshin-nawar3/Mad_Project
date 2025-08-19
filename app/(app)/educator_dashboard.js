@@ -6,7 +6,7 @@ export default function EducatorDashboard() {
   const router = useRouter();
 
   const handlePostQuiz = () => {
-    router.push("/home");
+    router.push("/post_quiz");
   };
 
   return (
