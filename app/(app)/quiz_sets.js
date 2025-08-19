@@ -31,23 +31,23 @@ export default function QuizSets() {
     </TouchableOpacity>
   );
 
-//   return (
-//     <SafeAreaView style={styles.container}>
-//       <Text style={styles.title}>Available Quizzes</Text>
-//       {quizSets.length > 0 ? (
-//         <FlatList
-//           data={quizSets}
-//           renderItem={renderQuizTile}
-//           keyExtractor={(item) => item}
-//           numColumns={2}
-//           contentContainerStyle={styles.list}
-//         />
-//       ) : (
-//         <Text style={styles.noQuizzes}>No quizzes available</Text>
-//       )}
-//     </SafeAreaView>
-//   );
-// }
+  return (
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>Available Quizzes</Text>
+      {quizSets.length > 0 ? (
+        <FlatList
+          data={quizSets}
+          renderItem={renderQuizTile}
+          keyExtractor={(item) => item}
+          numColumns={2}
+          contentContainerStyle={styles.list}
+        />
+      ) : (
+        <Text style={styles.noQuizzes}>No quizzes available</Text>
+      )}
+    </SafeAreaView>
+  );
+}
 
 // const styles = StyleSheet.create({
 //   container: {
