@@ -54,7 +54,7 @@ export default function PostQuiz() {
       Alert.alert("Error", "Please fill all fields for the current question.");
       return;
     }
-//     const finalQuestions = [...questions, currentQuestion];
+     const finalQuestions = [...questions, currentQuestion];
 
 //     try {
 //       await addDoc(collection(db, "quizzes"), {
