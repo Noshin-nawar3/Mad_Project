@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  Picker,
 } from "react-native";
 import { db } from "../../firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
@@ -21,6 +22,7 @@ export default function PostQuiz() {
   const [currentQuestion, setCurrentQuestion] = useState({
     text: "",
     options: ["", "", "", ""],
+    correctAnswer: "A", // Default to option A
   });
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -37,7 +39,7 @@ export default function PostQuiz() {
     }
     const updatedQuestions = [...questions, currentQuestion];
     setQuestions(updatedQuestions);
-    setCurrentQuestion({ text: "", options: ["", "", "", ""] });
+    setCurrentQuestion({ text: "", options: ["", "", "", ""], correctAnswer: "A" });
     if (currentIndex < 4) {
       setCurrentIndex(currentIndex + 1);
     }
@@ -93,14 +95,18 @@ export default function PostQuiz() {
         placeholder="Enter Set Name (e.g., Set A)"
         value={setName}
         onChangeText={setSetName}
+        onFocus={() => setSetName("")} // Clear placeholder on focus
+        onBlur={() => !setName && setSetName("Enter Set Name (e.g., Set A)")} // Restore if empty
       />
       <View style={styles.questionContainer}>
         <Text style={styles.questionLabel}>Question {currentIndex + 1}</Text>
         <TextInput
           style={styles.input}
-          placeholder={`Question ${currentIndex + 1} text`}
+          placeholder="Enter Question Text"
           value={currentQuestion.text}
           onChangeText={(value) => setCurrentQuestion({ ...currentQuestion, text: value })}
+          onFocus={() => currentQuestion.text === "" && setCurrentQuestion({ ...currentQuestion, text: "" })}
+          onBlur={() => !currentQuestion.text && setCurrentQuestion({ ...currentQuestion, text: "Enter Question Text" })}
         />
         {currentQuestion.options.map((option, optIndex) => (
           <TextInput
@@ -109,8 +115,23 @@ export default function PostQuiz() {
             placeholder={`Option ${String.fromCharCode(65 + optIndex)}`}
             value={option}
             onChangeText={(value) => handleOptionChange(optIndex, value)}
+            onFocus={() => option === "" && handleOptionChange(optIndex, "")}
+            onBlur={() => !option && handleOptionChange(optIndex, `Option ${String.fromCharCode(65 + optIndex)}`)}
           />
         ))}
+        <View style={styles.pickerContainer}>
+          <Text style={styles.pickerLabel}>Correct Answer:</Text>
+          <Picker
+            selectedValue={currentQuestion.correctAnswer}
+            style={styles.picker}
+            onValueChange={(value) => setCurrentQuestion({ ...currentQuestion, correctAnswer: value })}
+          >
+            <Picker.Item label="A" value="A" />
+            <Picker.Item label="B" value="B" />
+            <Picker.Item label="C" value="C" />
+            <Picker.Item label="D" value="D" />
+          </Picker>
+        </View>
       </View>
       {getActionButton()}
     </SafeAreaView>
@@ -144,6 +165,20 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     marginBottom: 5,
+  },
+  pickerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  pickerLabel: {
+    fontSize: 16,
+    marginRight: 10,
+  },
+  picker: {
+    flex: 1,
+    height: 50,
+    backgroundColor: "#fff",
   },
   button: {
     backgroundColor: "#FFD60A",
