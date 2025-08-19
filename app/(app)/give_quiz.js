@@ -14,23 +14,23 @@ export default function GiveQuiz() {
   const [submitted, setSubmitted] = useState(false);
   const [score, setScore] = useState(0);
 
-//   useEffect(() => {
-//     const fetchQuestions = async () => {
-//       try {
-//         const q = query(collection(db, "quizzes"), where("setName", "==", decodeURIComponent(setName)));
-//         const querySnapshot = await getDocs(q);
-//         if (!querySnapshot.empty) {
-//           const doc = querySnapshot.docs[0];
-//           setQuestions(doc.data().questions || []);
-//         }
-//         setLoading(false);
-//       } catch (error) {
-//         console.error("Error fetching questions:", error);
-//         setLoading(false);
-//       }
-//     };
-//     fetchQuestions();
-//   }, [setName]);
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const q = query(collection(db, "quizzes"), where("setName", "==", decodeURIComponent(setName)));
+        const querySnapshot = await getDocs(q);
+        if (!querySnapshot.empty) {
+          const doc = querySnapshot.docs[0];
+          setQuestions(doc.data().questions || []);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+        setLoading(false);
+      }
+    };
+    fetchQuestions();
+  }, [setName]);
 
 //   const handleOptionSelect = (questionIndex, optionIndex) => {
 //     setSelectedAnswers({
