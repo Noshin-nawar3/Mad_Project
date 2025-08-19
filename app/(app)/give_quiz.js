@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from "react-na
 import { db } from "../../firebaseConfig";
 import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import { useLocalSearchParams } from "expo-router";
-//import { useAuth } from "../../context/authContext"; // Corrected import
+import { useAuth } from "../../context/authContext"; // Corrected import
 
 // export default function GiveQuiz() {
 //   const { setName } = useLocalSearchParams();
