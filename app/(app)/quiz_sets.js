@@ -8,18 +8,18 @@ export default function QuizSets() {
   const router = useRouter();
   const [quizSets, setQuizSets] = useState([]);
 
-//   useEffect(() => {
-//     const fetchQuizSets = async () => {
-//       try {
-//         const querySnapshot = await getDocs(collection(db, "quizzes"));
-//         const sets = querySnapshot.docs.map(doc => doc.data().setName);
-//         setQuizSets([...new Set(sets)]); // Unique set names
-//       } catch (error) {
-//         console.error("Error fetching quiz sets:", error);
-//       }
-//     };
-//     fetchQuizSets();
-//   }, []);
+  useEffect(() => {
+    const fetchQuizSets = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "quizzes"));
+        const sets = querySnapshot.docs.map(doc => doc.data().setName);
+        setQuizSets([...new Set(sets)]); // Unique set names
+      } catch (error) {
+        console.error("Error fetching quiz sets:", error);
+      }
+    };
+    fetchQuizSets();
+  }, []);
 
 //   const handleQuizSelect = (setName) => {
 //     router.push(`/give_quiz?setName=${encodeURIComponent(setName)}`);
