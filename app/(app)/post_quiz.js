@@ -56,20 +56,20 @@ export default function PostQuiz() {
     }
      const finalQuestions = [...questions, currentQuestion];
 
-//     try {
-//       await addDoc(collection(db, "quizzes"), {
-//         setName,
-//         questions: finalQuestions,
-//         createdBy: user?.userId,
-//         createdAt: new Date(),
-//       });
-//       Alert.alert("Success", "Quiz posted successfully!");
-//       router.push("/educator_dashboard");
-//     } catch (error) {
-//       console.error("Error posting quiz:", error);
-//       Alert.alert("Error", "Failed to post quiz.");
-//     }
-//   };
+    try {
+      await addDoc(collection(db, "quizzes"), {
+        setName,
+        questions: finalQuestions,
+        createdBy: user?.userId,
+        createdAt: new Date(),
+      });
+      Alert.alert("Success", "Quiz posted successfully!");
+      router.push("/educator_dashboard");
+    } catch (error) {
+      console.error("Error posting quiz:", error);
+      Alert.alert("Error", "Failed to post quiz.");
+    }
+  };
 
 //   const getActionButton = () => {
 //     if (currentIndex < 4) {
