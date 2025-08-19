@@ -32,18 +32,18 @@ export default function PostQuiz() {
     setCurrentQuestion({ ...currentQuestion, options: newOptions });
   };
 
-//   const handleNext = () => {
-//     if (!currentQuestion.text.trim() || currentQuestion.options.some(o => !o.trim())) {
-//       Alert.alert("Error", "Please fill all fields for the current question.");
-//       return;
-//     }
-//     const updatedQuestions = [...questions, currentQuestion];
-//     setQuestions(updatedQuestions);
-//     setCurrentQuestion({ text: "", options: ["", "", "", ""], correctAnswer: "A" });
-//     if (currentIndex < 4) {
-//       setCurrentIndex(currentIndex + 1);
-//     }
-//   };
+  const handleNext = () => {
+    if (!currentQuestion.text.trim() || currentQuestion.options.some(o => !o.trim())) {
+      Alert.alert("Error", "Please fill all fields for the current question.");
+      return;
+    }
+    const updatedQuestions = [...questions, currentQuestion];
+    setQuestions(updatedQuestions);
+    setCurrentQuestion({ text: "", options: ["", "", "", ""], correctAnswer: "A" });
+    if (currentIndex < 4) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
 
 //   const handleSubmit = async () => {
 //     if (!setName.trim()) {
