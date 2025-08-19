@@ -5,14 +5,14 @@ import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 import { useLocalSearchParams } from "expo-router";
 import { useAuth } from "../../context/authContext"; // Corrected import
 
-// export default function GiveQuiz() {
-//   const { setName } = useLocalSearchParams();
-//   const { user } = useAuth();
-//   const [questions, setQuestions] = useState([]);
-//   const [selectedAnswers, setSelectedAnswers] = useState({});
-//   const [loading, setLoading] = useState(true);
-//   const [submitted, setSubmitted] = useState(false);
-//   const [score, setScore] = useState(0);
+export default function GiveQuiz() {
+  const { setName } = useLocalSearchParams();
+  const { user } = useAuth();
+  const [questions, setQuestions] = useState([]);
+  const [selectedAnswers, setSelectedAnswers] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
+  const [score, setScore] = useState(0);
 
 //   useEffect(() => {
 //     const fetchQuestions = async () => {
