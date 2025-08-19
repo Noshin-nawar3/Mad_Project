@@ -71,21 +71,21 @@ export default function PostQuiz() {
     }
   };
 
-//   const getActionButton = () => {
-//     if (currentIndex < 4) {
-//       return (
-//         <TouchableOpacity style={styles.button} onPress={handleNext}>
-//           <Text style={styles.buttonText}>Next</Text>
-//         </TouchableOpacity>
-//       );
-//     } else {
-//       return (
-//         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-//           <Text style={styles.buttonText}>Post Quiz</Text>
-//         </TouchableOpacity>
-//       );
-//     }
-//   };
+  const getActionButton = () => {
+    if (currentIndex < 4) {
+      return (
+        <TouchableOpacity style={styles.button} onPress={handleNext}>
+          <Text style={styles.buttonText}>Next</Text>
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Post Quiz</Text>
+        </TouchableOpacity>
+      );
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
