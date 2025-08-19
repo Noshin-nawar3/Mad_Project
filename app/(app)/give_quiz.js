@@ -39,17 +39,17 @@ export default function GiveQuiz() {
     });
   };
 
-//   const handleSubmit = async () => {
-//     let correctCount = 0;
-//     questions.forEach((q, index) => {
-//       if (selectedAnswers[index] === q.correctAnswer) {
-//         correctCount++;
-//       }
-//     });
-//     setScore(correctCount);
-//     setSubmitted(true);
+  const handleSubmit = async () => {
+    let correctCount = 0;
+    questions.forEach((q, index) => {
+      if (selectedAnswers[index] === q.correctAnswer) {
+        correctCount++;
+      }
+    });
+    setScore(correctCount);
+    setSubmitted(true);
 
-//     // Store score in Firebase
+    // Store score in Firebase
 //     try {
 //       await addDoc(collection(db, "quizScores"), {
 //         userId: user?.userId,
