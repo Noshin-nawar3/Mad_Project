@@ -32,12 +32,12 @@ export default function GiveQuiz() {
     fetchQuestions();
   }, [setName]);
 
-//   const handleOptionSelect = (questionIndex, optionIndex) => {
-//     setSelectedAnswers({
-//       ...selectedAnswers,
-//       [questionIndex]: String.fromCharCode(65 + optionIndex),
-//     });
-//   };
+  const handleOptionSelect = (questionIndex, optionIndex) => {
+    setSelectedAnswers({
+      ...selectedAnswers,
+      [questionIndex]: String.fromCharCode(65 + optionIndex),
+    });
+  };
 
 //   const handleSubmit = async () => {
 //     let correctCount = 0;
