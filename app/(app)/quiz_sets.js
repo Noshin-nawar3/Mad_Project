@@ -13,7 +13,7 @@ export default function QuizSets() {
       try {
         const querySnapshot = await getDocs(collection(db, "quizzes"));
         const sets = querySnapshot.docs.map(doc => doc.data().setName);
-        setQuizSets([...new Set(sets)]); // Unique set names
+        setQuizSets([...new Set(sets)]); 
       } catch (error) {
         console.error("Error fetching quiz sets:", error);
       }
