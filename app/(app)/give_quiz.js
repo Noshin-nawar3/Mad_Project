@@ -120,77 +120,77 @@ export default function GiveQuiz() {
   );
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#DBEAFE',
-//     padding: 20,
-//   },
-//   title: {
-//     fontSize: 24,
-//     fontWeight: 'bold',
-//     textAlign: 'center',
-//     marginBottom: 20,
-//   },
-//   questionContainer: {
-//     marginBottom: 20,
-//     padding: 10,
-//     backgroundColor: '#fff',
-//     borderRadius: 8,
-//     shadowColor: '#000',
-//     shadowOffset: { width: 0, height: 2 },
-//     shadowOpacity: 0.1,
-//     shadowRadius: 4,
-//     elevation: 2,
-//   },
-//   questionText: {
-//     fontSize: 18,
-//     fontWeight: '600',
-//     marginBottom: 10,
-//   },
-//   optionButton: {
-//     padding: 10,
-//     borderWidth: 1,
-//     borderColor: '#ccc',
-//     borderRadius: 5,
-//     marginBottom: 5,
-//     backgroundColor: '#f9f9f9',
-//   },
-//   selectedOption: {
-//     backgroundColor: '#d1e7dd',
-//     borderColor: '#198754',
-//   },
-//   optionText: {
-//     fontSize: 16,
-//   },
-//   resultText: {
-//     fontSize: 16,
-//     marginLeft: 20,
-//     marginTop: 10,
-//     color: '#333',
-//   },
-//   submitButton: {
-//     backgroundColor: '#2563eb',
-//     padding: 15,
-//     borderRadius: 8,
-//     alignItems: 'center',
-//     marginTop: 20,
-//   },
-//   submitButtonText: {
-//     color: '#fff',
-//     fontWeight: 'bold',
-//     fontSize: 16,
-//   },
-//   scoreText: {
-//     fontSize: 20,
-//     fontWeight: 'bold',
-//     textAlign: 'center',
-//     marginTop: 20,
-//     color: '#2563eb',
-//   },
-//   noQuestions: {
-//     textAlign: 'center',
-//     color: '#666',
-//     fontSize: 16,
-//   },
-// });
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#DBEAFE',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  questionContainer: {
+    marginBottom: 20,
+    padding: 10,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  questionText: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 10,
+  },
+  optionButton: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    marginBottom: 5,
+    backgroundColor: '#f9f9f9',
+  },
+  selectedOption: {
+    backgroundColor: '#d1e7dd',
+    borderColor: '#198754',
+  },
+  optionText: {
+    fontSize: 16,
+  },
+  resultText: {
+    fontSize: 16,
+    marginLeft: 20,
+    marginTop: 10,
+    color: '#333',
+  },
+  submitButton: {
+    backgroundColor: '#2563eb',
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  submitButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  scoreText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 20,
+    color: '#2563eb',
+  },
+  noQuestions: {
+    textAlign: 'center',
+    color: '#666',
+    fontSize: 16,
+  },
+});
