@@ -22,31 +22,31 @@ export default function PostQuiz2() {
     setQuestion({ ...question, options: newOptions });
   };
 
-//   const handlePostQuiz = async () => {
-//     if (!question.text.trim() || question.options.some(o => !o.trim())) {
-//       Alert.alert("Error", "Please fill all fields for the question.");
-//       return;
-//     }
+  const handlePostQuiz = async () => {
+    if (!question.text.trim() || question.options.some(o => !o.trim())) {
+      Alert.alert("Error", "Please fill all fields for the question.");
+      return;
+    }
 
-//     try {
-//       await addDoc(collection(db, "schoolQuizzes"), {
-//         subject,
-//         level,
-//         question: {
-//           text: question.text,
-//           options: question.options,
-//           correctAnswer: question.correctAnswer,
-//         },
-//         createdBy: user?.userId,
-//         createdAt: new Date(),
-//       });
-//       Alert.alert("Success", "Quiz posted to school successfully!");
-//       router.push("/educator_dashboard");
-//     } catch (error) {
-//       console.error("Error posting quiz:", error);
-//       Alert.alert("Error", "Failed to post quiz.");
-//     }
-//   };
+    try {
+      await addDoc(collection(db, "schoolQuizzes"), {
+        subject,
+        level,
+        question: {
+          text: question.text,
+          options: question.options,
+          correctAnswer: question.correctAnswer,
+        },
+        createdBy: user?.userId,
+        createdAt: new Date(),
+      });
+      Alert.alert("Success", "Quiz posted to school successfully!");
+      router.push("/educator_dashboard");
+    } catch (error) {
+      console.error("Error posting quiz:", error);
+      Alert.alert("Error", "Failed to post quiz.");
+    }
+  };
 
 //   return (
 //     <SafeAreaView style={styles.container}>
