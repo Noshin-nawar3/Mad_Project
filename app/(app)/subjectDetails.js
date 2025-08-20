@@ -1,17 +1,27 @@
 import { Video } from "expo-av";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
-import { FlatList, Linking, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Linking,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import HomeHeader from "../../components/HomeHeader";
+import { Ionicons } from "@expo/vector-icons";
+import LevelMap from "../../components/LevelMap"; 
+
 export default function SubjectDetails() {
-const router = useRouter();
+  const router = useRouter();
   const { subject } = useLocalSearchParams();
   const [expandedLevel, setExpandedLevel] = useState(null);
   const [currentVideoIndex, setCurrentVideoIndex] = useState({});
+  const [currentLevel, setCurrentLevel] = useState(1);
 
   const levels = ["Level 1", "Level 2", "Level 3", "Level 4", "Level 5"];
 
-  // Hardcoded resources (PDFs) and tutorials (video URLs) for each subject
   const resources = {
     Science: "https://www.example.com/science.pdf",
     Mathematics: "https://www.example.com/math.pdf",
@@ -21,32 +31,12 @@ const router = useRouter();
   };
 
   const tutorials = {
-  Science: [
-    require("./video.mp4"),
-    require("./video.mp4"),
-    require("./video.mp4"),
-  ],
-  Mathematics: [
-    require("./video.mp4"),
-    require("./video.mp4"),
-    require("./video.mp4"),
-  ],
-  "Social Studies": [
-    require("./video.mp4"),
-    require("./video.mp4"),
-    require("./video.mp4"),
-  ],
-  Language: [
-    require("./video.mp4"),
-    require("./video.mp4"),
-    require("./video.mp4"),
-  ],
-  "Art & Music": [
-    require("./video.mp4"),
-    require("./video.mp4"),
-    require("./video.mp4"),
-  ],
-};
+    Science: [require("./video.mp4"), require("./video.mp4"), require("./video.mp4")],
+    Mathematics: [require("./video.mp4"), require("./video.mp4"), require("./video.mp4")],
+    "Social Studies": [require("./video.mp4"), require("./video.mp4"), require("./video.mp4")],
+    Language: [require("./video.mp4"), require("./video.mp4"), require("./video.mp4")],
+    "Art & Music": [require("./video.mp4"), require("./video.mp4"), require("./video.mp4")],
+  };
 
   const subjectColors = {
     Science: "#27AE60",
@@ -56,13 +46,11 @@ const router = useRouter();
     "Art & Music": "#C0392B",
   };
 
-  // Debug: Log subject and background color to verify
-  console.log("Subject:", subject, "BackgroundColor:", subjectColors[subject] || "#2563eb");
-
-  const handleLevelPress = (level) => {
-    setExpandedLevel(expandedLevel === level ? null : level);
-    if (expandedLevel !== level) {
-      setCurrentVideoIndex((prev) => ({ ...prev, [level]: 0 }));
+  const handleLevelPress = (lvl) => {
+    setExpandedLevel(expandedLevel === lvl ? null : lvl);
+    setCurrentLevel(parseInt(lvl.split(" ")[1])); // e.g. "Level 2" -> 2
+    if (expandedLevel !== lvl) {
+      setCurrentVideoIndex((prev) => ({ ...prev, [lvl]: 0 }));
     }
   };
 
@@ -70,274 +58,232 @@ const router = useRouter();
     Linking.openURL(resources[subject] || "https://www.example.com/default.pdf");
   };
 
-  const handleTutorialPrev = (level) => {
+  const handleTutorialPrev = (lvl) => {
     setCurrentVideoIndex((prev) => {
       const videos = tutorials[subject] || [];
-      const currentIndex = prev[level] || 0;
+      const currentIndex = prev[lvl] || 0;
       const prevIndex = (currentIndex - 1 + videos.length) % videos.length;
-      return { ...prev, [level]: prevIndex };
+      return { ...prev, [lvl]: prevIndex };
     });
   };
 
-  const handleTutorialNext = (level) => {
+  const handleTutorialNext = (lvl) => {
     setCurrentVideoIndex((prev) => {
       const videos = tutorials[subject] || [];
-      const currentIndex = prev[level] || 0;
+      const currentIndex = prev[lvl] || 0;
       const nextIndex = (currentIndex + 1) % videos.length;
-      return { ...prev, [level]: nextIndex }; // Fixed: Use nextIndex instead of prevIndex
+      return { ...prev, [lvl]: nextIndex };
     });
   };
 
-  const handleQuizPress = (level) => {
+  const handleQuizPress = (lvl) => {
     router.push({
       pathname: "/quiz",
-      params: { subject, level },
+      params: { subject, level: lvl },
     });
   };
 
-  const renderLevelItem = ({ item: level }) => {
-  const isExpanded = expandedLevel === level;
-  const videos = tutorials[subject] || [];
-  const currentIndex = currentVideoIndex[level] || 0;
-  const videoUrl = videos[currentIndex] || "";
+  const renderExpandedContent = (lvl) => {
+    const videos = tutorials[subject] || [];
+    const currentIndex = currentVideoIndex[lvl] || 0;
+    const videoUrl = videos[currentIndex] || "";
 
-return (
-    <View style={styles.levelContainer}>
-      <Pressable
-        style={({ pressed }) => [
-          styles.levelButton,
-          { backgroundColor: subjectColors[subject] || "#2563eb" },
-          pressed && styles.buttonPressed,
-        ]}
-        onPress={() => handleLevelPress(level)}
-      >
-        <Text style={styles.buttonText}>{level}</Text>
-      </Pressable>
-      {isExpanded && (
-        <View style={styles.dropdownContainer}>
-          <Pressable
-            style={({ pressed }) => [
-              styles.dropdownButton,
-              pressed && styles.buttonPressed,
-            ]}
-            onPress={handleResourcePress}
-          >
-            <Text style={styles.dropdownText}>Resource (PDF)</Text>
-          </Pressable>
-          <View style={styles.tutorialContainer}>
-            <View style={styles.videoPlaceholder}>
-              <View style={styles.videoFrame}>
-                <Video
-                  source={videoUrl}
-                  style={styles.video}
-                  useNativeControls
-                  resizeMode="contain"
-                  isLooping
-                  onError={(error) => console.log("Video Error:", error)}
-                />
-              </View>
-              <View style={styles.navigationButtons}>
-                <Pressable
-                  style={({ pressed }) => [
-                    styles.navButton,
-                    pressed && styles.buttonPressed,
-                  ]}
-                  onPress={() => handleTutorialPrev(level)}
-                >
-                  <Text style={styles.navButtonText}>Previous</Text>
-                </Pressable>
-                <Pressable
-                  style={({ pressed }) => [
-                    styles.navButton,
-                    pressed && styles.buttonPressed,
-                  ]}
-                  onPress={() => handleTutorialNext(level)}
-                >
-                  <Text style={styles.navButtonText}>Next</Text>
-                </Pressable>
-              </View>
-            </View>
+    return (
+      <View style={styles.dropdownContainer}>
+        {/* Video Section */}
+        <View style={styles.videoPlaceholder}>
+          <View style={styles.videoFrame}>
+            <Video
+              source={videoUrl}
+              style={styles.video}
+              useNativeControls
+              resizeMode="contain"
+              isLooping
+              onError={(error) => console.log("Video Error:", error)}
+            />
           </View>
-          <Pressable
-            style={({ pressed }) => [
-              styles.dropdownButton,
-              pressed && styles.buttonPressed,
-            ]}
-            onPress={() => handleQuizPress(level)}
-          >
-            <Text style={styles.dropdownText}>Take Quiz</Text>
-          </Pressable>
+          <View style={styles.navigationButtons}>
+            <Pressable
+              style={styles.navButton}
+              onPress={() => handleTutorialPrev(lvl)}
+            >
+              <Text style={styles.navButtonText}>Previous</Text>
+            </Pressable>
+            <Pressable
+              style={styles.navButton}
+              onPress={() => handleTutorialNext(lvl)}
+            >
+              <Text style={styles.navButtonText}>Next</Text>
+            </Pressable>
+          </View>
         </View>
-      )}
-    </View>
-  );
-};
+
+        {/* Resource Button */}
+        <TouchableOpacity style={styles.button} onPress={handleResourcePress}>
+          <Ionicons name="document-text-outline" size={28} color="#fff" />
+          <Text style={styles.buttonTextin}>Resource (PDF)</Text>
+        </TouchableOpacity>
+
+        {/* Quiz Button */}
+        <TouchableOpacity style={styles.button} onPress={() => handleQuizPress(lvl)}>
+          <Ionicons name="document-text-outline" size={28} color="#fff" />
+          <Text style={styles.buttonTextin}>Take Quiz</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container_home}>
       <HomeHeader />
       <Text style={styles.title}>{subject || "Subject Details"}</Text>
-      <FlatList
-        data={levels}
-        renderItem={renderLevelItem}
-        keyExtractor={(item) => item}
-        contentContainerStyle={styles.buttonSection}
+
+      <LevelMap
+        currentLevel={currentLevel}
+        onSelectLevel={(lvlNum) => handleLevelPress(`Level ${lvlNum}`)}
       />
+
+      {/* Expanded content for selected level */}
+      {expandedLevel && renderExpandedContent(expandedLevel)}
     </View>
   );
 }
 
+
 const styles = StyleSheet.create({
   container_home: {
     flex: 1,
-    backgroundColor: "#f8f9fa",
+    backgroundColor: "#FDF6E4", // warm pastel background
+  },
+    wrapper: {
+    flex: 1,
+    alignItems: "flex-start",
+    paddingHorizontal: 5,
   },
   title: {
-    fontSize: 26,
-    fontWeight: "700",
+    fontSize: 28,
+    fontWeight: "800",
     marginLeft: 20,
     marginTop: 20,
     marginBottom: 10,
-    color: "#1a1a1a",
+    color: "#FF6B6B", // bright playful pink-red
   },
   buttonSection: {
     paddingHorizontal: 20,
-    paddingBottom: 20,
+    paddingBottom: 30,
   },
   levelContainer: {
-    marginVertical: 8,
+    marginVertical: 10,
   },
   levelButton: {
     width: "100%",
-    padding: 20,
-    borderRadius: 12,
+    padding: 18,
+    borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#2563eb", // Fallback background color
-    elevation: 8, // Unified for Android
-    shadowColor: "#000", // Unified for iOS
+    backgroundColor: "#FFD93D", // bright yellow
+    elevation: 6,
+    shadowColor: "#FF6B6B",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
-    shadowRadius: 8,
-    borderWidth: 1,
-    borderColor: "rgba(0, 0, 0, 0.15)",
+    shadowRadius: 6,
   },
   buttonPressed: {
-    opacity: 0.8,
-    transform: [{ scale: 0.98 }],
+    transform: [{ scale: 0.96 }],
+    opacity: 0.9,
   },
   buttonText: {
+    fontSize: 22,
+    fontWeight: "800",
+    color: "#2D4059", // dark navy
+    textAlign: "center",
+  },
+  buttonTextin: {
     fontSize: 20,
-    fontWeight: "700",
     color: "#fff",
     textAlign: "center",
   },
+  button: {
+    backgroundColor: "#6366F1",
+    padding: 15,
+    borderRadius: 15,
+    marginVertical: 5,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  icon: {
+    marginRight: 4,
+  },
   dropdownContainer: {
-    marginTop: 8,
-    paddingHorizontal: 16,
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    paddingVertical: 12,
+    marginTop: 10,
+    paddingHorizontal: 14,
+    backgroundColor: "#FFF",
+    borderRadius: 20,
+    paddingVertical: 14,
+    borderWidth: 2,
+    borderColor: "#FF6B6B",
     elevation: 4,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.15,
-    shadowRadius: 6,
+    shadowRadius: 5,
   },
   dropdownButton: {
     width: "100%",
-    backgroundColor: "#2563eb",
+    backgroundColor: "#6BCB77", // soft green
     padding: 15,
-    borderRadius: 8,
+    borderRadius: 15,
     marginVertical: 6,
     alignItems: "center",
-    elevation: 4,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
   },
   dropdownText: {
     fontSize: 18,
-    fontWeight: "600",
-    color: "#fff",
+    fontWeight: "700",
+    color: "#1A1A1A", // dark gray
     textAlign: "center",
   },
   tutorialContainer: {
-    marginVertical: 6,
+    marginVertical: 8,
   },
   videoPlaceholder: {
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
-    padding: 20,
-    borderRadius: 15,
-    margin: 20,
-    elevation: 4,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
+    backgroundColor: "#FFF5E1",
+    padding: 16,
+    borderRadius: 20,
+    margin: 10,
+    borderWidth: 2,
+    borderColor: "#FFD93D",
   },
   videoFrame: {
-    width: "80%",
+    width: "90%",
     maxWidth: 600,
-    height: 200,
+    height: 220,
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
+    borderRadius: 20,
+    overflow: "hidden",
   },
   video: {
     width: "100%",
-    height: 200,
-    borderRadius: 10,
+    height: "100%",
   },
   navigationButtons: {
     flexDirection: "row",
-    justifyContent: "center",
-    gap: 10,
+    justifyContent: "space-between",
     marginTop: 15,
+    paddingHorizontal: 10,
   },
   navButton: {
-    padding: 8,
-    backgroundColor: "#e94560",
-    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: "#FF6B6B", // fun red-pink
+    borderRadius: 15,
     alignItems: "center",
-    flex: 1,
-    elevation: 4,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-  },
-  
-  
-  loadingPlaceholder: {
-    fontSize: 16,
-    color: "#fff",
-    textAlign: "center",
-    fontWeight: "600",
-  },
-  navigationButtons: {
-    flexDirection: "row",
-    justifyContent: "center",
-    gap: 10,
-    marginTop: 15, // Adapted from eschool.css navigation-buttons
-  },
-  navButton: {
-    padding: 8,
-    backgroundColor: "#e94560", // Adapted from eschool.css --highlight-color
-    borderRadius: 8,
-    alignItems: "center",
-    flex: 1,
-    elevation: 4,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
+    flex: 0.45,
   },
   navButtonText: {
-    color: "#fff",
-    fontWeight: "600",
-    fontSize: 14,
+    color: "#1a1a1a",
+    fontSize: 16,
   },
 });
-  
