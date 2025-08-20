@@ -324,6 +324,16 @@ export default function SpecialChildDashboard() {
         </TouchableOpacity>
 
         <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            router.push('/quiz_result');
+          }}
+        >
+          <Ionicons name="trophy-outline" size={20} color="#fff" style={styles.icon} />
+          <Text style={styles.buttonText}>Quiz Result</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
           style={[styles.button, styles.logoutButton]}
           onPress={handleLogout}
         >
