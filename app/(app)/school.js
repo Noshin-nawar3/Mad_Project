@@ -12,7 +12,6 @@ export default function School() {
   const [search, setSearch] = useState("");
   const { toggleBookmark, bookmarks } = useBookmarks();
 
-  const data = ["Bangla", "English", "History", "Arts and Crafts"];
   const subjects = [
     "Science",
     "Mathematics",
@@ -29,7 +28,7 @@ export default function School() {
     History: require("../../assets/images/sub.jpg"),
     Computer: require("../../assets/images/sub.jpg"),
   };
-  const filteredData = data.filter((item) =>
+  const filteredSubjects = subjects.filter((item) =>
     item.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -58,14 +57,16 @@ export default function School() {
           <SearchBar
             value={search}
             onChangeText={setSearch}
-            placeholder="Search Courses..."
+            placeholder="Search Suject..."
           />
           {search.trim() !== "" && (
             <FlatList
-              data={filteredData}
+              data={filteredSubjects}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({ item }) => (
-                <Text style={styles.searchItem}>{item}</Text>
+                <Text style={styles.searchItem}
+                 onPress={() => handleSubjectPress(item)}
+                >{item}</Text>
               )}
             />
           )}
