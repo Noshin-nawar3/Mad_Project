@@ -5,6 +5,7 @@ import HomeHeader from "../../components/HomeHeader";
 import SearchBar from "../../components/SearchBar";
 import SquareButton from "../../components/SquareButton";
 import { useBookmarks } from "./BookmarkContext";
+import SubjectButton from "../../components/SubjectButton";
 
 export default function School() {
   const router = useRouter();
@@ -12,8 +13,22 @@ export default function School() {
   const { toggleBookmark, bookmarks } = useBookmarks();
 
   const data = ["Bangla", "English", "History", "Arts and Crafts"];
-  const subjects = ["Science", "Mathematics", "Social Studies", "Language", "Art & Music"];
+  const subjects = [
+    "Science",
+    "Mathematics",
+    "Social Studies",
+    "Language",
+    "Art & Music",
+  ];
 
+  // Example subject → image mapping
+  const subjectImages = {
+    Math: require("../../assets/images/sub.jpg"),
+    Science: require("../../assets/images/sub.jpg"),
+    English: require("../../assets/images/sub.jpg"),
+    History: require("../../assets/images/sub.jpg"),
+    Computer: require("../../assets/images/sub.jpg"),
+  };
   const filteredData = data.filter((item) =>
     item.toLowerCase().includes(search.toLowerCase())
   );
@@ -33,7 +48,7 @@ export default function School() {
     });
   };
 
- return (
+  return (
     <View style={styles.container_home}>
       <HomeHeader />
 
@@ -83,7 +98,7 @@ export default function School() {
 
         {/* Subjects Section */}
         <Text style={styles.title}>Subjects</Text>
-        <View style={styles.wrapper}>
+        {/* <View style={styles.wrapper}>
           {Array(Math.ceil(subjects.length / 2))
             .fill()
             .map((_, rowIndex) => {
@@ -102,6 +117,36 @@ export default function School() {
                     />
                   ))}
                   {isLastRow && <View style={styles.subjectSpacer} />}
+                </View>
+              );
+            })}
+        </View> */}
+        <View style={styles.wrapper}>
+          {Array(Math.ceil(subjects.length / 2))
+            .fill()
+            .map((_, rowIndex) => {
+              const rowSubjects = subjects.slice(
+                rowIndex * 2,
+                rowIndex * 2 + 2
+              );
+              return (
+                <View
+                  key={rowIndex}
+                  style={
+                    rowSubjects.length === 1
+                      ? styles.leftAlignedRow
+                      : styles.subjectRow
+                  }
+                >
+                  {rowSubjects.map((subject, subIndex) => (
+                    <SubjectButton
+                      key={subIndex}
+                      title={subject}
+                      color={subjectColors[subject]}
+                      image={subjectImages[subject]}
+                      onPress={() => handleSubjectPress(subject)}
+                    />
+                  ))}
                 </View>
               );
             })}
@@ -124,16 +169,18 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginHorizontal: 12,
     marginTop: 12,
-    ...(Platform && Platform.select ? Platform.select({
-      android: { elevation: 4 },
-      ios: {
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.15,
-        shadowRadius: 6,
-      },
-      default: { elevation: 4 },
-    }) : { elevation: 4 }),
+    ...(Platform && Platform.select
+      ? Platform.select({
+          android: { elevation: 4 },
+          ios: {
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.15,
+            shadowRadius: 6,
+          },
+          default: { elevation: 4 },
+        })
+      : { elevation: 4 }),
   },
   searchItem: {
     fontSize: 18,
@@ -151,7 +198,7 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     alignItems: "flex-start",
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
   },
   row: {
     flexDirection: "row",
@@ -202,17 +249,19 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     justifyContent: "center",
     alignItems: "center",
-    ...(Platform && Platform.select ? Platform.select({
-      android: { elevation: 10 },
-      ios: {
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 5 },
-        shadowOpacity: 0.3,
-        shadowRadius: 12,
-      },
-      default: { elevation: 10 },
-    }) : { elevation: 10 }),
+    ...(Platform && Platform.select
+      ? Platform.select({
+          android: { elevation: 10 },
+          ios: {
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 5 },
+            shadowOpacity: 0.3,
+            shadowRadius: 12,
+          },
+          default: { elevation: 10 },
+        })
+      : { elevation: 10 }),
     borderWidth: 1,
     borderColor: "rgba(0, 0, 0, 0.15)",
   },
-}); 
+});

@@ -59,8 +59,8 @@ export default function SquareButton({ title, iconName, onPress }) {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    width: wp(22),
-    height: wp(22),
+    width: wp(30),
+    height: wp(30),
     margin: wp(1),
     backgroundColor: '#FFFFFF',
     padding: 12,
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 12.5,
+    fontSize: 15,
     fontWeight: "600",
     textAlign: "center",
   }, 
