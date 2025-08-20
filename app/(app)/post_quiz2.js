@@ -5,16 +5,16 @@ import { collection, addDoc } from "firebase/firestore";
 import { useAuth } from "../../context/authContext";
 import { useRouter } from "expo-router";
 
-// export default function PostQuiz2() {
-//   const { user } = useAuth();
-//   const router = useRouter();
-//   const [subject, setSubject] = useState("Science");
-//   const [level, setLevel] = useState("Level 1");
-//   const [question, setQuestion] = useState({
-//     text: "",
-//     options: ["", "", "", ""],
-//     correctAnswer: "A",
-//   });
+export default function PostQuiz2() {
+  const { user } = useAuth();
+  const router = useRouter();
+  const [subject, setSubject] = useState("Science");
+  const [level, setLevel] = useState("Level 1");
+  const [question, setQuestion] = useState({
+    text: "",
+    options: ["", "", "", ""],
+    correctAnswer: "A",
+  });
 
 //   const handleOptionChange = (optIndex, value) => {
 //     const newOptions = [...question.options];
