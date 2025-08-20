@@ -6,6 +6,7 @@ import SearchBar from "../../components/SearchBar";
 import SquareButton from "../../components/SquareButton";
 import { useBookmarks } from "./BookmarkContext";
 import SubjectButton from "../../components/SubjectButton";
+import CourseCard from "../../components/CourseCard";
 
 export default function School() {
   const router = useRouter();
@@ -57,7 +58,7 @@ export default function School() {
           <SearchBar
             value={search}
             onChangeText={setSearch}
-            placeholder="Search Suject..."
+            placeholder="Search Subject..."
           />
           {search.trim() !== "" && (
             <FlatList
@@ -152,6 +153,81 @@ export default function School() {
               );
             })}
         </View>
+        {/* Courses List */}
+        <Text style={styles.title}>Courses</Text>
+        <View style={styles.buttonSection}>
+          <CourseCard
+            image="https://images.pexels.com/photos/4145195/pexels-photo-4145195.jpeg"
+            title="React Native for Beginners"
+            description="Learn how to build cross-platform mobile apps using React Native and Expo."
+            length="5h 30m"
+            rating="4.8"
+            isFavorite={bookmarks.some(
+              (b) => b.title === "React Native for Beginners"
+            )}
+            onFavoriteToggle={() =>
+              toggleBookmark({
+                title: "React Native for Beginners",
+                description:
+                  "Learn how to build cross-platform mobile apps using React Native and Expo.",
+                image:
+                  "https://images.pexels.com/photos/4145195/pexels-photo-4145195.jpeg",
+                length: "5h 30m",
+                rating: "4.8",
+              })
+            }
+            onPress={() =>
+              router.push({
+                pathname: "/courseDetails",
+                params: {
+                  title: "React Native for Beginners",
+                  description:
+                    "Learn how to build cross-platform mobile apps using React Native and Expo.",
+                  image:
+                    "https://images.pexels.com/photos/4145195/pexels-photo-4145195.jpeg",
+                  length: "5h 30m",
+                  rating: "4.8",
+                },
+              })
+            }
+          />
+
+          <CourseCard
+            image="https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg"
+            title="Advanced JavaScript"
+            description="Master closures, async programming, and advanced concepts."
+            length="3h 45m"
+            rating="4.6"
+            isFavorite={bookmarks.some(
+              (b) => b.title === "Advanced JavaScript"
+            )}
+            onFavoriteToggle={() =>
+              toggleBookmark({
+                title: "Advanced JavaScript",
+                description:
+                  "Master closures, async programming, and advanced concepts.",
+                image:
+                  "https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg",
+                length: "3h 45m",
+                rating: "4.6",
+              })
+            }
+            onPress={() =>
+              router.push({
+                pathname: "/courseDetails",
+                params: {
+                  title: "Advanced JavaScript",
+                  description:
+                    "Master closures, async programming, and advanced concepts.",
+                  image:
+                    "https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg",
+                  length: "3h 45m",
+                  rating: "4.6",
+                },
+              })
+            }
+          />
+        </View>
       </ScrollView>
     </View>
   );
@@ -159,14 +235,14 @@ export default function School() {
 const styles = StyleSheet.create({
   container_home: {
     flex: 1,
-    backgroundColor: "#f8f9fa",
+    backgroundColor: "#FDF6E4",
   },
   scrollContent: {
     paddingBottom: 50,
   },
   searchContainer: {
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "#FDF6E4",
     borderRadius: 12,
     marginHorizontal: 12,
     marginTop: 12,

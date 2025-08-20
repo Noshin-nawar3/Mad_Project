@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import HomeHeader from "../../components/HomeHeader";
 import { Ionicons } from "@expo/vector-icons";
-import LevelMap from "../../components/LevelMap"; 
+import LevelMap from "../../components/LevelMap";
 
 export default function SubjectDetails() {
   const router = useRouter();
@@ -31,11 +31,31 @@ export default function SubjectDetails() {
   };
 
   const tutorials = {
-    Science: [require("./video.mp4"), require("./video.mp4"), require("./video.mp4")],
-    Mathematics: [require("./video.mp4"), require("./video.mp4"), require("./video.mp4")],
-    "Social Studies": [require("./video.mp4"), require("./video.mp4"), require("./video.mp4")],
-    Language: [require("./video.mp4"), require("./video.mp4"), require("./video.mp4")],
-    "Art & Music": [require("./video.mp4"), require("./video.mp4"), require("./video.mp4")],
+    Science: [
+      require("./video.mp4"),
+      require("./video.mp4"),
+      require("./video.mp4"),
+    ],
+    Mathematics: [
+      require("./video.mp4"),
+      require("./video.mp4"),
+      require("./video.mp4"),
+    ],
+    "Social Studies": [
+      require("./video.mp4"),
+      require("./video.mp4"),
+      require("./video.mp4"),
+    ],
+    Language: [
+      require("./video.mp4"),
+      require("./video.mp4"),
+      require("./video.mp4"),
+    ],
+    "Art & Music": [
+      require("./video.mp4"),
+      require("./video.mp4"),
+      require("./video.mp4"),
+    ],
   };
 
   const subjectColors = {
@@ -55,7 +75,9 @@ export default function SubjectDetails() {
   };
 
   const handleResourcePress = () => {
-    Linking.openURL(resources[subject] || "https://www.example.com/default.pdf");
+    Linking.openURL(
+      resources[subject] || "https://www.example.com/default.pdf"
+    );
   };
 
   const handleTutorialPrev = (lvl) => {
@@ -118,16 +140,28 @@ export default function SubjectDetails() {
           </View>
         </View>
 
+        {/* Course details Button */}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => router.push("/courseDetails")}
+        >
+          <Ionicons name="book-outline" size={28} color="#fff" />
+          <Text style={styles.buttonTextin}> Course Details</Text>
+        </TouchableOpacity>
+
         {/* Resource Button */}
         <TouchableOpacity style={styles.button} onPress={handleResourcePress}>
-          <Ionicons name="document-text-outline" size={28} color="#fff" />
-          <Text style={styles.buttonTextin}>Resource (PDF)</Text>
+          <Ionicons name="document-attach-outline" size={28} color="#fff" />
+          <Text style={styles.buttonTextin}> Resource (PDF)</Text>
         </TouchableOpacity>
 
         {/* Quiz Button */}
-        <TouchableOpacity style={styles.button} onPress={() => handleQuizPress(lvl)}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => handleQuizPress(lvl)}
+        >
           <Ionicons name="document-text-outline" size={28} color="#fff" />
-          <Text style={styles.buttonTextin}>Take Quiz</Text>
+          <Text style={styles.buttonTextin}> Take Quiz</Text>
         </TouchableOpacity>
       </View>
     );
@@ -149,13 +183,12 @@ export default function SubjectDetails() {
   );
 }
 
-
 const styles = StyleSheet.create({
   container_home: {
     flex: 1,
     backgroundColor: "#FDF6E4", // warm pastel background
   },
-    wrapper: {
+  wrapper: {
     flex: 1,
     alignItems: "flex-start",
     paddingHorizontal: 5,
