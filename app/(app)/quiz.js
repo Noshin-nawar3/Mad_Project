@@ -1,11 +1,13 @@
 import { useLocalSearchParams } from "expo-router";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where, addDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import { FlatList, Pressable, StyleSheet, Text, View, Alert } from "react-native";
 import { db } from "../../firebaseConfig";
+import { useAuth } from "../../context/authContext";
 
 export default function Quiz() {
   const { subject, level } = useLocalSearchParams();
+  const { user } = useAuth();
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
@@ -14,56 +16,87 @@ export default function Quiz() {
     const fetchQuestions = async () => {
       try {
         const q = query(
-          collection(db, 'questions'),
-          where('subject', '==', subject),
-          where('level', '==', level)
+          collection(db, "schoolQuizzes"),
+          where("subject", "==", subject),
+          where("level", "==", level)
         );
         const querySnapshot = await getDocs(q);
         const allQuestions = querySnapshot.docs.map(doc => ({
           id: doc.id,
-          ...doc.data(),
+          text: doc.data().question.text,
+          options: doc.data().question.options,
+          correctAnswer: doc.data().question.correctAnswer,
         }));
-        // Shuffle and pick 5 random questions
         const shuffled = allQuestions.sort(() => 0.5 - Math.random());
         setQuestions(shuffled.slice(0, 5));
       } catch (error) {
-        console.error('Error fetching questions:', error);
+        console.error("Error fetching questions:", error);
       }
     };
     fetchQuestions();
   }, [subject, level]);
 
-  const handleSelect = (questionId, selectedOption) => {
+  const handleSelect = (questionId, selectedOption, optionIndex) => {
     if (!showResults) {
-      setAnswers(prev => ({ ...prev, [questionId]: selectedOption }));
+      setAnswers(prev => ({
+        ...prev,
+        [questionId]: String.fromCharCode(65 + optionIndex), // Store the letter (A, B, C, D)
+      }));
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setShowResults(true);
+
+    // Prepare detailed results
+    const detailedResults = questions.map(q => ({
+      questionId: q.id,
+      questionText: q.text,
+      selectedAnswer: answers[q.id] || null,
+      correctAnswer: q.correctAnswer,
+      isCorrect: answers[q.id] === q.correctAnswer,
+    }));
+    const score = detailedResults.filter(r => r.isCorrect).length;
+
+    // Store in Firebase
+    try {
+      await addDoc(collection(db, "userQuizScores"), {
+        userId: user?.userId,
+        subject,
+        level,
+        score,
+        totalQuestions: questions.length,
+        detailedResults,
+        timestamp: new Date(),
+      });
+      console.log("Score saved successfully");
+    } catch (error) {
+      console.error("Error saving score:", error);
+      Alert.alert("Error", "Failed to save score.");
+    }
   };
 
   const renderQuestion = ({ item: q }) => {
     const selected = answers[q.id];
     return (
       <View style={styles.questionContainer}>
-        <Text style={styles.questionText}>{q.question}</Text>
+        <Text style={styles.questionText}>{q.text}</Text>
         {q.options.map((option, index) => {
           let optionStyle = styles.optionButton;
           if (showResults) {
-            if (option === q.correctAnswer) {
+            if (String.fromCharCode(65 + index) === q.correctAnswer) {
               optionStyle = [styles.optionButton, styles.correct];
-            } else if (option === selected && selected !== q.correctAnswer) {
+            } else if (String.fromCharCode(65 + index) === selected && selected !== q.correctAnswer) {
               optionStyle = [styles.optionButton, styles.wrong];
             }
-          } else if (option === selected) {
+          } else if (String.fromCharCode(65 + index) === selected) {
             optionStyle = [styles.optionButton, styles.selected];
           }
           return (
             <Pressable
               key={index}
               style={optionStyle}
-              onPress={() => handleSelect(q.id, option)}
+              onPress={() => handleSelect(q.id, option, index)}
             >
               <Text style={styles.optionText}>{option}</Text>
             </Pressable>
