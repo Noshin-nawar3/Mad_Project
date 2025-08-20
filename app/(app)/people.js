@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginRight: 10,
     width: 120,
+    marginBottom: 170,
   },
   avatar: { width: 60, height: 60, borderRadius: 30, marginBottom: 8 },
   name: { fontSize: 14, fontWeight: "500", marginBottom: 5, textAlign: "center" },
