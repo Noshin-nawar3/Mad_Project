@@ -16,11 +16,11 @@ export default function PostQuiz2() {
     correctAnswer: "A",
   });
 
-//   const handleOptionChange = (optIndex, value) => {
-//     const newOptions = [...question.options];
-//     newOptions[optIndex] = value;
-//     setQuestion({ ...question, options: newOptions });
-//   };
+  const handleOptionChange = (optIndex, value) => {
+    const newOptions = [...question.options];
+    newOptions[optIndex] = value;
+    setQuestion({ ...question, options: newOptions });
+  };
 
 //   const handlePostQuiz = async () => {
 //     if (!question.text.trim() || question.options.some(o => !o.trim())) {
