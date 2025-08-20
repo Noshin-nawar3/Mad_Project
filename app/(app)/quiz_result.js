@@ -1,8 +1,8 @@
-// import { useState, useEffect } from "react";
-// import { FlatList, StyleSheet, Text, View, ActivityIndicator } from "react-native";
-// import { db } from "../../firebaseConfig";
-// import { collection, query, where, getDocs } from "firebase/firestore";
-// import { useAuth } from "../../context/authContext";
+import { useState, useEffect } from "react";
+import { FlatList, StyleSheet, Text, View, ActivityIndicator } from "react-native";
+import { db } from "../../firebaseConfig";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { useAuth } from "../../context/authContext";
 
 // export default function QuizResult() {
 //   const { user } = useAuth();
