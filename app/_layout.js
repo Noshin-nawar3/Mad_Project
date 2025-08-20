@@ -2,7 +2,7 @@ import { Slot, useRouter, useSegments } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { MenuProvider } from 'react-native-popup-menu';
 import { AuthContextProvider, useAuth } from '../context/authContext';
-import { View, Text } from 'react-native'; // Explicitly import for native
+import { View, Text } from 'react-native'; 
 import "../global.css";
 
 const MainLayout = () => {
@@ -12,7 +12,7 @@ const MainLayout = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setIsLoading(false); // Set loaded after mount
+    setIsLoading(false); 
   }, []);
 
 useEffect(() => {

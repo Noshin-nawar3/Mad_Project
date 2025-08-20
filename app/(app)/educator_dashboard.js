@@ -9,6 +9,10 @@ export default function EducatorDashboard() {
     router.push("/post_quiz");
   };
 
+  const handlePostQuizToSchool = () => {
+    router.push("/post_quiz2");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container_home}> 
@@ -17,6 +21,9 @@ export default function EducatorDashboard() {
         <Text style={styles.welcome}>Welcome to the Educator Dashboard!</Text>
         <TouchableOpacity style={styles.tile} onPress={handlePostQuiz}>
           <Text style={styles.tileText}>Post Quiz</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.tile} onPress={handlePostQuizToSchool}>
+          <Text style={styles.tileText}>Post Quiz to School</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
