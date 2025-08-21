@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from "react-native";
-import {
-  collection,
-  onSnapshot,
-  doc,
-  updateDoc,
-  arrayUnion,
-  addDoc,
-  query,
-  where,
-  getDocs,
-} from "firebase/firestore";
-import { db } from "../../firebaseConfig";
-import { useAuth } from "../../context/authContext";
 import { useRouter } from "expo-router";
+import {
+  addDoc,
+  arrayUnion,
+  collection,
+  doc,
+  onSnapshot,
+  updateDoc
+} from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useAuth } from "../../context/authContext";
+import { db } from "../../firebaseConfig";
 
 export default function People() {
   const { user } = useAuth();
@@ -118,7 +115,7 @@ export default function People() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff", padding: 16 },
-  sectionTitle: { fontSize: 20, fontWeight: "bold", marginVertical: 10 },
+  sectionTitle: { fontSize: 20, fontWeight: "bold", marginVertical: 10, marginTop: 40 },
   tile: {
     backgroundColor: "#f1f1f1",
     borderRadius: 10,
@@ -126,7 +123,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginRight: 10,
     width: 120,
-    marginBottom: 170,
+    marginBottom: 540,
   },
   avatar: { width: 60, height: 60, borderRadius: 30, marginBottom: 8 },
   name: { fontSize: 14, fontWeight: "500", marginBottom: 5, textAlign: "center" },
