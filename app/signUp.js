@@ -267,7 +267,7 @@ import {
 } from "react-native-responsive-screen";
 import Loading from "../components/Loading";
 import { useAuth } from "../context/authContext";
-
+import { sendEmailVerification } from "firebase/auth";
 export default function SignUp() {
   console.log("SignUp component rendering");
   const router = useRouter();
@@ -282,7 +282,7 @@ export default function SignUp() {
 
   // Client-side email validation for Gmail
   const validateEmailFormat = (email) => {
-    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/i;
+    const gmailRegex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|iut-dhaka\.edu)$/i;
     if (!email) {
       return "Email is required";
     }
@@ -338,7 +338,7 @@ export default function SignUp() {
     setLoading(true);
 
     try {
-      // Verify email existence
+     
       const isEmailValid = await verifyEmailExistence(emailRef.current);
       if (!isEmailValid) {
         setLoading(false);
@@ -357,7 +357,7 @@ export default function SignUp() {
         return;
       }
 
-      // Proceed with registration
+      
       const response = await register(
         emailRef.current,
         passwordRef.current,
@@ -366,17 +366,46 @@ export default function SignUp() {
         selectedRole
       );
 
-      setLoading(false);
-
-      console.log("Registration response:", response);
       if (!response.success) {
-        Alert.alert("Sign Up", response.msg);
-      }
-    } catch (error) {
       setLoading(false);
-      console.error("Registration error:", error.code || error.message);
-      Alert.alert("Sign Up", "Registration failed. Please try again.");
+      Alert.alert("Sign Up", response.msg);
+      return;
     }
+
+    // Send email verification
+    const user = auth.currentUser;
+    console.log('Current user:', user);
+    if (user) {
+      try {
+        await sendEmailVerification(user, {
+          url: 'madproject-4c5b6.firebaseapp.com/verify', // Replace with production URL
+          handleCodeInApp: true,
+        });
+        console.log('Verification email sent to:', emailRef.current);
+        Alert.alert(
+          'Sign Up',
+          'Registration successful!'
+        );
+        router.push('/signIn');
+      } catch (emailError) {
+        console.error('Error sending verification email:', emailError);
+        throw new Error('Failed to send verification email.');
+      }
+    } else {
+      throw new Error('No user is currently signed in.');
+    }
+
+    setLoading(false);
+  } catch (error) {
+    setLoading(false);
+    console.error('Registration or email verification error:', error.code || error.message);
+    Alert.alert(
+      'Sign Up',
+      error.code === 'auth/too-many-requests'
+        ? 'Too many verification requests. Please try again later.'
+        : 'Registration or email verification failed: ' + (error.message || 'Please try again.')
+    );
+  }
   };
 
   return (
