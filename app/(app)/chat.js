@@ -167,7 +167,7 @@ export default function Chat() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#ECE5DD" },
+  container: { flex: 1, backgroundColor: "#ECE5DD",padding: 16 },
   containerDark: { backgroundColor: "#121212" },
 
   headerContainer: {
@@ -176,6 +176,8 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 10,
     paddingHorizontal: 10,
+    borderRadius: 20,
+    height: 118,
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     shadowColor: "#f5ebebff",
     shadowOffset: { width: 0, height: 2 },
@@ -193,7 +195,7 @@ const styles = StyleSheet.create({
   headerAvatar: { width: 40, height: 40, borderRadius: 20, marginRight: 10 },
   headerText: { fontSize: 20, fontWeight: "bold", color: "#075E54" },
 
-  menuButton: { marginLeft: "auto", padding: 5 },
+  menuButton: { marginLeft: "auto", padding: 5, fontWeight: "bold" },
   menuText: { fontSize: 22, color: "#075E54" },
   menuContainer: {
     position: "absolute",
@@ -221,7 +223,7 @@ const styles = StyleSheet.create({
   friendMessageDark: { backgroundColor: "#333" },
   messageText: { fontSize: 16, color: "#000" },
 
-  inputContainer: { flexDirection: "row", alignItems: "center", paddingVertical: 8, paddingHorizontal: 10, backgroundColor: "#FFF", borderTopWidth: 1, borderColor: "#DDD", marginBottom: 29  },
+  inputContainer: { flexDirection: "row", alignItems: "center", paddingVertical: 8, paddingHorizontal: 10, backgroundColor: "#FFF", borderTopWidth: 1,borderRadius:15, borderColor: "#DDD", marginBottom: 29  },
   input: { flex: 1, backgroundColor: "#F0F0F0", borderRadius: 20, paddingHorizontal: 15, paddingVertical: 8, fontSize: 16, marginRight: 10 },
   sendButton: { backgroundColor: "#128C7E", paddingVertical: 10, paddingHorizontal: 16, borderRadius: 20, justifyContent: "center", alignItems: "center" },
 });
