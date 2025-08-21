@@ -82,7 +82,7 @@ export default function School() {
             <SquareButton
               title="Your Course"
               iconName="book"
-              onPress={() => router.push("/CourseScreen")}
+              onPress={() => router.push("/yourCourse")}
               style={styles.largeButton}
             />
             <SquareButton
