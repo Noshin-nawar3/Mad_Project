@@ -945,6 +945,7 @@ export default function rAADSRTestScreen() {
 
     const result = {
       userId: effectiveUserId,
+      username: user?.username || 'Anonymous',
       date,
       score,
       sectionScores: sections,
