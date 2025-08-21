@@ -1,4 +1,3 @@
-
 import {
   arrayUnion,
   collection,
@@ -6,13 +5,22 @@ import {
   getDocs,
   onSnapshot,
   query,
+  ScrollView,
   updateDoc,
   where,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { useAuth } from "../../context/authContext";
 import { db } from "../../firebaseConfig";
+import HomeHeader from "../../components/HomeHeader";
 
 export default function Request() {
   const { user } = useAuth();
@@ -26,15 +34,20 @@ export default function Request() {
         const data = docSnap.data() || {};
         return {
           id: docSnap.id,
-          "Friend Request": Array.isArray(data["Friend Request"]) ? data["Friend Request"] : [],
+          "Friend Request": Array.isArray(data["Friend Request"])
+            ? data["Friend Request"]
+            : [],
           ...data,
         };
       });
 
       if (user?.userId) {
-        const currentUserData = usersData.find((u) => u.userId === user.userId) || {};
+        const currentUserData =
+          usersData.find((u) => u.userId === user.userId) || {};
         setFriendRequests(
-          Array.isArray(currentUserData["Friend Request"]) ? currentUserData["Friend Request"] : []
+          Array.isArray(currentUserData["Friend Request"])
+            ? currentUserData["Friend Request"]
+            : []
         );
         setAllUsers(usersData);
       }
@@ -57,7 +70,9 @@ export default function Request() {
       const requestsSnapshot = await getDocs(requestsQuery);
       if (!requestsSnapshot.empty) {
         const requestDoc = requestsSnapshot.docs[0];
-        await updateDoc(doc(db, "friendrequests", requestDoc.id), { status: "accepted" });
+        await updateDoc(doc(db, "friendrequests", requestDoc.id), {
+          status: "accepted",
+        });
       }
 
       await updateDoc(currentUserRef, {
@@ -93,39 +108,64 @@ export default function Request() {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.sectionTitle}>Friend Requests</Text>
-      <FlatList
-        data={(friendRequests || [])
-          .map((id) => allUsers.find((u) => u.userId === id))
-          .filter(Boolean)}
-        horizontal
-        keyExtractor={(item) => item.userId}
-        renderItem={({ item }) => <UserTile item={item} />}
-      />
+    <View style={styles.container_home}>
+      <HomeHeader />
+      {/* <ScrollView contentContainerStyle={styles.scrollContent}> */}
+        <View style={styles.container}>
+          <Text style={styles.sectionTitle}>Friend Requests</Text>
+          <FlatList
+            data={(friendRequests || [])
+              .map((id) => allUsers.find((u) => u.userId === id))
+              .filter(Boolean)}
+            horizontal
+            keyExtractor={(item) => item.userId}
+            renderItem={({ item }) => <UserTile item={item} />}
+          />
+        </View>
+      {/* </ScrollView> */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", padding: 16 },
-  sectionTitle: { fontSize: 20, fontWeight: "bold", marginVertical: 10, marginTop: 40 },
+  container: { flex: 1, backgroundColor: "#FDF6E4", padding: 16 },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginVertical: 10,
+    marginTop: 40,
+  },
   tile: {
     backgroundColor: "#f1f1f1",
     borderRadius: 10,
     padding: 10,
     alignItems: "center",
     marginRight: 10,
-    width: 120,
+    width: 130,
+    height: 200,
     marginBottom: 540,
   },
-  avatar: { width: 60, height: 60, borderRadius: 30, marginBottom: 8 },
-  name: { fontSize: 14, fontWeight: "500", marginBottom: 5, textAlign: "center" },
+  avatar: { width: 100, height: 100, borderRadius: 100, marginBottom: 8 },
+  name: {
+    paddingTop: 5,
+    fontSize: 14,
+    fontWeight: "500",
+    marginBottom: 5,
+    textAlign: "center",
+  },
   button: {
     backgroundColor: "#007bff",
     paddingHorizontal: 8,
     paddingVertical: 5,
     borderRadius: 5,
+  },
+  container_home: {
+    padding: 16,
+    flex: 1,
+    backgroundColor: "#FDF6E4",
+  },
+  scrollContent: {
+    paddingBottom: 50,
   },
   buttonText: { color: "#fff", fontSize: 12 },
 });

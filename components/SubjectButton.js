@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     minWidth: "47%",
     maxWidth: "47%",
     width: wp(50),
-    height: 300,
+    height: 200,
     margin: 8,
     borderRadius: 16,
     justifyContent: "center",

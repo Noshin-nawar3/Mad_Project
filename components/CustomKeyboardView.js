@@ -6,7 +6,7 @@ const CustomKeyboardView = ({ children }) => {
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}//60:80
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}//60:80
     >
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         {children}

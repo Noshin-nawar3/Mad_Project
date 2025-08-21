@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
         })
       : { elevation: 4 }),
   },
-  avatar: { width: 60, height: 100, borderRadius: 30, marginBottom: 8 },
+  avatar: { width: 100, height: 100, borderRadius: 100, marginBottom: 8 },
   name: {
     fontSize: 14,
     fontWeight: "500",
