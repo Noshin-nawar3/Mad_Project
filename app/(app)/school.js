@@ -13,13 +13,7 @@ export default function School() {
   const [search, setSearch] = useState("");
   const { toggleBookmark, bookmarks } = useBookmarks();
 
-  const subjects = [
-    "Science",
-    "Mathematics",
-    "Social Studies",
-    "Language",
-    "Art & Music",
-  ];
+  const subjects = ["Science", "Mathematics", "Social Studies", "Language"];
 
   // Example subject → image mapping
   const subjectImages = {
@@ -38,7 +32,6 @@ export default function School() {
     Mathematics: "#2980B9", // Deep blue
     "Social Studies": "#D35400", // Rich orange
     Language: "#8E44AD", // Vivid purple
-    "Art & Music": "#C0392B", // Bold red
   };
 
   const handleSubjectPress = (subject) => {
@@ -65,9 +58,12 @@ export default function School() {
               data={filteredSubjects}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({ item }) => (
-                <Text style={styles.searchItem}
-                 onPress={() => handleSubjectPress(item)}
-                >{item}</Text>
+                <Text
+                  style={styles.searchItem}
+                  onPress={() => handleSubjectPress(item)}
+                >
+                  {item}
+                </Text>
               )}
             />
           )}
@@ -152,6 +148,14 @@ export default function School() {
                 </View>
               );
             })}
+          <View style={styles.leftAlignedRow}>
+            <SubjectButton
+              title="Art & Music"
+              color="#C0392B" // Bold red
+              image={require("../../assets/images/sub.jpg")}
+               onPress={() => router.push("/arts")}
+            />
+          </View>
         </View>
         {/* Courses List */}
         {/* <Text style={styles.title}>Courses</Text>
@@ -243,7 +247,7 @@ const styles = StyleSheet.create({
   searchContainer: {
     paddingTop: 20,
     backgroundColor: "#FDF6E4",
-    borderColor:"#FDF6E4",
+    borderColor: "#FDF6E4",
     borderRadius: 12,
     marginHorizontal: 12,
     marginTop: 12,
