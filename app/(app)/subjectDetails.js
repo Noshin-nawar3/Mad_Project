@@ -544,7 +544,6 @@ export default function SubjectDetails() {
     Mathematics: "https://www.example.com/math.pdf",
     "Social Studies": "https://www.example.com/social-studies.pdf",
     Language: "https://www.example.com/language.pdf",
-    "Art & Music": "https://www.example.com/art-music.pdf",
   };
 
   const tutorials = {
@@ -568,11 +567,7 @@ export default function SubjectDetails() {
       require("./video.mp4"),
       require("./video.mp4"),
     ],
-    "Art & Music": [
-      require("./video.mp4"),
-      require("./video.mp4"),
-      require("./video.mp4"),
-    ],
+  
   };
 
   const subjectColors = {
@@ -580,7 +575,7 @@ export default function SubjectDetails() {
     Mathematics: "#2980B9",
     "Social Studies": "#D35400",
     Language: "#8E44AD",
-    "Art & Music": "#C0392B",
+    
   };
 
   const courseDetails = {
