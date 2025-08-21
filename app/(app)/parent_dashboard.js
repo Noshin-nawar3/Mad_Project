@@ -21,7 +21,18 @@ export default function ParentDashboard() {
         <Text style={styles.title}>Parent Dashboard</Text>
         <Text style={styles.welcome}>Welcome to the Parent Dashboard!</Text>
 
-        {/* Connect with my child tile */}
+        {/* Share your concern tile */}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            router.push('/share_concern');
+          }}
+        >
+          <Ionicons name="chatbox-ellipses-outline" size={20} color="#fff" style={styles.icon} />
+          <Text style={styles.buttonText}>Share your concern</Text>
+        </TouchableOpacity>
+
+        {/* Connect with child tile */}
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
@@ -29,7 +40,7 @@ export default function ParentDashboard() {
           }}
         >
           <Ionicons name="people-outline" size={20} color="#fff" style={styles.icon} />
-          <Text style={styles.buttonText}>Connect with my child</Text>
+          <Text style={styles.buttonText}>Connect with child</Text>
         </TouchableOpacity>
 
         {/* Logout button */}

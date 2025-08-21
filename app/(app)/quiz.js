@@ -62,6 +62,7 @@ export default function Quiz() {
     try {
       await addDoc(collection(db, "userQuizScores"), {
         userId: user?.userId,
+        username: user?.username,
         subject,
         level,
         score,
