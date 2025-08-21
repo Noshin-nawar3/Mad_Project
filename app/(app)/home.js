@@ -1,12 +1,6 @@
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import {
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View
-} from "react-native";
+import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -22,7 +16,7 @@ export default function Home() {
 
   const handleLogout = async () => {
     await logout();
-  }; 
+  };
 
   console.log("user data ", user);
 
@@ -66,18 +60,33 @@ export default function Home() {
               title="School"
               description="Click to see the School"
               onPress={() => router.push("/school")}
+              iconName="school"
+              iconColor="#2563EB" // Blue-600
+              bgColor="#EFF6FF" // Blue-50
+              innerBgColor="#DBEAFE" // Blue-100
+              iconBgColor="#BFDBFE" // Blue-200
             />
 
             <FullWidthButton
               title="Connection"
-              description="connect with all!"
-               onPress={() => router.push("/connection")}
+              description="Connect with all!"
+              onPress={() => router.push("/connection")}
+              iconName="people"
+              iconColor="#9333EA" // Purple-600
+              bgColor="#F5F3FF" // Purple-50
+              innerBgColor="#EDE9FE" // Purple-100
+              iconBgColor="#DDD6FE" // Purple-200
             />
 
             <FullWidthButton
               title="Contact Us"
               description="Feel free to reach out!"
-              // onPress={() => router.push("/event")}
+              onPress={() => router.push("/contact")}
+              iconName="call"
+              iconColor="#16A34A" // Green-600
+              bgColor="#ECFDF5" // Green-50
+              innerBgColor="#D1FAE5" // Green-100
+              iconBgColor="#A7F3D0" // Green-200
             />
           </View>
         </View>
@@ -133,9 +142,9 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   largeButton: {
-    width: wp(40), 
-    height: hp(15), 
-    marginHorizontal: 10, 
+    width: wp(40),
+    height: hp(15),
+    marginHorizontal: 10,
   },
   buttonSection: {
     marginTop: 20,

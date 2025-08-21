@@ -11,10 +11,10 @@ import {
   Pressable,
   StyleSheet,
   Text,
+  ScrollView,
   TouchableOpacity,
   View,
 } from "react-native";
-import { ScrollView } from "react-native-web";
 import HomeHeader from "../../components/HomeHeader";
 import LevelMap from "../../components/LevelMap";
 
@@ -294,6 +294,7 @@ export default function SubjectDetails() {
   return (
     <View style={styles.container_home}>
       <HomeHeader />
+      <ScrollView >
       <Text style={styles.title}>{subject || "Subject Details"}</Text>
 
       <TouchableOpacity style={styles.button} onPress={handleCourseDetailsToggle}>
@@ -311,6 +312,7 @@ export default function SubjectDetails() {
       />
 
       {expandedLevel && renderExpandedContent(expandedLevel)}
+      </ScrollView>
     </View>
   );
 }
