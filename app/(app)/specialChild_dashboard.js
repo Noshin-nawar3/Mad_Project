@@ -272,8 +272,9 @@
 //   },
 // });
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import HomeHeader from "../../components/HomeHeader";
 import { useAuth } from "../../context/authContext";
 
@@ -284,23 +285,55 @@ export default function SpecialChildDashboard() {
   const handleLogout = async () => {
     await logout();
   };
+
+  const handleStartNewTest = async () => {
+    try {
+      await AsyncStorage.removeItem('@raadsr_draft');
+      router.push('rAADSRTestScreen');
+    } catch (error) {
+      console.error('Error clearing draft:', error);
+      Alert.alert('Error', 'Failed to start new test.');
+    }
+  };
+
+  const handleResumeTest = async () => {
+    try {
+      const draft = await AsyncStorage.getItem('@raadsr_draft');
+      if (draft) {
+        router.push('rAADSRTestScreen');
+      } else {
+        Alert.alert('No Paused Test', 'There is no paused test to resume. Start a new test.');
+      }
+    } catch (error) {
+      console.error('Error checking draft:', error);
+      Alert.alert('Error', 'Failed to check for paused test.');
+    }
+  };
+
+
   console.log("user data ", user);
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.container_home}> 
+      <View style={styles.container_home}>
         <HomeHeader />
         <Text style={styles.title}>Special Child Dashboard</Text>
         <Text style={styles.welcome}>Welcome to the Special Child Dashboard!</Text>
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => {
-            router.push('rAADSRTestScreen');
-          }}
+          onPress={handleStartNewTest}
         >
           <Ionicons name="document-text-outline" size={20} color="#fff" style={styles.icon} />
-          <Text style={styles.buttonText}>Take RAADS-R Test</Text>
+          <Text style={styles.buttonText}>Start New RAADS-R Test</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleResumeTest}
+        >
+          <Ionicons name="play-circle-outline" size={20} color="#fff" style={styles.icon} />
+          <Text style={styles.buttonText}>Resume Test</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -376,7 +409,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logoutButton: {
-    backgroundColor: '#dc2626', 
+    backgroundColor: '#dc2626',
   },
   buttonText: {
     color: '#fff',
