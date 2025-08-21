@@ -11,11 +11,11 @@ import HomeHeader from "../../components/HomeHeader";
 import { useAuth } from "../../context/authContext";
 import ArtsButton from "../../components/Artsbutton";
 
-export default function Alphabets() {
+export default function Music() {
   return (
     <View style={styles.container_home}>
       <HomeHeader />
-      <Text style={styles.title}>Alphabets</Text>
+      <Text style={styles.title}>Music</Text>
       
     </View>
   );

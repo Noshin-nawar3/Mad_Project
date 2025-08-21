@@ -128,7 +128,7 @@ import HomeHeader from "../../components/HomeHeader";
 import ArtsButton from "../../components/Artsbutton";
 
 export default function Arts() {
-  const router = useRouter(); // ✅ FIXED
+  const router = useRouter();
 
   return (
     <View style={styles.container_home}>
