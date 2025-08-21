@@ -11,7 +11,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { ScrollView } from "react-native-web";
 import HomeHeader from "../../components/HomeHeader";
 import LevelMap from "../../components/LevelMap";
 

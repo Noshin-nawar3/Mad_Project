@@ -184,16 +184,12 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   searchContainer: {
-    padding: 10,
-    marginTop: 100,
+    paddingTop: 100,
     backgroundColor: "#FDF6E4",
+    borderColor:"#FDF6E4",
     borderRadius: 12,
-    ...(Platform && Platform.select
-      ? Platform.select({
-          android: { elevation: 4 },
-          default: { elevation: 4 },
-        })
-      : { elevation: 4 }),
+    marginHorizontal: 1,
+    marginTop: 12,
   },
   menuButton: {
     position: "absolute",

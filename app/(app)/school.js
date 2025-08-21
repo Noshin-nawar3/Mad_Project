@@ -241,23 +241,12 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   searchContainer: {
-    padding: 20,
+    paddingTop: 20,
     backgroundColor: "#FDF6E4",
+    borderColor:"#FDF6E4",
     borderRadius: 12,
     marginHorizontal: 12,
     marginTop: 12,
-    ...(Platform && Platform.select
-      ? Platform.select({
-          android: { elevation: 4 },
-          ios: {
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.15,
-            shadowRadius: 6,
-          },
-          default: { elevation: 4 },
-        })
-      : { elevation: 4 }),
   },
   searchItem: {
     fontSize: 18,

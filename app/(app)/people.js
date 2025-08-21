@@ -180,18 +180,13 @@ const styles = StyleSheet.create({
     marginRight: 10,
     width: 120,
   },
-  searchContainer: {
-    padding: 10,
-    marginTop: 20,
+    searchContainer: {
+    paddingTop: 20,
     backgroundColor: "#FDF6E4",
+    borderColor:"#FDF6E4",
     borderRadius: 12,
-    marginBottom: 10,
-    ...(Platform && Platform.select
-      ? Platform.select({
-          android: { elevation: 4 },
-          default: { elevation: 4 },
-        })
-      : { elevation: 4 }),
+    marginHorizontal: 1,
+    marginTop: 12,
   },
   avatar: { width: 100, height: 100, borderRadius: 100, marginBottom: 8 },
   name: {
