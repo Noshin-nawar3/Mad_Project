@@ -1,3 +1,4 @@
+import { Ionicons } from "@expo/vector-icons";
 import { Video } from "expo-av";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
@@ -10,8 +11,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { ScrollView } from "react-native-web";
 import HomeHeader from "../../components/HomeHeader";
-import { Ionicons } from "@expo/vector-icons";
 import LevelMap from "../../components/LevelMap";
 
 export default function SubjectDetails() {
@@ -112,6 +113,7 @@ export default function SubjectDetails() {
     const videoUrl = videos[currentIndex] || "";
 
     return (
+      <ScrollView>
       <View style={styles.dropdownContainer}>
         {/* Video Section */}
         <View style={styles.videoPlaceholder}>
@@ -165,6 +167,7 @@ export default function SubjectDetails() {
           <Text style={styles.buttonTextin}> Take Quiz</Text>
         </TouchableOpacity>
       </View>
+      </ScrollView>
     );
   };
 
