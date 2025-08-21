@@ -32,6 +32,17 @@ export default function ParentDashboard() {
           <Text style={styles.buttonText}>Share your concern</Text>
         </TouchableOpacity>
 
+        {/* Connect with child tile */}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            router.push('/connect_child');
+          }}
+        >
+          <Ionicons name="people-outline" size={20} color="#fff" style={styles.icon} />
+          <Text style={styles.buttonText}>Connect with child</Text>
+        </TouchableOpacity>
+
         {/* Logout button */}
         <TouchableOpacity
           style={[styles.button, styles.logoutButton]}
