@@ -36,6 +36,8 @@ export default function SignUp() {
   const [selectedRole, setSelectedRole] = useState("Special Child"); // Default role
   const { register } = useAuth();
 
+
+
   const handleRegister = async () => {
     if (
       !usernameRef.current ||
