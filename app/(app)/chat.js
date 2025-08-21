@@ -95,7 +95,7 @@ export default function Chat() {
     <KeyboardAvoidingView
       style={[styles.container, isDarkMode && styles.containerDark]}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 100}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
     >
       {/* Header */}
       <View style={[styles.headerContainer, isDarkMode && styles.headerDark]}>

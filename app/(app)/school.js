@@ -154,7 +154,7 @@ export default function School() {
             })}
         </View>
         {/* Courses List */}
-        <Text style={styles.title}>Courses</Text>
+        {/* <Text style={styles.title}>Courses</Text>
         <View style={styles.buttonSection}>
           <CourseCard
             image="https://images.pexels.com/photos/4145195/pexels-photo-4145195.jpeg"
@@ -227,7 +227,7 @@ export default function School() {
               })
             }
           />
-        </View>
+        </View> */}
       </ScrollView>
     </View>
   );
