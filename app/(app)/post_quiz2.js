@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Picker } from "react-native";
-import { db } from "../../firebaseConfig";
-import { collection, addDoc } from "firebase/firestore";
-import { useAuth } from "../../context/authContext";
+import { Picker } from "@react-native-picker/picker";
 import { useRouter } from "expo-router";
+import { addDoc, collection } from "firebase/firestore";
+import { useState } from "react";
+import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { useAuth } from "../../context/authContext";
+import { db } from "../../firebaseConfig";
 
 export default function PostQuiz2() {
   const { user } = useAuth();
