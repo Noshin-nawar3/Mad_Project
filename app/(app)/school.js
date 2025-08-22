@@ -37,6 +37,9 @@ export default function School() {
       params: { subject },
     });
   };
+    const filteredSubjects = subjects.filter((item) =>
+    item.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <View style={styles.container_home}>
@@ -45,11 +48,11 @@ export default function School() {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Search */}
         <View style={styles.searchContainer}>
-          {/* <SearchBar
+          <SearchBar
             value={search}
             onChangeText={setSearch}
             placeholder="Search Subject..."
-          /> */}
+          />
           {search.trim() !== "" && (
             <FlatList
               data={filteredSubjects}
@@ -283,8 +286,9 @@ const styles = StyleSheet.create({
   },
   largeButton: {
     flex: 1,
-    minWidth: "48%",
-    maxWidth: "48%",
+    // minWidth: "48%",
+    // maxWidth: "48%",
+    width: "100%",
     margin: 4,
   },
   subjectRow: {

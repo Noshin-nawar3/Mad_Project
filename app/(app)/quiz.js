@@ -143,12 +143,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     color: '#1a1a1a',
+    marginTop: 70,
   },
   questionContainer: {
     marginBottom: 20,
   },
   questionText: {
     fontSize: 18,
+    padding: 10,
     marginBottom: 10,
     color: '#1a1a1a',
   },
@@ -187,6 +189,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     marginTop: 20,
+    marginBottom: 40,
   },
   submitText: {
     fontSize: 18,
