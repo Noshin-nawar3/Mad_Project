@@ -1,9 +1,10 @@
 import { useRouter } from "expo-router";
 import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
-import { Alert, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, Pressable, StyleSheet, Text, TextInput, View, ScrollView } from "react-native";
 import { useAuth } from "../../context/authContext";
 import { db } from "../../firebaseConfig";
+import HomeHeader from "../../components/HomeHeader";
 
 export default function PostNotice() {
   const router = useRouter();
@@ -33,14 +34,20 @@ export default function PostNotice() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container_home}>
+          <HomeHeader />
+    <ScrollView style={styles.container}>
       <Text style={styles.header}>Post a New Notice</Text>
+
+      <Text style={styles.inputLabel}>Title</Text>
       <TextInput
         style={styles.input}
         placeholder="Notice Title"
         value={title}
         onChangeText={setTitle}
       />
+
+      <Text style={styles.inputLabel}>Description</Text>
       <TextInput
         style={[styles.input, styles.textArea]}
         placeholder="Description"
@@ -49,48 +56,69 @@ export default function PostNotice() {
         multiline
         numberOfLines={4}
       />
+
       <Pressable style={styles.postButton} onPress={handlePostNotice}>
-        <Text style={styles.postButtonText}>Post</Text>
+        <Text style={styles.postButtonText}>Post Notice</Text>
       </Pressable>
+    </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container_home: {
+    flex: 1,
+    backgroundColor: "#EFF6FF",
+    fontColor: "#000",
+  },
   container: {
     flex: 1,
     backgroundColor: "#F3F4F6",
     padding: 20,
   },
   header: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 20,
+    color: "#065F46",
+    marginVertical: 20,
   },
   input: {
-    height: 40,
+    height: 50,
     borderColor: "#D1D5DB",
+    fontColor: "#000",
     borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 15,
+    borderRadius: 12,
+    paddingHorizontal: 15,
+    marginBottom: 20,
     backgroundColor: "#FFFFFF",
+    fontSize: 16,
+  },
+  inputLabel: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#374151",
+    marginBottom: 5,
   },
   textArea: {
-    height: 100,
+    height: 120,
     textAlignVertical: "top",
   },
   postButton: {
-    backgroundColor: "#4B5563",
-    paddingVertical: 12,
-    borderRadius: 8,
+    backgroundColor: "#10b981",
+    paddingVertical: 15,
+    borderRadius: 12,
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
     marginTop: 10,
   },
   postButtonText: {
     color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "500",
+    fontSize: 18,
+    fontWeight: "600",
   },
 });
