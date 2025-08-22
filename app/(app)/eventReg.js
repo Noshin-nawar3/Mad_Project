@@ -78,4 +78,78 @@ export default function EventReg() {
   );
 }
 
-
+const styles = StyleSheet.create({
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginVertical: 16,
+    color: "#111827",
+  },
+  container_home: {
+    flex: 1,
+    backgroundColor: "#EFF6FF",
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "#E5E7EB",
+    padding: 16,
+  },
+  header: {
+    fontSize: 26,
+    fontWeight: "700",
+    color: "#111827",
+    textAlign: "center",
+    marginBottom: 16,
+  },
+  list: {
+    paddingBottom: 20,
+  },
+tile: {
+  width: "100%",           // full width
+  backgroundColor: "#FFFFFF",
+  borderRadius: 16,
+  marginVertical: 8,       // vertical spacing between tiles
+  padding: 12,
+  alignItems: "center",
+  shadowColor: "#000",
+  shadowOffset: { width: 0, height: 4 },
+  shadowOpacity: 0.15,
+  shadowRadius: 6,
+  elevation: 4,
+},
+  eventImage: {
+    width: 120,
+    height: 120,
+    borderRadius: 12,
+    marginBottom: 10,
+  },
+  tileEventName: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#1F2937",
+    textAlign: "center",
+    marginBottom: 4,
+  },
+  tileUsername: {
+    fontSize: 14,
+    color: "#6B7280",
+    marginBottom: 6,
+  },
+  timestampContainer: {
+    backgroundColor: "#F3F4F6",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+  },
+  tileTimestamp: {
+    fontSize: 12,
+    color: "#9CA3AF",
+  },
+  noRegistrations: {
+    textAlign: "center",
+    color: "#6B7280",
+    fontSize: 16,
+    marginTop: 40,
+  },
+});
