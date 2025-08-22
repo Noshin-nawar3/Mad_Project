@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, FlatList, Alert } from "react-native";
+import { StyleSheet, Text, View, FlatList, Alert, Image } from "react-native";
 import { db } from "../../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import { useAuth } from "../../context/authContext";
-import { useRouter } from "expo-router";
+import HomeHeader from "../../components/HomeHeader"; 
 
 export default function User() {
   const [users, setUsers] = useState([]);
   const { user } = useAuth();
-  const router = useRouter();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -18,6 +17,9 @@ export default function User() {
           id: doc.id,
           username: doc.data().username || "Unknown User",
           role: doc.data().role || "Unknown Role",
+          profileUrl:
+            doc.data().profileUrl ||
+            "https://as2.ftcdn.net/jpg/03/49/49/79/1000_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg", // placeholder
         }));
         setUsers(usersList);
       } catch (error) {
@@ -31,12 +33,15 @@ export default function User() {
 
   const renderUserTile = ({ item }) => (
     <View style={styles.tile}>
+      <Image source={{ uri: item.profileUrl }} style={styles.avatar} />
       <Text style={styles.tileUsername}>{item.username}</Text>
       <Text style={styles.tileRole}>{item.role}</Text>
     </View>
   );
 
   return (
+    <View style={styles.container_home}>
+      <HomeHeader />
     <View style={styles.container}>
       <Text style={styles.header}>All Users</Text>
       {users.length > 0 ? (
@@ -44,25 +49,31 @@ export default function User() {
           data={users}
           renderItem={renderUserTile}
           keyExtractor={(item) => item.id}
-          numColumns={2} 
+          numColumns={2}
           contentContainerStyle={styles.list}
         />
       ) : (
         <Text style={styles.noUsers}>No users available.</Text>
       )}
     </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container_home: {
+    flex: 1,
+    backgroundColor: "#F3F4F6",
+  },
   container: {
     flex: 1,
     backgroundColor: "#F3F4F6",
-    padding: 20,
+    padding: 15,
   },
   header: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: "bold",
+    color: "#10b981",
     textAlign: "center",
     marginBottom: 20,
   },
@@ -72,29 +83,38 @@ const styles = StyleSheet.create({
   tile: {
     flex: 1,
     backgroundColor: "#FFFFFF",
-    borderRadius: 10,
+    borderRadius: 15,
     padding: 15,
-    margin: 5,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    margin: 8,
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.12,
+    shadowRadius: 6,
+    elevation: 4,
+  },
+  avatar: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    marginBottom: 10,
+    borderWidth: 2,
+    borderColor: "#10b981",
   },
   tileUsername: {
     fontSize: 16,
-    fontWeight: "500",
+    fontWeight: "600",
     color: "#333333",
-    marginBottom: 5,
+    marginBottom: 3,
   },
   tileRole: {
     fontSize: 14,
-    color: "#666666",
+    color: "#777777",
   },
   noUsers: {
     textAlign: "center",
-    color: "#666666",
+    color: "#777777",
     fontSize: 16,
+    marginTop: 50,
   },
 });
