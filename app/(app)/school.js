@@ -8,6 +8,7 @@ import { useBookmarks } from "./BookmarkContext";
 import SubjectButton from "../../components/SubjectButton";
 import CourseCard from "../../components/CourseCard";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import FullwidthButton from "../../components/FullwidthButton";
 
 export default function School() {
   const router = useRouter();
@@ -79,12 +80,19 @@ export default function School() {
               onPress={() => router.push("/resources")}
               style={styles.largeButton}
             /> */}
-            <SquareButton
+            {/* <SquareButton
               title="Your Course"
               iconName="book"
               onPress={() => router.push("/yourCourse")}
               style={styles.largeButton}
-            />
+            /> */}
+            <View style={styles.buttonSection}>
+            <FullwidthButton
+              title="My Course"
+              iconName="book"
+              onPress={() => router.push("/yourCourse")}
+              
+            /></View>
             {/* <SquareButton
               title="Library"
               iconName="bookmark-outline"
@@ -259,6 +267,12 @@ const styles = StyleSheet.create({
     padding: 8,
     color: "#333",
   },
+  buttonSection: {
+    marginTop: 20,
+    paddingHorizontal: 16,
+    width: "100%",
+    gap: 16,
+  },
   title: {
     fontSize: 26,
     fontWeight: "700",
@@ -303,7 +317,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     marginVertical: 10,
     width: "100%",
-    paddingHorizontal: 20,
+    paddingHorizontal: 35,
   },
   subjectSpacer: {
     flex: 1,
