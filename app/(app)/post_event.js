@@ -56,7 +56,7 @@ export default function PostEvent() {
       <HomeHeader />
       <View style={styles.container}>
         <Text style={styles.title}>Post New Event</Text>
-
+       <Text style={styles.inputLabel}>Title</Text>
         <TextInput
           style={styles.input}
           placeholder="Event Name"
@@ -64,7 +64,7 @@ export default function PostEvent() {
           value={eventName}
           onChangeText={setEventName}
         />
-
+<Text style={styles.inputLabel}>Date</Text>
         <Pressable style={styles.dateButton} onPress={showDatepicker}>
           <Text style={styles.dateText}>{eventDate.toLocaleDateString()}</Text>
         </Pressable>
@@ -77,7 +77,7 @@ export default function PostEvent() {
             onChange={handleDateChange}
           />
         )}
-
+<Text style={styles.inputLabel}>Event Description</Text>
         <TextInput
           style={[styles.input, styles.descriptionInput]}
           placeholder="Event Description"
@@ -105,6 +105,12 @@ const styles = StyleSheet.create({
   container_home: {
     flex: 1,
     backgroundColor: "#EFF6FF",
+  },
+  inputLabel: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#374151",
+    marginBottom: 5,
   },
   title: {
     fontSize: 26,
