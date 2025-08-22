@@ -1,8 +1,8 @@
 import React from "react";
-import { TouchableOpacity, Text, StyleSheet, Image, View } from "react-native";
+import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 
-export default function SubjectButton({ title, onPress, color, image }) {
+export default function SubjectButton({ title, onPress, color, icon, IconComponent }) {
   return (
     <TouchableOpacity
       style={[styles.button, { backgroundColor: color }]}
@@ -10,11 +10,11 @@ export default function SubjectButton({ title, onPress, color, image }) {
       activeOpacity={0.8}
     >
       <View style={styles.content}>
-        {/* Static image */}
-        <Image source={image} style={styles.image} resizeMode="contain" />
+        {/* Subject icon */}
+        <IconComponent name={icon} size={40} color="white" />
 
         {/* Subject name */}
-        <Text style={styles.text}>{title}</Text>
+        <Text style={styles.title}>{title}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -23,14 +23,14 @@ export default function SubjectButton({ title, onPress, color, image }) {
 const styles = StyleSheet.create({
   button: {
     flex: 1,
-    minWidth: "47%",
-    maxWidth: "47%",
-    width: wp(50),
-    height: 200,
-    margin: 8,
-    borderRadius: 16,
+    minWidth: "42%",
+    maxWidth: "42%",
+    height: 130,
+    margin: 6,
+    borderRadius: 18,
     justifyContent: "center",
     alignItems: "center",
+    padding: 10,
     shadowColor: "#000",
     shadowOpacity: 0.15,
     shadowOffset: { width: 0, height: 3 },
@@ -38,18 +38,13 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   content: {
-    //alignItems: "center",
-    margin: 8,
+    alignItems: "center",
   },
-  image: {
-    width: "100%",
-    height: 150,
-    marginBottom: 8,
-  },
-  text: {
+  title: {
+    color: "white",
     fontSize: 16,
-    fontWeight: "600",
-    color: "#fff",
+    fontWeight: "bold",
+    marginTop: 8,
     textAlign: "center",
   },
 });

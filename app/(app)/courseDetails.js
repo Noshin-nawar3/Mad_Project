@@ -154,23 +154,34 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import HomeHeader from "../../components/HomeHeader";
 import { getAuth } from "firebase/auth";
 import { getDatabase, ref, push, set } from "firebase/database";
 
+const courseImages = {
+  Science: "https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg",
+  Mathematics: "https://images.pexels.com/photos/5427870/pexels-photo-5427870.jpeg",
+  "Social Studies": "https://images.pexels.com/photos/3769138/pexels-photo-3769138.jpeg",
+  Language: "https://images.pexels.com/photos/267669/pexels-photo-267669.jpeg",
+  "Art & Music": "https://images.pexels.com/photos/7095438/pexels-photo-7095438.jpeg"
+};
+
 export default function CourseDetails() {
   const router = useRouter();
-
-  const title = "Science";
-  const description =
-    "Master closures, async programming, and advanced concepts.";
-  const image =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIfi0Qt3iHaBgQvJ9O6KWMr7VqveMHF_bDGYu4nYASx8j03I091i_BEsPYVKicZHJrnGM&usqp=CAU";
-  const length = "3h 45m";
-  const rating = "4.6";
+  const params = useLocalSearchParams();
+  
+  // Get course details from params
+  const {
+    title,
+    description,
+    image,
+    length,
+    rating,
+    subject
+  } = params;
 
   const [enrolled, setEnrolled] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
@@ -198,6 +209,7 @@ export default function CourseDetails() {
         image,
         length,
         rating,
+        subject,
         enrolledAt: new Date().toISOString(),
       });
 
@@ -212,6 +224,7 @@ export default function CourseDetails() {
           image,
           length,
           rating,
+          subject
         },
       });
     } catch (error) {
@@ -221,17 +234,52 @@ export default function CourseDetails() {
     }
   };
 
-  const handleBookmark = () => {
-    setBookmarked((prev) => !prev);
-    // Save/remove bookmark in Firebase if needed
-    console.log("Bookmark toggled:", !bookmarked);
+  const handleBookmark = async () => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (!user) {
+        Alert.alert("Not logged in", "Please sign in to bookmark.");
+        return;
+      }
+
+      setBookmarked((prev) => !prev);
+
+      const db = getDatabase();
+      const bookmarksRef = ref(db, `users/${user.uid}/bookmarks/${subject}`);
+
+      if (!bookmarked) {
+        // Add bookmark
+        await set(bookmarksRef, {
+          title,
+          description,
+          image,
+          length,
+          rating,
+          bookmarkedAt: new Date().toISOString(),
+        });
+      } else {
+        // Remove bookmark
+        await set(bookmarksRef, null);
+      }
+    } catch (error) {
+      console.error("Error toggling bookmark:", error);
+      Alert.alert("Error", "Could not update bookmark. Try again.");
+      setBookmarked((prev) => !prev);
+    }
   };
 
   return (
     <View style={styles.container_home}>
       <HomeHeader />
       <ScrollView style={styles.container}>
-        <Image source={{ uri: image }} style={styles.image} />
+        <Image 
+          source={{ 
+            uri: courseImages[subject] || image // Fallback to passed image if subject image not found
+          }} 
+          style={styles.image} 
+        />
 
         <View style={styles.headerRow}>
           <Text style={styles.title}>{title}</Text>
@@ -253,8 +301,8 @@ export default function CourseDetails() {
 
         <Text style={styles.sectionTitle}>Course Content</Text>
         <Text style={styles.sectionText}>
-          (Here you can render a list of lessons, modules, or details about the
-          course)
+          This course includes comprehensive lessons, interactive exercises, and assessments 
+          to help you master {subject}.
         </Text>
 
         <TouchableOpacity

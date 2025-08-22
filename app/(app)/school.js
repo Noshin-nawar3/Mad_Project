@@ -7,6 +7,7 @@ import SquareButton from "../../components/SquareButton";
 import { useBookmarks } from "./BookmarkContext";
 import SubjectButton from "../../components/SubjectButton";
 import CourseCard from "../../components/CourseCard";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function School() {
   const router = useRouter();
@@ -16,17 +17,13 @@ export default function School() {
   const subjects = ["Science", "Mathematics", "Social Studies", "Language"];
 
   // Example subject → image mapping
-  const subjectImages = {
-    Math: require("../../assets/images/sub.jpg"),
-    Science: require("../../assets/images/sub.jpg"),
-    English: require("../../assets/images/sub.jpg"),
-    History: require("../../assets/images/sub.jpg"),
-    Computer: require("../../assets/images/sub.jpg"),
+  const subjectIcons = {
+    Science: "flask",
+    Mathematics: "calculator",
+    "Social Studies": "earth",
+    Language: "book-open-variant",
+    "Art & Music": "music-note"
   };
-  const filteredSubjects = subjects.filter((item) =>
-    item.toLowerCase().includes(search.toLowerCase())
-  );
-
   const subjectColors = {
     Science: "#27AE60", // Vibrant green
     Mathematics: "#2980B9", // Deep blue
@@ -48,11 +45,11 @@ export default function School() {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Search */}
         <View style={styles.searchContainer}>
-          <SearchBar
+          {/* <SearchBar
             value={search}
             onChangeText={setSearch}
             placeholder="Search Subject..."
-          />
+          /> */}
           {search.trim() !== "" && (
             <FlatList
               data={filteredSubjects}
@@ -73,24 +70,24 @@ export default function School() {
         <Text style={styles.title}>School</Text>
         <View style={styles.wrapper}>
           <View style={styles.row}>
-            <SquareButton
+            {/* <SquareButton
               title="Resource"
               iconName="book-open-page-variant"
               onPress={() => router.push("/resources")}
               style={styles.largeButton}
-            />
+            /> */}
             <SquareButton
               title="Your Course"
               iconName="book"
               onPress={() => router.push("/yourCourse")}
               style={styles.largeButton}
             />
-            <SquareButton
+            {/* <SquareButton
               title="Library"
               iconName="bookmark-outline"
               onPress={() => router.push("/bookmark")}
               style={styles.largeButton}
-            />
+            /> */}
           </View>
         </View>
 
@@ -141,7 +138,8 @@ export default function School() {
                       key={subIndex}
                       title={subject}
                       color={subjectColors[subject]}
-                      image={subjectImages[subject]}
+                      icon={subjectIcons[subject]} // Replace image prop with icon
+                      IconComponent={MaterialCommunityIcons} // Add this prop
                       onPress={() => handleSubjectPress(subject)}
                     />
                   ))}
@@ -151,9 +149,10 @@ export default function School() {
           <View style={styles.leftAlignedRow}>
             <SubjectButton
               title="Art & Music"
-              color="#C0392B" // Bold red
-              image={require("../../assets/images/sub.jpg")}
-               onPress={() => router.push("/arts")}
+              color="#C0392B"
+              icon="music-note"
+              IconComponent={MaterialCommunityIcons}
+              onPress={() => router.push("/arts")}
             />
           </View>
         </View>
