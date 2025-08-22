@@ -34,8 +34,10 @@ export default function User() {
   const renderUserTile = ({ item }) => (
     <View style={styles.tile}>
       <Image source={{ uri: item.profileUrl }} style={styles.avatar} />
+     <View style={styles.userInfo}> 
       <Text style={styles.tileUsername}>{item.username}</Text>
       <Text style={styles.tileRole}>{item.role}</Text>
+    </View>
     </View>
   );
 
@@ -49,7 +51,6 @@ export default function User() {
           data={users}
           renderItem={renderUserTile}
           keyExtractor={(item) => item.id}
-          numColumns={2}
           contentContainerStyle={styles.list}
         />
       ) : (
@@ -81,10 +82,13 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   tile: {
+    width: "100%",
     flex: 1,
+    flexDirection: "row", 
     backgroundColor: "#FFFFFF",
     borderRadius: 15,
     padding: 15,
+    marginVertical: 8,  
     margin: 8,
     alignItems: "center",
     shadowColor: "#000",
@@ -96,12 +100,28 @@ const styles = StyleSheet.create({
   avatar: {
     width: 70,
     height: 70,
+    marginRight: 20,      
     borderRadius: 35,
     marginBottom: 10,
     borderWidth: 2,
     borderColor: "#10b981",
   },
-  tileUsername: {
+  userInfo: {
+  flex: 1,                   // take remaining space
+  justifyContent: "center",
+},
+
+tileUsername: {
+  fontSize: 16,
+  fontWeight: "600",
+  color: "#333333",
+},
+tileRole: {
+  fontSize: 14,
+  color: "#777777",
+  marginTop: 4,
+},
+tileUsername: {
     fontSize: 16,
     fontWeight: "600",
     color: "#333333",
