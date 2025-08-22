@@ -2,7 +2,16 @@ import { Picker } from "@react-native-picker/picker";
 import { useRouter } from "expo-router";
 import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
-import { Alert, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  ScrollView,
+} from "react-native";
 import { useAuth } from "../../context/authContext";
 import { db } from "../../firebaseConfig";
 
@@ -24,7 +33,7 @@ export default function PostQuiz2() {
   };
 
   const handlePostQuiz = async () => {
-    if (!question.text.trim() || question.options.some(o => !o.trim())) {
+    if (!question.text.trim() || question.options.some((o) => !o.trim())) {
       Alert.alert("Error", "Please fill all fields for the question.");
       return;
     }
@@ -51,62 +60,70 @@ export default function PostQuiz2() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Post Quiz to School</Text>
-      <View style={styles.pickerContainer}>
-        <Text style={styles.pickerLabel}>Subject:</Text>
-        <Picker
-          selectedValue={subject}
-          style={styles.picker}
-          onValueChange={(value) => setSubject(value)}
-        >
-          <Picker.Item label="Science" value="Science" />
-          <Picker.Item label="Mathematics" value="Mathematics" />
-          <Picker.Item label="Social Science" value="Social Science" />
-          <Picker.Item label="Language" value="Language" />
-          <Picker.Item label="Art and Music" value="Art and Music" />
-        </Picker>
-      </View>
-      <View style={styles.pickerContainer}>
-        <Text style={styles.pickerLabel}>Level:</Text>
-        <Picker
-          selectedValue={level}
-          style={styles.picker}
-          onValueChange={(value) => setLevel(value)}
-        >
-          <Picker.Item label="Level 1" value="Level 1" />
-          <Picker.Item label="Level 2" value="Level 2" />
-          <Picker.Item label="Level 3" value="Level 3" />
-          <Picker.Item label="Level 4" value="Level 4" />
-          <Picker.Item label="Level 5" value="Level 5" />
-        </Picker>
-      </View>
-      <View style={styles.questionContainer}>
-        <Text style={styles.questionLabel}>Question</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter Question Text"
-          value={question.text}
-          onChangeText={(value) => setQuestion({ ...question, text: value })}
-          onFocus={() => question.text === "" && setQuestion({ ...question, text: "" })}
-          onBlur={() => !question.text && setQuestion({ ...question, text: "Enter Question Text" })}
-        />
-        {question.options.map((option, optIndex) => (
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Text style={styles.title}>📘 Post Quiz to School</Text>
+
+        {/* Subject Picker */}
+        <View style={styles.card}>
+          <Text style={styles.label}>Select Subject</Text>
+          <Picker
+            selectedValue={subject}
+            style={styles.picker}
+            onValueChange={(value) => setSubject(value)}
+          >
+            <Picker.Item label="Science" value="Science" />
+            <Picker.Item label="Mathematics" value="Mathematics" />
+            <Picker.Item label="Social Science" value="Social Science" />
+            <Picker.Item label="Language" value="Language" />
+            <Picker.Item label="Art and Music" value="Art and Music" />
+          </Picker>
+        </View>
+
+        {/* Level Picker */}
+        <View style={styles.card}>
+          <Text style={styles.label}>Select Level</Text>
+          <Picker
+            selectedValue={level}
+            style={styles.picker}
+            onValueChange={(value) => setLevel(value)}
+          >
+            <Picker.Item label="Level 1" value="Level 1" />
+            <Picker.Item label="Level 2" value="Level 2" />
+            <Picker.Item label="Level 3" value="Level 3" />
+            <Picker.Item label="Level 4" value="Level 4" />
+            <Picker.Item label="Level 5" value="Level 5" />
+          </Picker>
+        </View>
+
+        {/* Question Input */}
+        <View style={styles.card}>
+          <Text style={styles.label}>Question</Text>
           <TextInput
-            key={optIndex}
             style={styles.input}
-            placeholder={`Option ${String.fromCharCode(65 + optIndex)}`}
-            value={option}
-            onChangeText={(value) => handleOptionChange(optIndex, value)}
-            onFocus={() => option === "" && handleOptionChange(optIndex, "")}
-            onBlur={() => !option && handleOptionChange(optIndex, `Option ${String.fromCharCode(65 + optIndex)}`)}
+            placeholder="Enter your question here"
+            value={question.text}
+            onChangeText={(value) => setQuestion({ ...question, text: value })}
           />
-        ))}
-        <View style={styles.pickerContainer}>
-          <Text style={styles.pickerLabel}>Correct Answer:</Text>
+
+          {/* Options */}
+          {question.options.map((option, optIndex) => (
+            <TextInput
+              key={optIndex}
+              style={styles.input}
+              placeholder={`Option ${String.fromCharCode(65 + optIndex)}`}
+              value={option}
+              onChangeText={(value) => handleOptionChange(optIndex, value)}
+            />
+          ))}
+
+          {/* Correct Answer Picker */}
+          <Text style={[styles.label, { marginTop: 10 }]}>Correct Answer</Text>
           <Picker
             selectedValue={question.correctAnswer}
             style={styles.picker}
-            onValueChange={(value) => setQuestion({ ...question, correctAnswer: value })}
+            onValueChange={(value) =>
+              setQuestion({ ...question, correctAnswer: value })
+            }
           >
             <Picker.Item label="A" value="A" />
             <Picker.Item label="B" value="B" />
@@ -114,10 +131,12 @@ export default function PostQuiz2() {
             <Picker.Item label="D" value="D" />
           </Picker>
         </View>
-      </View>
-      <TouchableOpacity style={styles.button} onPress={handlePostQuiz}>
-        <Text style={styles.buttonText}>Post Quiz</Text>
-      </TouchableOpacity>
+
+        {/* Post Button */}
+        <TouchableOpacity style={styles.button} onPress={handlePostQuiz}>
+          <Text style={styles.buttonText}>🚀 Post Quiz</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -125,59 +144,61 @@ export default function PostQuiz2() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FEF3C7',
+    backgroundColor: "#FFF9F0",
     padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 20,
+    color: "#333",
   },
-  pickerContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 10,
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    padding: 15,
+    marginBottom: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 5,
+    elevation: 2,
   },
-  pickerLabel: {
+  label: {
     fontSize: 16,
-    marginRight: 10,
+    fontWeight: "600",
+    marginBottom: 8,
+    color: "#555",
   },
   picker: {
-    flex: 1,
     height: 50,
-    backgroundColor: "#fff",
-  },
-  questionContainer: {
-    marginBottom: 20,
-  },
-  questionLabel: {
-    fontSize: 18,
-    fontWeight: "600",
-    marginBottom: 5,
+    backgroundColor: "#F9FAFB",
+    borderRadius: 8,
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
+    borderColor: "#ddd",
+    borderRadius: 8,
+    padding: 12,
     marginBottom: 10,
-    backgroundColor: "#fff",
+    backgroundColor: "#F9FAFB",
   },
   button: {
-    backgroundColor: "#FFD60A",
-    padding: 15,
-    borderRadius: 10,
+    backgroundColor: "#4CAF50",
+    paddingVertical: 16,
+    borderRadius: 12,
     alignItems: "center",
+    marginTop: 10,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
     elevation: 3,
   },
   buttonText: {
     fontSize: 18,
-    fontWeight: "600",
-    color: "#333",
+    fontWeight: "700",
+    color: "#fff",
   },
 });
